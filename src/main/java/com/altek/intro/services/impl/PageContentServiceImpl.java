@@ -2,6 +2,7 @@ package com.altek.intro.services.impl;
 
 import com.altek.intro.dto.PageContentDTO;
 import com.altek.intro.entites.PageContentEntity;
+import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.PageContentMapper;
 import com.altek.intro.repository.PageContentRepository;
 import com.altek.intro.services.PageContentService;
@@ -15,6 +16,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class PageContentServiceImpl extends AbstractServiceImpl implements PageContentService {
+
     @Autowired
     private PageContentRepository pageContentRepository;
 
@@ -35,7 +37,7 @@ public class PageContentServiceImpl extends AbstractServiceImpl implements PageC
             return pageContentDTOs;
         } catch (Exception e) {
             e.printStackTrace();
-            throw new Exception("Get All Error");
+            throw new ResourceNotFoundException(e.getMessage());
         }
     }
 
