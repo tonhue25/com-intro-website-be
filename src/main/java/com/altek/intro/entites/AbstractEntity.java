@@ -14,15 +14,17 @@ import lombok.Data;
 @Data
 public class AbstractEntity {
     @Id
-    @Column(name = "id")
+    @Column(name = "ID")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    @Column(name="active_flag")
+    @Column(name="ACTIVE_FLAG")
     private int activeFlag;
-    @Column(name="create_date")
+    @Column(name="CREATE_BY")
+    private String createBy;
+    @Column(name="CREATE_DATE")
     private Date createDate;
-    @Column(name="modify_by")
+    @Column(name="MODIFY_BY")
     private String modifyBy;
-    @Column(name="modify_date")
+    @Column(name="MODIFY_DATE")
     private Date modifyDate;
 }
