@@ -1,8 +1,8 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.dto.MenuViewDTO;
+import com.altek.intro.dto.CompanyInfoViewDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
-import com.altek.intro.services.MenuService;
+import com.altek.intro.services.CompanyInfoService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,17 +13,18 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/menu")
+@RequestMapping("/companyInfo")
 @CrossOrigin(origins = "*", maxAge = 3600)
-public class MenuController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(MenuController.class);
+public class CompanyInfoController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(CompanyInfoController.class);
+
     @Autowired
-    MenuService menuService;
+    CompanyInfoService companyInfoService;
 
     @GetMapping("/")
-    public ResponseEntity<MenuViewDTO> listAllMenu() {
+    public ResponseEntity<CompanyInfoViewDTO> listAllCompanyInfo() {
         try {
-            List<MenuViewDTO> response = menuService.getAllMenu();
+            List<CompanyInfoViewDTO> response = companyInfoService.getAllCompanyInfo();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());
@@ -36,9 +37,9 @@ public class MenuController {
 
     }
     @GetMapping("/{id}")
-    public ResponseEntity<MenuViewDTO> getMenuId(@PathVariable Long id){
+    public ResponseEntity<CompanyInfoViewDTO> getCompanyInfoId(@PathVariable Long id){
         try {
-            return new ResponseEntity<>(menuService.getMenuById(id), HttpStatus.OK);
+            return new ResponseEntity<>(companyInfoService.getAllCompanyInfoById(id), HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

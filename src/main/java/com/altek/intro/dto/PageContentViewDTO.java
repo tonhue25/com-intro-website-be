@@ -1,12 +1,10 @@
 package com.altek.intro.dto;
 
-import com.altek.intro.entites.AbstractEntity;
 import lombok.Data;
 
-import javax.persistence.Column;
-
 @Data
-public class PageContentDTO extends AbstractDTO {
+public class PageContentViewDTO {
+    private Long id;
     private String pageTitle;
     private String shortDescription;
     private Long menuId;

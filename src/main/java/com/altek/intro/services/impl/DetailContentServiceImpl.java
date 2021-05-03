@@ -1,8 +1,11 @@
 package com.altek.intro.services.impl;
 
 import com.altek.intro.dto.DetailContentDTO;
+import com.altek.intro.dto.DetailContentViewDTO;
+import com.altek.intro.dto.MenuViewDTO;
 import com.altek.intro.dto.PageContentDTO;
 import com.altek.intro.entites.DetailContentEntity;
+import com.altek.intro.entites.MenuEntity;
 import com.altek.intro.entites.PageContentEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.DetailMapper;
@@ -27,17 +30,17 @@ public class DetailContentServiceImpl extends AbstractServiceImpl implements Det
     @Autowired
     private DetailMapper detailMapper;
     @Override
-    public List<DetailContentDTO> getAllDetailContent() throws Exception {
+    public List<DetailContentViewDTO> getAllDetailContent() throws Exception {
         try {
-            List<DetailContentDTO> detailContentDTOs = new ArrayList<DetailContentDTO>();
+            List<DetailContentViewDTO> DetailContentViewDTOs = new ArrayList<DetailContentViewDTO>();
 
             List<DetailContentEntity> detailContentEntities = detailRepository.findAll();
-            DetailContentDTO dto = new DetailContentDTO();
+            DetailContentViewDTO dto = new DetailContentViewDTO();
             if (CollectionUtils.isNotEmpty(detailContentEntities)) {
-                detailContentDTOs = detailContentEntities.stream().map(item -> (DetailContentDTO) detailMapper.convertToDTO(dto, item))
+                DetailContentViewDTOs = detailContentEntities.stream().map(item -> (DetailContentViewDTO) detailMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
-            return detailContentDTOs;
+            return DetailContentViewDTOs;
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResourceNotFoundException(e.getMessage());
@@ -45,17 +48,17 @@ public class DetailContentServiceImpl extends AbstractServiceImpl implements Det
     }
 
     @Override
-    public List<DetailContentDTO> getAllDetailContentByContentId(Long contentID) throws Exception {
+    public List<DetailContentViewDTO> getAllDetailContentByContentId(Long contentID) throws Exception {
         try {
-            List<DetailContentDTO> detailContentDTOs = new ArrayList<DetailContentDTO>();
+            List<DetailContentViewDTO> DetailContentViewDTOs = new ArrayList<DetailContentViewDTO>();
 
             List<DetailContentEntity> detailContentEntities = detailRepository.findAllByContentId(contentID);
-            DetailContentDTO dto = new DetailContentDTO();
+            DetailContentViewDTO dto = new DetailContentViewDTO();
             if (CollectionUtils.isNotEmpty(detailContentEntities)) {
-                detailContentDTOs = detailContentEntities.stream().map(item -> (DetailContentDTO) detailMapper.convertToDTO(dto, item))
+                DetailContentViewDTOs = detailContentEntities.stream().map(item -> (DetailContentViewDTO) detailMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
-            return detailContentDTOs;
+            return DetailContentViewDTOs;
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResourceNotFoundException(e.getMessage());
@@ -63,10 +66,12 @@ public class DetailContentServiceImpl extends AbstractServiceImpl implements Det
     }
 
     @Override
-    public DetailContentEntity getDetailContentById(Long id) throws Exception {
+    public DetailContentViewDTO getDetailContentById(Long id) throws Exception {
         try {
+            DetailContentViewDTO detailContentViewDTO = new DetailContentViewDTO();
             DetailContentEntity detailContentEntity = detailRepository.findById(id).get();
-            return detailContentEntity;
+            detailContentViewDTO = (DetailContentViewDTO) detailMapper.convertToDTO(detailContentViewDTO,detailContentEntity);
+            return detailContentViewDTO;
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResourceNotFoundException(e.getMessage());

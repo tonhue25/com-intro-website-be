@@ -1,6 +1,7 @@
 package com.altek.intro.services.impl;
 
 import com.altek.intro.dto.MenuDTO;
+import com.altek.intro.dto.MenuViewDTO;
 import com.altek.intro.entites.MenuEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.MenuMapper;
@@ -18,18 +19,19 @@ import java.util.stream.Collectors;
 public class MenuServiceImpl extends AbstractServiceImpl implements MenuService {
     @Autowired
     private MenuRepository menuRepository;
+
     @Autowired
     private MenuMapper menuMapper;
 
     @Override
-    public List<MenuDTO> getAllMenu() throws Exception {
+    public List<MenuViewDTO> getAllMenu() throws Exception {
         try {
-            List<MenuDTO> MenuDTOs = new ArrayList<MenuDTO>();
+            List<MenuViewDTO> MenuDTOs = new ArrayList<MenuViewDTO>();
 
             List<MenuEntity> MenuEntities = menuRepository.findAll();
-            MenuDTO dto = new MenuDTO();
+            MenuViewDTO dto = new MenuViewDTO();
             if (CollectionUtils.isNotEmpty(MenuEntities)) {
-                MenuDTOs = MenuEntities.stream().map(item -> (MenuDTO) menuMapper.convertToDTO(dto, item))
+                MenuDTOs = MenuEntities.stream().map(item -> (MenuViewDTO) menuMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
             return MenuDTOs;
@@ -40,10 +42,12 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
     }
 
     @Override
-    public MenuEntity getMenuById(Long id) throws Exception {
+    public MenuViewDTO getMenuById(Long id) throws Exception {
         try {
-            MenuEntity MenuEntities = menuRepository.findById(id).get();
-            return MenuEntities;
+            MenuViewDTO menuViewDTO = new MenuViewDTO();
+            MenuEntity menuEntity = menuRepository.findById(id).get();
+            menuViewDTO = (MenuViewDTO) menuMapper.convertToDTO(menuViewDTO,menuEntity);
+            return menuViewDTO;
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResourceNotFoundException(e.getMessage());
