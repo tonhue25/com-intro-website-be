@@ -8,6 +8,6 @@ import javax.persistence.Column;
 public class PageContentDTO extends AbstractDTO{
     private String pageTitle;
     private String shortDescription;
-    private int menuId;
+    private Long menuId;
     private String type;
 }

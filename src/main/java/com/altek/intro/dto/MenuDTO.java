@@ -8,7 +8,7 @@ public class MenuDTO extends AbstractDTO {
 
     private String menuTo;
 
-    private String exact;
+    private Long exact;
 
     private String icon;
 }

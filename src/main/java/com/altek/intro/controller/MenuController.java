@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/menu")
 public class MenuController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PageContentController.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MenuController.class);
     @Autowired
     MenuService menuService;
 
