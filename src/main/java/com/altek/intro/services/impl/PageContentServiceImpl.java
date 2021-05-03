@@ -43,7 +43,7 @@ public class PageContentServiceImpl extends AbstractServiceImpl implements PageC
     }
 
     @Override
-    public List<PageContentDTO> getAllPageContentByMenuId(int menuId) {
+    public List<PageContentDTO> getAllPageContentByMenuId(Long menuId) {
         try {
             List<PageContentDTO> pageContentDTOs = new ArrayList<PageContentDTO>();
 

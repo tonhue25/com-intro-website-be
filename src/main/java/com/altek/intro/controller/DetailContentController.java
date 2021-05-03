@@ -1,10 +1,11 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.config.MessageService;
 import com.altek.intro.dto.PageContentDTO;
-import com.altek.intro.entites.MenuEntity;
+import com.altek.intro.dto.DetailContentDTO;
+import com.altek.intro.entites.DetailContentEntity;
 import com.altek.intro.entites.PageContentEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
+import com.altek.intro.services.DetailContentService;
 import com.altek.intro.services.PageContentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,20 +20,16 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/page")
-public class PageContentController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(PageContentController.class);
-
+@RequestMapping("/detailPage")
+public class DetailContentController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DetailContentController.class);
     @Autowired
-    PageContentService pageContentService;
-
-    @Autowired
-    MessageService messageService;
+    DetailContentService detailContentService;
 
     @GetMapping("/")
-    public ResponseEntity<PageContentDTO> listAll() {
+    public ResponseEntity<DetailContentDTO> listAll() {
         try {
-            List<PageContentDTO> response = pageContentService.getAllPageContent();
+            List<DetailContentDTO> response = detailContentService.getAllDetailContent();
             return new ResponseEntity(response, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());
@@ -43,10 +40,10 @@ public class PageContentController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/menu/{menuId}")
-    public ResponseEntity<PageContentDTO> listAllByMenuId(@PathVariable Long menuId) {
+    @GetMapping("/content/{contentId}")
+    public ResponseEntity<DetailContentDTO> listAllByContentId(@PathVariable Long contentId) {
         try {
-            List<PageContentDTO> response = pageContentService.getAllPageContentByMenuId(menuId);
+            List<DetailContentDTO> response = detailContentService.getAllDetailContentByContentId(contentId);
             return new ResponseEntity(response, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());
@@ -58,9 +55,9 @@ public class PageContentController {
         }
     }
     @GetMapping("/{id}")
-    public ResponseEntity<PageContentEntity> getPageContentById(@PathVariable Long id){
+    public ResponseEntity<DetailContentEntity> getPageContentById(@PathVariable Long id){
         try {
-            return new ResponseEntity<>(pageContentService.getPageContentById(id), HttpStatus.OK);
+            return new ResponseEntity<>(detailContentService.getDetailContentById(id), HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

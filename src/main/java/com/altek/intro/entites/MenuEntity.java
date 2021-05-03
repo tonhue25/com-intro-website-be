@@ -18,7 +18,7 @@ public class MenuEntity extends AbstractEntity {
     private String menuTo;
 
     @Column(name = "EXACT")
-    private String exact;
+    private Long exact;
 
     @Column(name = "ICON")
     private String icon;

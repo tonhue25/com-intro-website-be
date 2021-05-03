@@ -11,6 +11,6 @@ import java.util.List;
 @Service
 public interface PageContentService extends AbstractService{
     List<PageContentDTO> getAllPageContent() throws Exception;
-    List<PageContentDTO> getAllPageContentByMenuId(int menuId) throws Exception;
+    List<PageContentDTO> getAllPageContentByMenuId(Long menuId) throws Exception;
     PageContentEntity getPageContentById(Long id) throws Exception;
 }
