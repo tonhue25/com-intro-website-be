@@ -3,7 +3,8 @@ package com.altek.intro.dto;
 import lombok.Data;
 
 @Data
-public class DetailContentDTO extends AbstractDTO {
+public class DetailContentViewDTO {
+    private Long id;
     private String title;
     private String shortDescription;
     private String content;
