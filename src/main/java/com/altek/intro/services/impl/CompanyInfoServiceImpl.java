@@ -43,10 +43,10 @@ public class CompanyInfoServiceImpl extends AbstractServiceImpl implements Compa
     @Override
     public CompanyInfoViewDTO getAllCompanyInfoById(Long id) throws Exception {
         try {
-            CompanyInfoViewDTO CompanyInfoViewDTO = new CompanyInfoViewDTO();
+            CompanyInfoViewDTO companyInfoViewDTO = new CompanyInfoViewDTO();
             CompanyInfoEntity companyInfoEntity = companyInfoRepository.findById(id).get();
-            CompanyInfoViewDTO = (CompanyInfoViewDTO) companyInfoMapper.convertToDTO(CompanyInfoViewDTO,companyInfoEntity);
-            return CompanyInfoViewDTO;
+            companyInfoViewDTO = (CompanyInfoViewDTO) companyInfoMapper.convertToDTO(companyInfoViewDTO,companyInfoEntity);
+            return companyInfoViewDTO;
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResourceNotFoundException(e.getMessage());

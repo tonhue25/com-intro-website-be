@@ -32,15 +32,15 @@ public class DetailContentServiceImpl extends AbstractServiceImpl implements Det
     @Override
     public List<DetailContentViewDTO> getAllDetailContent() throws Exception {
         try {
-            List<DetailContentViewDTO> DetailContentViewDTOs = new ArrayList<DetailContentViewDTO>();
+            List<DetailContentViewDTO> detailContentViewDTOs = new ArrayList<DetailContentViewDTO>();
 
             List<DetailContentEntity> detailContentEntities = detailRepository.findAll();
             DetailContentViewDTO dto = new DetailContentViewDTO();
             if (CollectionUtils.isNotEmpty(detailContentEntities)) {
-                DetailContentViewDTOs = detailContentEntities.stream().map(item -> (DetailContentViewDTO) detailMapper.convertToDTO(dto, item))
+                detailContentViewDTOs = detailContentEntities.stream().map(item -> (DetailContentViewDTO) detailMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
-            return DetailContentViewDTOs;
+            return detailContentViewDTOs;
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResourceNotFoundException(e.getMessage());
@@ -50,15 +50,15 @@ public class DetailContentServiceImpl extends AbstractServiceImpl implements Det
     @Override
     public List<DetailContentViewDTO> getAllDetailContentByContentId(Long contentID) throws Exception {
         try {
-            List<DetailContentViewDTO> DetailContentViewDTOs = new ArrayList<DetailContentViewDTO>();
+            List<DetailContentViewDTO> detailContentViewDTOs = new ArrayList<DetailContentViewDTO>();
 
             List<DetailContentEntity> detailContentEntities = detailRepository.findAllByContentId(contentID);
             DetailContentViewDTO dto = new DetailContentViewDTO();
             if (CollectionUtils.isNotEmpty(detailContentEntities)) {
-                DetailContentViewDTOs = detailContentEntities.stream().map(item -> (DetailContentViewDTO) detailMapper.convertToDTO(dto, item))
+                detailContentViewDTOs = detailContentEntities.stream().map(item -> (DetailContentViewDTO) detailMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
-            return DetailContentViewDTOs;
+            return detailContentViewDTOs;
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResourceNotFoundException(e.getMessage());
