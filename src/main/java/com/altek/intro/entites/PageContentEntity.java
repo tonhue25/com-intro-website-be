@@ -13,8 +13,8 @@ public class PageContentEntity extends AbstractEntity{
     private String pageTitle;
     @Column(name = "SHORT_DESCRIPTION")
     private String shortDescription;
-    @Column(name = "MENU_ID")
-    private Long menuId;
     @Column(name = "TYPE")
     private String type;
+    @Column(name = "MENU_CODE")
+    private String menuCode;
 }

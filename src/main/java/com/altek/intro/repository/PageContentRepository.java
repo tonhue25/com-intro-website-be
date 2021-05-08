@@ -10,6 +10,7 @@ import java.util.List;
 public interface PageContentRepository extends AbstractRepository<PageContentEntity, Long>{
     @Query(value = "SELECT * FROM ALT_PAGE_CONTENT where ACTIVE_FLAG = 1", nativeQuery = true)
     List<PageContentEntity> findAll();
-    List<PageContentEntity> findAllByMenuId(Long menuId);
+    @Query(value = "SELECT * FROM ALT_PAGE_CONTENT where LOWER(MENU_CODE) = :menuCode and ACTIVE_FLAG = 1", nativeQuery = true)
+    List<PageContentEntity> findAllByMenuCode(String menuCode);
 
 }

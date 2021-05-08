@@ -8,5 +8,5 @@ public class MenuViewDTO {
     private String label;
     private String menuTo;
     private Long exact;
-
+    private String code;
 }

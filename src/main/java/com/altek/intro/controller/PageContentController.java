@@ -39,10 +39,10 @@ public class PageContentController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @GetMapping("/menu/{menuId}")
-    public ResponseEntity<PageContentViewDTO> listAllByMenuId(@PathVariable Long menuId) {
+    @GetMapping("/menu/{menuCode}")
+    public ResponseEntity<PageContentViewDTO> listAllByMenuCode(@PathVariable String menuCode) {
         try {
-            List<PageContentViewDTO> response = pageContentService.getAllPageContentByMenuId(menuId);
+            List<PageContentViewDTO> response = pageContentService.getAllPageContentByMenuCode(menuCode);
             return new ResponseEntity(response, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());
