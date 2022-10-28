@@ -9,6 +9,6 @@ import javax.persistence.Column;
 public class PageContentDTO extends AbstractDTO {
     private String pageTitle;
     private String shortDescription;
-    private Long menuId;
     private String type;
+    private String menuCode;
 }

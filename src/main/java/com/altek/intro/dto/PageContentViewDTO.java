@@ -7,6 +7,6 @@ public class PageContentViewDTO {
     private Long id;
     private String pageTitle;
     private String shortDescription;
-    private Long menuId;
     private String type;
+    private String menuCode;
 }

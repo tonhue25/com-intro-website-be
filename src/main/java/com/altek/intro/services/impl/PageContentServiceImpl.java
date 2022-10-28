@@ -45,11 +45,11 @@ public class PageContentServiceImpl extends AbstractServiceImpl implements PageC
     }
 
     @Override
-    public List<PageContentViewDTO> getAllPageContentByMenuId(Long menuId) {
+    public List<PageContentViewDTO> getAllPageContentByMenuCode(String menuCode) {
+        String menuCodeLower = menuCode.toLowerCase();
         try {
             List<PageContentViewDTO> pageContentDTOs = new ArrayList<PageContentViewDTO>();
-
-            List<PageContentEntity> pageContentEntities = pageContentRepository.findAllByMenuId(menuId);
+            List<PageContentEntity> pageContentEntities = pageContentRepository.findAllByMenuCode(menuCodeLower);
             PageContentViewDTO dto = new PageContentViewDTO();
             if (CollectionUtils.isNotEmpty(pageContentEntities)) {
                 pageContentDTOs = pageContentEntities.stream().map(item -> (PageContentViewDTO) pageContentMapper.convertToDTO(dto, item))

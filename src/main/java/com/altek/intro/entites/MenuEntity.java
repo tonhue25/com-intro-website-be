@@ -20,7 +20,7 @@ public class MenuEntity extends AbstractEntity {
     @Column(name = "EXACT")
     private Long exact;
 
-    @Column(name = "ICON")
-    private String icon;
+    @Column(name = "CODE")
+    private String code;
 
 }
