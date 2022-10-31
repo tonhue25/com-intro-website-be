@@ -33,8 +33,8 @@ public class MenuController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
     }
+
     @GetMapping("/{id}")
     public ResponseEntity<MenuViewDTO> getMenuId(@PathVariable Long id){
         try {
