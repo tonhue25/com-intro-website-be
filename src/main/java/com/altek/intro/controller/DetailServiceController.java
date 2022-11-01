@@ -1,9 +1,9 @@
 package com.altek.intro.controller;
 
+import com.altek.intro.dto.DetailServiceDTO;
 import com.altek.intro.dto.MenuViewDTO;
-import com.altek.intro.dto.SliderDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
-import com.altek.intro.services.SliderService;
+import com.altek.intro.services.DetailServiceOfService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,19 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/slider")
+@RequestMapping("/detailService")
 @CrossOrigin(origins = "*", maxAge = 3600)
-public class SliderController {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(SliderController.class);
+public class DetailServiceController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(DetailServiceController.class);
 
     @Autowired
-    private SliderService sliderService;
+    private DetailServiceOfService detailServiceOfService;
 
     @GetMapping
-    public ResponseEntity<SliderDTO> listAllSlide() {
+    public ResponseEntity<DetailServiceDTO> listAllDetailService() {
         try {
-            List<SliderDTO> response = sliderService.getAllSlide();
+            List<DetailServiceDTO> response = detailServiceOfService.getAllDetailService();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());

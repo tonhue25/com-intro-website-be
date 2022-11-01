@@ -1,13 +1,10 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.dto.PageContentViewDTO;
 import com.altek.intro.dto.SliderDTO;
-import com.altek.intro.entites.PageContentEntity;
 import com.altek.intro.entites.SliderEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.SliderMapper;
 import com.altek.intro.repository.SliderRepository;
-import com.altek.intro.services.PageContentService;
 import com.altek.intro.services.SliderService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,4 +40,5 @@ public class SliderServiceImpl extends AbstractServiceImpl implements SliderServ
             throw new ResourceNotFoundException(e.getMessage());
         }
     }
+
 }
