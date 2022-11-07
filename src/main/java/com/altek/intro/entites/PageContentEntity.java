@@ -32,4 +32,5 @@ public class PageContentEntity extends AbstractEntity{
 
     @Column(name = "MENU_ID")
     private Long menuId;
+
 }

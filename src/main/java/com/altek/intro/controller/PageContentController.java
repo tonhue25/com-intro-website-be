@@ -37,20 +37,18 @@ public class PageContentController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-//    @GetMapping("/{id}")
-//    public ResponseEntity<PageContentDTO> getPageContentById(@PathVariable Long id){
-//        try {
-//            PageContentDTO pageContentDTO = pageContentService.getPageContentById(id);
-//            return new ResponseEntity<>(pageContentDTO, HttpStatus.OK);
-//        } catch (ResourceNotFoundException e) {
-//            LOGGER.error(e.getMessage());
-//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-//        } catch (Exception e) {
-//            LOGGER.error(e.getMessage());
-//            e.printStackTrace();
-//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+    @GetMapping("/{id}")
+    public ResponseEntity<List<PageContentDTO>> listPageContentById(@PathVariable Long id){
+        try {
+            return new ResponseEntity<>(pageContentService.listPageContentById(id), HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            LOGGER.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 }

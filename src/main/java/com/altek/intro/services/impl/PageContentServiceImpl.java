@@ -7,6 +7,7 @@ import com.altek.intro.entites.MenuEntity;
 import com.altek.intro.entites.PageContentEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.PageContentMapper;
+import com.altek.intro.repository.MenuRepository;
 import com.altek.intro.repository.PageContentRepository;
 import com.altek.intro.services.PageContentService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -29,6 +30,8 @@ public class PageContentServiceImpl extends AbstractServiceImpl implements PageC
     @Autowired
     private PageContentMapper pageContentMapper;
 
+    @Autowired
+    private MenuRepository menuRepository;
 
     @Override
     public List<PageContentDTO> getAllPageContent() {
@@ -48,16 +51,14 @@ public class PageContentServiceImpl extends AbstractServiceImpl implements PageC
         }
     }
 
-//    @Override
-    public PageContentDTO getPageContentById(Long id)  {
-        try {
-            PageContentDTO pageContentViewDTO = new PageContentDTO();
-            PageContentEntity pageContentEntity = pageContentRepository.findById(id).get();
-            pageContentViewDTO = (PageContentDTO) pageContentMapper.convertToDTO(pageContentViewDTO,pageContentEntity);
-            return pageContentViewDTO;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ResourceNotFoundException(e.getMessage());
+    @Override
+    public List<PageContentDTO> listPageContentById(Long id) {
+        Optional<MenuEntity> optionalMenuEntity = menuRepository.findById(id);
+        if(!optionalMenuEntity.isPresent()){
+            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", id));
         }
+        List<PageContentEntity> listEntity = pageContentRepository.findByMenuId(id);
+        return null;
     }
+
 }

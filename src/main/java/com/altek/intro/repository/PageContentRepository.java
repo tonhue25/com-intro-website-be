@@ -11,4 +11,5 @@ public interface PageContentRepository extends AbstractRepository<PageContentEnt
     @Query(value = "SELECT * FROM ALT_PAGE_CONTENT where STATUS = 1", nativeQuery = true)
     List<PageContentEntity> findAll();
 
+    List<PageContentEntity> findByMenuId(Long id);
 }
