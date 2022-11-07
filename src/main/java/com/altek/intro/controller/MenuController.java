@@ -25,7 +25,7 @@ public class MenuController {
     @GetMapping
     public ResponseEntity<MenuDTO> listAll() {
         try {
-            List<MenuDTO> response = menuService.getAllMenu();
+            List<MenuDTO> response = menuService.getAll();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());

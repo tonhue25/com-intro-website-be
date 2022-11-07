@@ -1,11 +1,10 @@
-package com.altek.intro.dto;
+package com.altek.intro.model;
 
 import lombok.Data;
 
 @Data
-public class PageContentDTO {
+public class PageContentModel extends AbstractModel {
 
-    private Long id;
     private String pageTitle;
     private String shortDescription;
     private String menuCode;

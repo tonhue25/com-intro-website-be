@@ -26,7 +26,7 @@ public class PageContentController {
     @GetMapping
     public ResponseEntity<PageContentDTO> listAll() {
         try {
-            List<PageContentDTO> response = pageContentService.getAllPageContent();
+            List<PageContentDTO> response = pageContentService.getAll();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());
@@ -38,17 +38,7 @@ public class PageContentController {
         }
     }
     @GetMapping("/{id}")
-    public ResponseEntity<List<PageContentDTO>> listPageContentById(@PathVariable Long id){
-        try {
-            return new ResponseEntity<>(pageContentService.listPageContentById(id), HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            LOGGER.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<List<PageContentDTO>> listPageContentByMenuId(@PathVariable Long id){
+         return new ResponseEntity<>(pageContentService.listPageContentByMenuId(id), HttpStatus.OK);
     }
-
 }

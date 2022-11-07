@@ -10,9 +10,7 @@ import java.util.Optional;
 @Service
 public interface PageContentService extends AbstractService{
 
-    List<PageContentDTO> getAllPageContent();
+    List<PageContentDTO> getAll();
 
-    List<PageContentDTO> listPageContentById(Long id);
-
-//    Optional<PageContentEntity> getPageContentById(Long id);
+    List<PageContentDTO> listPageContentByMenuId(Long id);
 }

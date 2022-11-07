@@ -56,5 +56,4 @@ public class BaseException extends RuntimeException {
         this.errorDetails = errorDetails;
     }
 
-
 }

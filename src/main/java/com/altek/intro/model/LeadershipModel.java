@@ -1,9 +1,9 @@
-package com.altek.intro.dto;
+package com.altek.intro.model;
 
 import lombok.Data;
 
 @Data
-public class LeadershipDTO{
+public class LeadershipModel extends AbstractModel {
     private String image;
     private String name;
     private String position;
