@@ -7,6 +7,7 @@ import com.altek.intro.entites.MenuEntity;
 import com.altek.intro.entites.PageContentEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.PageContentMapper;
+import com.altek.intro.repository.MenuRepository;
 import com.altek.intro.repository.PageContentRepository;
 import com.altek.intro.services.PageContentService;
 import org.apache.commons.collections4.CollectionUtils;
@@ -29,35 +30,39 @@ public class PageContentServiceImpl extends AbstractServiceImpl implements PageC
     @Autowired
     private PageContentMapper pageContentMapper;
 
+    @Autowired
+    private MenuRepository menuRepository;
 
     @Override
-    public List<PageContentDTO> getAllPageContent() {
+    public List<PageContentDTO> getAll() {
         try {
-            List<PageContentDTO> pageContentDTOs = new ArrayList<PageContentDTO>();
-
-            List<PageContentEntity> pageContentEntities = pageContentRepository.findAll();
-            MenuDTO dto = new MenuDTO();
-            if (CollectionUtils.isNotEmpty(pageContentEntities)) {
-                pageContentDTOs = pageContentEntities.stream().map(item -> (PageContentDTO) pageContentMapper.convertToDTO(dto, item))
+            List<PageContentDTO> listDto = new ArrayList<>();
+            List<PageContentEntity> listEntity = pageContentRepository.findAll();
+            PageContentDTO dto = new PageContentDTO();
+            if (CollectionUtils.isNotEmpty(listEntity)) {
+                listDto = listEntity.stream().map(item -> (PageContentDTO) pageContentMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
-            return pageContentDTOs;
+            return listDto;
         } catch (Exception e) {
             e.printStackTrace();
             throw new ResourceNotFoundException(e.getMessage());
         }
     }
 
-//    @Override
-    public PageContentDTO getPageContentById(Long id)  {
-        try {
-            PageContentDTO pageContentViewDTO = new PageContentDTO();
-            PageContentEntity pageContentEntity = pageContentRepository.findById(id).get();
-            pageContentViewDTO = (PageContentDTO) pageContentMapper.convertToDTO(pageContentViewDTO,pageContentEntity);
-            return pageContentViewDTO;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ResourceNotFoundException(e.getMessage());
+    @Override
+    public List<PageContentDTO> listPageContentByMenuId(Long id) {
+        Optional<MenuEntity> optional = menuRepository.findById(id);
+        List<PageContentDTO> listDTO = new ArrayList<>();
+        if(!optional.isPresent()){
+            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", id));
         }
+        PageContentDTO dto = new PageContentDTO();
+        List<PageContentEntity> listEntity = pageContentRepository.findByMenuId(id);
+        if (CollectionUtils.isNotEmpty(listEntity)) {
+            listDTO = listEntity.stream().map(item -> (PageContentDTO) pageContentMapper.convertToDTO(dto, item))
+                    .collect(Collectors.toList());
+        }
+        return listDTO;
     }
 }

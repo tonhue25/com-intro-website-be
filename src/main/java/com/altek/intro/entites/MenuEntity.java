@@ -14,9 +14,6 @@ public class MenuEntity extends AbstractEntity {
     @Column(name = "LABEL")
     private String label;
 
-    @Column(name = "CODE")
-    private String code;
-
     @Column(name = "LINK")
     private String link;
 }

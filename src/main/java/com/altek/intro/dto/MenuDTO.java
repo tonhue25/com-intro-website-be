@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class MenuDTO{
-
+    private Long id;
     private String label;
-    private String code;
     private String link;
+    private String status;
 }

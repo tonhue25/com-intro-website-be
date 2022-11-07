@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class PageContentDTO {
 
+    private Long id;
     private String pageTitle;
     private String shortDescription;
     private String menuCode;
