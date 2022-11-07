@@ -20,6 +20,6 @@ public class RecruitmentEntity extends AbstractEntity{
     @Column(name = "IMAGE")
     private String image;
 
-    @Column(name = "file")
+    @Column(name = "FILE")
     private String file;
 }
