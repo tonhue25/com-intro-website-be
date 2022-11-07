@@ -1,7 +1,8 @@
 package com.altek.intro.controller;
 
 import com.altek.intro.config.MessageService;
-import com.altek.intro.dto.PageContentViewDTO;
+import com.altek.intro.dto.MenuDTO;
+import com.altek.intro.dto.PageContentDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.PageContentService;
 import org.slf4j.Logger;
@@ -20,50 +21,36 @@ public class PageContentController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PageContentController.class);
 
     @Autowired
-    PageContentService pageContentService;
+    private PageContentService pageContentService;
 
-    @Autowired
-    MessageService messageService;
+    @GetMapping
+    public ResponseEntity<PageContentDTO> listAll() {
+        try {
+            List<PageContentDTO> response = pageContentService.getAllPageContent();
+            return new ResponseEntity(response, HttpStatus.OK);
+        }catch (ResourceNotFoundException e) {
+            LOGGER.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            LOGGER.error(e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
-    @GetMapping("/")
-    public ResponseEntity<PageContentViewDTO> listAll() {
-        try {
-            List<PageContentViewDTO> response = pageContentService.getAllPageContent();
-            return new ResponseEntity(response, HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            LOGGER.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    @GetMapping("/menu/{menuCode}")
-    public ResponseEntity<PageContentViewDTO> listAllByMenuCode(@PathVariable String menuCode) {
-        try {
-            List<PageContentViewDTO> response = pageContentService.getAllPageContentByMenuCode(menuCode);
-            return new ResponseEntity(response, HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            LOGGER.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    @GetMapping("/{id}")
-    public ResponseEntity<PageContentViewDTO> getPageContentById(@PathVariable Long id){
-        try {
-            return new ResponseEntity<>(pageContentService.getPageContentById(id), HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            LOGGER.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<PageContentDTO> getPageContentById(@PathVariable Long id){
+//        try {
+//            PageContentDTO pageContentDTO = pageContentService.getPageContentById(id);
+//            return new ResponseEntity<>(pageContentDTO, HttpStatus.OK);
+//        } catch (ResourceNotFoundException e) {
+//            LOGGER.error(e.getMessage());
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        } catch (Exception e) {
+//            LOGGER.error(e.getMessage());
+//            e.printStackTrace();
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
 }

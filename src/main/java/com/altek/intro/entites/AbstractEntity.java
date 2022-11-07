@@ -13,18 +13,28 @@ import lombok.Data;
 @MappedSuperclass
 @Data
 public class AbstractEntity {
+
     @Id
     @Column(name = "ID")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    @Column(name="ACTIVE_FLAG")
-    private int activeFlag;
-    @Column(name="CREATE_BY")
-    private String createBy;
-    @Column(name="CREATE_DATE")
-    private Date createDate;
-    @Column(name="MODIFY_BY")
-    private String modifyBy;
-    @Column(name="MODIFY_DATE")
-    private Date modifyDate;
+
+    @Column(name="STATUS")
+    private int status;
+
+    @Column(name="CREATED_BY")
+    private String createdBy;
+
+    @Column(name="CREATED_TIME")
+    private Date createdTime;
+
+    @Column(name="LAST_UPDATED_BY")
+    private String lastUpdatedBy;
+
+    @Column(name="LAST_UPDATED_TIME")
+    private Date lastUpdatedTime;
+
+    @Column(name="DESCRIPTION")
+    private String description;
+
 }

@@ -1,6 +1,7 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.dto.MenuViewDTO;
+import com.altek.intro.dto.MenuDTO;
+import com.altek.intro.dto.SliderDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.MenuService;
 import org.slf4j.Logger;
@@ -17,29 +18,16 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class MenuController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MenuController.class);
-    @Autowired
-    MenuService menuService;
 
-    @GetMapping("/")
-    public ResponseEntity<MenuViewDTO> listAllMenu() {
+    @Autowired
+    private MenuService menuService;
+
+    @GetMapping
+    public ResponseEntity<MenuDTO> listAll() {
         try {
-            List<MenuViewDTO> response = menuService.getAllMenu();
+            List<MenuDTO> response = menuService.getAllMenu();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
-            LOGGER.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<MenuViewDTO> getMenuId(@PathVariable Long id){
-        try {
-            return new ResponseEntity<>(menuService.getMenuById(id), HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {

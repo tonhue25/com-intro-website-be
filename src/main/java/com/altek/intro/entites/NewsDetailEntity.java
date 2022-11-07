@@ -8,15 +8,12 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name="ALT_SLIDER")
-public class SliderEntity extends AbstractEntity{
-
-    @Column(name = "TITLE")
-    private String title;
-
-    @Column(name = "IMAGE")
-    private String image;
+@Table(name = "ALT_DETAIL_NEWS")
+public class NewsDetailEntity extends AbstractEntity {
 
     @Column(name = "CONTENT")
     private String content;
+
+    @Column(name = "NEWS_ID")
+    private Long newsId;
 }

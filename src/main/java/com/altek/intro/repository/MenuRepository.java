@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface MenuRepository extends  AbstractRepository<MenuEntity, Long>{
-    @Query(value = "SELECT * FROM ALT_MENU where ACTIVE_FLAG = 1 ", nativeQuery = true)
+    @Query(value = "SELECT * FROM ALT_MENU where STATUS = 1 ", nativeQuery = true)
     List<MenuEntity> findAll();
 
 }

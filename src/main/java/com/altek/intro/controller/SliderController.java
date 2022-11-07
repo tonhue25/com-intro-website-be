@@ -1,6 +1,5 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.dto.MenuViewDTO;
 import com.altek.intro.dto.SliderDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.SliderService;
@@ -27,7 +26,7 @@ public class SliderController {
     private SliderService sliderService;
 
     @GetMapping
-    public ResponseEntity<SliderDTO> listAllSlide() {
+    public ResponseEntity<SliderDTO> listAll() {
         try {
             List<SliderDTO> response = sliderService.getAllSlide();
             return new ResponseEntity(response, HttpStatus.OK);

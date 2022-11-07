@@ -7,9 +7,10 @@ import java.util.Date;
 @Data
 public class AbstractDTO {
     private Long id;
-    private int activeFlag;
-    private String createBy;
-    private Date createDate;
-    private String modifyBy;
-    private Date modifyDate;
+    private int status;
+    private String createdBy;
+    private Date createdTime;
+    private String lastUpdatedBy;
+    private Date lastUpdatedTime;
+    private String description;
 }

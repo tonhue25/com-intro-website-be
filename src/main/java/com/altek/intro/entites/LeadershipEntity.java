@@ -8,17 +8,19 @@ import javax.persistence.Table;
 
 @Data
 @Entity
-@Table(name="ALT_CLIENT_REVIEW")
-public class ClientReviewEntity extends AbstractEntity {
-    @Column(name = "NAME")
-    private String name;
-    @Column(name = "POSITION")
-    private String position;
-    @Column(name = "CONTENT")
-    private String content;
-    @Column(name = "EVALUATE")
-    private Long evaluate;
+@Table(name = "ALT_LEADERSHIP")
+public class LeadershipEntity extends AbstractEntity{
+
     @Column(name = "IMAGE")
     private String image;
+
+    @Column(name = "NAME")
+    private String name;
+
+    @Column(name = "POSITION")
+    private String position;
+
+    @Column(name = "INFORMATION")
+    private String information;
 
 }
