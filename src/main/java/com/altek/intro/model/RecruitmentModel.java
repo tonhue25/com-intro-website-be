@@ -1,9 +1,9 @@
-package com.altek.intro.dto;
+package com.altek.intro.model;
 
 import lombok.Data;
 
 @Data
-public class RecruitmentDTO{
+public class RecruitmentModel extends AbstractModel {
     private String jobTitle;
     private String jobDescription;
     private String image;

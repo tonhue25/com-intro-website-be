@@ -1,9 +1,9 @@
-package com.altek.intro.dto;
+package com.altek.intro.model;
 
 import lombok.Data;
 
 @Data
-public class MenuDTO{
+public class MenuModel extends AbstractModel {
 
     private String label;
     private String code;

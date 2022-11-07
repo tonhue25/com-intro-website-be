@@ -1,9 +1,9 @@
-package com.altek.intro.dto;
+package com.altek.intro.model;
 
 import lombok.Data;
 
 @Data
-public class NewsDTO{
+public class NewsModel extends AbstractModel {
 
     private String title;
     private String thumbnail;

@@ -1,9 +1,9 @@
-package com.altek.intro.dto;
+package com.altek.intro.model;
 
 import lombok.Data;
 
 @Data
-public class SliderDTO{
+public class SliderModel extends AbstractModel {
 
     private String title;
     private String image;

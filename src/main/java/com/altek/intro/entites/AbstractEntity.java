@@ -34,7 +34,4 @@ public class AbstractEntity {
     @Column(name="LAST_UPDATED_TIME")
     private Date lastUpdatedTime;
 
-    @Column(name="DESCRIPTION")
-    private String description;
-
 }

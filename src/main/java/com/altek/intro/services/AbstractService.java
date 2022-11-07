@@ -1,6 +1,5 @@
 package com.altek.intro.services;
 
-import com.altek.intro.dto.AbstractDTO;
 import com.altek.intro.entites.AbstractEntity;
 import org.springframework.data.domain.Pageable;
 

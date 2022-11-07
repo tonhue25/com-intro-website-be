@@ -1,6 +1,5 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.dto.AbstractDTO;
 import com.altek.intro.entites.AbstractEntity;
 import com.altek.intro.services.AbstractService;
 import org.springframework.data.domain.PageRequest;
