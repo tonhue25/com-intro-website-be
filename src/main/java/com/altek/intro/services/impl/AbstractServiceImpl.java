@@ -12,7 +12,7 @@ import org.springframework.data.domain.Sort;
  * @author NGUYEN HOANG VU
  * @return
  */
-public class AbstractServiceImpl<D extends AbstractDTO, E extends AbstractEntity> implements AbstractService<D, E> {
+public class AbstractServiceImpl<D extends AbstractEntity, E extends AbstractEntity> implements AbstractService<D, E> {
 
     /**
      * get Pageable object with sortable

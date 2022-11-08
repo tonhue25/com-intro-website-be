@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
  * @author NGUYEN HOANG VU
  * @return
  */
-public interface AbstractService<D extends AbstractDTO, E extends AbstractEntity> {
+public interface AbstractService<D extends AbstractEntity, E extends AbstractEntity> {
 
     /**
      * get Pageable object with sortable
