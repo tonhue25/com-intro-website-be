@@ -1,7 +1,6 @@
 package com.altek.intro.services;
 
 import com.altek.intro.entites.AbstractEntity;
-import com.altek.intro.model.AbstractModel;
 import org.springframework.data.domain.Pageable;
 
 /**

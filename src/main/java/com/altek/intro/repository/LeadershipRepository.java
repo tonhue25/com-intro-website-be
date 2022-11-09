@@ -1,7 +1,6 @@
 package com.altek.intro.repository;
 
 import com.altek.intro.entites.LeadershipEntity;
-import com.altek.intro.entites.RecruitmentEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 

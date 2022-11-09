@@ -7,7 +7,7 @@ import com.altek.intro.entites.RecruitmentEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.MenuMapper;
 import com.altek.intro.mapper.RecruitmentMapper;
-import com.altek.intro.model.RecruitmentModel;
+
 import com.altek.intro.repository.MenuRepository;
 import com.altek.intro.repository.RecruitmentRepository;
 import com.altek.intro.services.MenuService;

@@ -14,7 +14,7 @@ public class LeadershipEntity extends AbstractEntity{
     @Column(name = "IMAGE")
     private String image;
 
-    @Column(name = "NAME")
+    @Column(name = "FULL_NAME")
     private String name;
 
     @Column(name = "POSITION")
