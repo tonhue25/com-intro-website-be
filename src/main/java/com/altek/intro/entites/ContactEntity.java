@@ -1,18 +1,20 @@
 package com.altek.intro.entites;
 
-import lombok.Data;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 @Data
 @Entity
 @Table(name = "ALT_CONTACT")
-public class ContactEntity extends AbstractEntity{
+public class ContactEntity extends AbstractEntity implements Serializable {
 
     @Column(name = "FULL_NAME")
-    private String fullName;
+    private String name;
 
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;

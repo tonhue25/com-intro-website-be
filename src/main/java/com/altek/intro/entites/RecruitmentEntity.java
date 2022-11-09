@@ -1,15 +1,17 @@
 package com.altek.intro.entites;
 
-import lombok.Data;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import lombok.Data;
+
 @Data
 @Entity
 @Table(name = "ALT_RECRUITMENT")
-public class RecruitmentEntity extends AbstractEntity{
+public class RecruitmentEntity extends AbstractEntity implements Serializable {
 
     @Column(name = "JOB_TITLE")
     private String jobTitle;

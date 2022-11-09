@@ -24,7 +24,7 @@ public class SliderServiceImpl extends AbstractServiceImpl implements SliderServ
     private SliderMapper sliderMapper;
 
     @Override
-    public List<SliderDTO> getAllSlide() {
+    public List<SliderDTO> getAll() {
         try {
             List<SliderDTO> sliderDTOs = new ArrayList<SliderDTO>();
 

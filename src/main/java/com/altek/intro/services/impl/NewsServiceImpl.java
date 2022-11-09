@@ -1,21 +1,19 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.dto.MenuDTO;
-import com.altek.intro.dto.NewsDTO;
-import com.altek.intro.entites.MenuEntity;
-import com.altek.intro.entites.NewsEntity;
-import com.altek.intro.exceptions.ResourceNotFoundException;
-import com.altek.intro.mapper.NewsMapper;
-import com.altek.intro.repository.NewsRepository;
-import com.altek.intro.services.MenuService;
-import com.altek.intro.services.NewsService;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
+import com.altek.intro.dto.NewsDTO;
+import com.altek.intro.entites.NewsEntity;
+import com.altek.intro.exceptions.ResourceNotFoundException;
+import com.altek.intro.mapper.NewsMapper;
+import com.altek.intro.repository.NewsRepository;
+import com.altek.intro.services.NewsService;
 
 @Service
 public class NewsServiceImpl extends AbstractServiceImpl implements NewsService {

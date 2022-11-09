@@ -1,11 +1,11 @@
 package com.altek.intro.repository;
 
-import com.altek.intro.entites.LeadershipEntity;
-import com.altek.intro.entites.RecruitmentEntity;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import com.altek.intro.entites.LeadershipEntity;
 
 @Repository
 public interface LeadershipRepository extends  AbstractRepository<LeadershipEntity, Long>{

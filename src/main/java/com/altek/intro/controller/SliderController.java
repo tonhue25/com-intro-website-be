@@ -28,7 +28,7 @@ public class SliderController {
     @GetMapping
     public ResponseEntity<SliderDTO> listAll() {
         try {
-            List<SliderDTO> response = sliderService.getAllSlide();
+            List<SliderDTO> response = sliderService.getAll();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());
@@ -39,5 +39,4 @@ public class SliderController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
 }
