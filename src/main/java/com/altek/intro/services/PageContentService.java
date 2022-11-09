@@ -1,16 +1,14 @@
 package com.altek.intro.services;
 
-import com.altek.intro.dto.PageContentDTO;
-import com.altek.intro.entites.PageContentEntity;
+import com.altek.intro.dto.request.PageContentRequestDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public interface PageContentService extends AbstractService{
 
-    List<PageContentDTO> getAll();
+    List<PageContentRequestDTO> getAll();
 
-    List<PageContentDTO> listPageContentByMenuId(Long id);
+    List<PageContentRequestDTO> listPageContentByMenuId(Long id);
 }

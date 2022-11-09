@@ -1,4 +1,4 @@
-package com.altek.intro.dto;
+package com.altek.intro.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

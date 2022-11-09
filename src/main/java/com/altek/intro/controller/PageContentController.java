@@ -1,8 +1,6 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.config.MessageService;
-import com.altek.intro.dto.MenuDTO;
-import com.altek.intro.dto.PageContentDTO;
+import com.altek.intro.dto.request.PageContentRequestDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.PageContentService;
 import org.slf4j.Logger;
@@ -24,9 +22,9 @@ public class PageContentController {
     private PageContentService pageContentService;
 
     @GetMapping
-    public ResponseEntity<PageContentDTO> listAll() {
+    public ResponseEntity<PageContentRequestDTO> listAll() {
         try {
-            List<PageContentDTO> response = pageContentService.getAll();
+            List<PageContentRequestDTO> response = pageContentService.getAll();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());
@@ -38,7 +36,7 @@ public class PageContentController {
         }
     }
     @GetMapping("/{id}")
-    public ResponseEntity<List<PageContentDTO>> listPageContentByMenuId(@PathVariable Long id){
+    public ResponseEntity<List<PageContentRequestDTO>> listPageContentByMenuId(@PathVariable Long id){
          return new ResponseEntity<>(pageContentService.listPageContentByMenuId(id), HttpStatus.OK);
     }
 }

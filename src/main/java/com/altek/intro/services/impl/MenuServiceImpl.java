@@ -1,6 +1,6 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.dto.MenuDTO;
+import com.altek.intro.dto.request.MenuRequestDTO;
 import com.altek.intro.entites.MenuEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.MenuMapper;
@@ -23,13 +23,13 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
     private MenuMapper menuMapper;
 
     @Override
-    public List<MenuDTO> getAll() {
+    public List<MenuRequestDTO> getAll() {
         try {
-            List<MenuDTO> menuDTOs = new ArrayList<MenuDTO>();
+            List<MenuRequestDTO> menuDTOs = new ArrayList<MenuRequestDTO>();
             List<MenuEntity> menuEntities = menuRepository.findAll();
-            MenuDTO dto = new MenuDTO();
+            MenuRequestDTO dto = new MenuRequestDTO();
             if (CollectionUtils.isNotEmpty(menuEntities)) {
-                menuDTOs = menuEntities.stream().map(item -> (MenuDTO) menuMapper.convertToDTO(dto, item))
+                menuDTOs = menuEntities.stream().map(item -> (MenuRequestDTO) menuMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
             return menuDTOs;

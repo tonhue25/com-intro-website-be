@@ -1,10 +1,9 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.dto.PageDetailDTO;
+import com.altek.intro.dto.request.PageDetailRequestDTO;
 import com.altek.intro.entites.PageContentEntity;
 import com.altek.intro.entites.PageDetailEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
-import com.altek.intro.mapper.PageContentMapper;
 import com.altek.intro.mapper.PageDetailMapper;
 import com.altek.intro.repository.PageContentRepository;
 import com.altek.intro.repository.PageDetailRepository;
@@ -27,17 +26,17 @@ public class PageDetailServiceImpl extends AbstractServiceImpl implements PageDe
     private PageDetailMapper pageDetailMapper;
 
     @Override
-    public PageDetailDTO getByPageContentId(Long id) {
+    public PageDetailRequestDTO getByPageContentId(Long id) {
         Optional<PageContentEntity> optional = pageContentRepository.findById(id);
         if(!optional.isPresent()){
             throw new ResourceNotFoundException(String.format("page.content.not.found.with.id:%s", id));
         }
-        PageDetailDTO pageDetailDTO = new PageDetailDTO();
+        PageDetailRequestDTO pageDetailDTO = new PageDetailRequestDTO();
         Optional<PageDetailEntity> optionalPageDetail = pageDetailRepository.findByPageContentId(id);
         if(!optionalPageDetail.isPresent()){
             throw new ResourceNotFoundException(String.format("page.content.no.have.page.detail.id:%s", id));
         }
-        PageDetailDTO dto = (PageDetailDTO) pageDetailMapper.convertToDTO(pageDetailDTO,optionalPageDetail.get());
+        PageDetailRequestDTO dto = (PageDetailRequestDTO) pageDetailMapper.convertToDTO(pageDetailDTO,optionalPageDetail.get());
         return dto;
     }
 }

@@ -1,9 +1,9 @@
-package com.altek.intro.dto;
+package com.altek.intro.dto.request;
 
 import lombok.Data;
 
 @Data
-public class SliderDTO{
+public class SliderRequestDTO {
 
     private String title;
     private String image;

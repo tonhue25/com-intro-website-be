@@ -1,7 +1,6 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.dto.MenuDTO;
-import com.altek.intro.dto.SliderDTO;
+import com.altek.intro.dto.request.MenuRequestDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.MenuService;
 import org.slf4j.Logger;
@@ -23,9 +22,9 @@ public class MenuController {
     private MenuService menuService;
 
     @GetMapping
-    public ResponseEntity<MenuDTO> listAll() {
+    public ResponseEntity<MenuRequestDTO> listAll() {
         try {
-            List<MenuDTO> response = menuService.getAll();
+            List<MenuRequestDTO> response = menuService.getAll();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());

@@ -1,9 +1,9 @@
-package com.altek.intro.dto;
+package com.altek.intro.dto.request;
 
 import lombok.Data;
 
 @Data
-public class MenuDTO{
+public class MenuRequestDTO {
     private Long id;
     private String label;
     private String link;

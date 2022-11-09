@@ -1,9 +1,9 @@
-package com.altek.intro.dto;
+package com.altek.intro.dto.request;
 
 import lombok.Data;
 
 @Data
-public class PageDetailDTO{
+public class PageDetailRequestDTO {
 
     private String title;
     private String shortDescription;

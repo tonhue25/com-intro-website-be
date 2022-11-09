@@ -1,8 +1,6 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.dto.MenuDTO;
-import com.altek.intro.dto.PageContentDTO;
-import com.altek.intro.dto.SliderDTO;
+import com.altek.intro.dto.request.PageContentRequestDTO;
 import com.altek.intro.entites.MenuEntity;
 import com.altek.intro.entites.PageContentEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
@@ -12,8 +10,6 @@ import com.altek.intro.repository.PageContentRepository;
 import com.altek.intro.services.PageContentService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -34,13 +30,13 @@ public class PageContentServiceImpl extends AbstractServiceImpl implements PageC
     private MenuRepository menuRepository;
 
     @Override
-    public List<PageContentDTO> getAll() {
+    public List<PageContentRequestDTO> getAll() {
         try {
-            List<PageContentDTO> listDto = new ArrayList<>();
+            List<PageContentRequestDTO> listDto = new ArrayList<>();
             List<PageContentEntity> listEntity = pageContentRepository.findAll();
-            PageContentDTO dto = new PageContentDTO();
+            PageContentRequestDTO dto = new PageContentRequestDTO();
             if (CollectionUtils.isNotEmpty(listEntity)) {
-                listDto = listEntity.stream().map(item -> (PageContentDTO) pageContentMapper.convertToDTO(dto, item))
+                listDto = listEntity.stream().map(item -> (PageContentRequestDTO) pageContentMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
             return listDto;
@@ -51,16 +47,16 @@ public class PageContentServiceImpl extends AbstractServiceImpl implements PageC
     }
 
     @Override
-    public List<PageContentDTO> listPageContentByMenuId(Long id) {
+    public List<PageContentRequestDTO> listPageContentByMenuId(Long id) {
         Optional<MenuEntity> optional = menuRepository.findById(id);
-        List<PageContentDTO> listDTO = new ArrayList<>();
+        List<PageContentRequestDTO> listDTO = new ArrayList<>();
         if(!optional.isPresent()){
             throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", id));
         }
-        PageContentDTO dto = new PageContentDTO();
+        PageContentRequestDTO dto = new PageContentRequestDTO();
         List<PageContentEntity> listEntity = pageContentRepository.findByMenuId(id);
         if (CollectionUtils.isNotEmpty(listEntity)) {
-            listDTO = listEntity.stream().map(item -> (PageContentDTO) pageContentMapper.convertToDTO(dto, item))
+            listDTO = listEntity.stream().map(item -> (PageContentRequestDTO) pageContentMapper.convertToDTO(dto, item))
                     .collect(Collectors.toList());
         }
         return listDTO;

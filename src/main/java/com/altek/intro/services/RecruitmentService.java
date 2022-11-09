@@ -1,13 +1,13 @@
 package com.altek.intro.services;
 
 
-import com.altek.intro.dto.MenuDTO;
-import com.altek.intro.dto.RecruitmentDTO;
+import com.altek.intro.dto.request.RecruitmentRequestDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public interface RecruitmentService extends AbstractService{
-    List<RecruitmentDTO> getAllRecruitment();
+    List<RecruitmentRequestDTO> getAllRecruitment();
+    RecruitmentRequestDTO Create(RecruitmentRequestDTO request);
 }

@@ -1,6 +1,6 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.dto.SliderDTO;
+import com.altek.intro.dto.request.SliderRequestDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.SliderService;
 import org.slf4j.Logger;
@@ -26,9 +26,9 @@ public class SliderController {
     private SliderService sliderService;
 
     @GetMapping
-    public ResponseEntity<SliderDTO> listAll() {
+    public ResponseEntity<SliderRequestDTO> listAll() {
         try {
-            List<SliderDTO> response = sliderService.getAllSlide();
+            List<SliderRequestDTO> response = sliderService.getAllSlide();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());

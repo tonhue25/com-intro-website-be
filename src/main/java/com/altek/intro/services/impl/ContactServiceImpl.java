@@ -1,6 +1,6 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.dto.ContactDTO;
+import com.altek.intro.dto.request.ContactRequestDTO;
 import com.altek.intro.entites.ContactEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.ContactMapper;
@@ -23,14 +23,14 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
     private ContactMapper contactMapper;
 
     @Override
-    public List<ContactDTO> getAllContact() {
+    public List<ContactRequestDTO> getAllContact() {
         try {
-            List<ContactDTO> contactDTOS = new ArrayList<ContactDTO>();
+            List<ContactRequestDTO> contactDTOS = new ArrayList<ContactRequestDTO>();
 
             List<ContactEntity> contactEntities = contactRepository.findAll();
-            ContactDTO dto = new ContactDTO();
+            ContactRequestDTO dto = new ContactRequestDTO();
             if (CollectionUtils.isNotEmpty(contactEntities)) {
-                contactDTOS = contactEntities.stream().map(item -> (ContactDTO) contactMapper.convertToDTO(dto, item))
+                contactDTOS = contactEntities.stream().map(item -> (ContactRequestDTO) contactMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
             return contactDTOS;

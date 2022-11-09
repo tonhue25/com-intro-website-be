@@ -1,21 +1,17 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.dto.MenuDTO;
-import com.altek.intro.dto.RecruitmentDTO;
-import com.altek.intro.entites.MenuEntity;
+import com.altek.intro.dto.request.RecruitmentRequestDTO;
 import com.altek.intro.entites.RecruitmentEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
-import com.altek.intro.mapper.MenuMapper;
 import com.altek.intro.mapper.RecruitmentMapper;
 
-import com.altek.intro.repository.MenuRepository;
 import com.altek.intro.repository.RecruitmentRepository;
-import com.altek.intro.services.MenuService;
 import com.altek.intro.services.RecruitmentService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -29,14 +25,14 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
     private RecruitmentMapper recruitmentMapper;
 
     @Override
-    public List<RecruitmentDTO> getAllRecruitment() {
+    public List<RecruitmentRequestDTO> getAllRecruitment() {
         try {
-            List<RecruitmentDTO> recruitmentDTOS = new ArrayList<RecruitmentDTO>();
+            List<RecruitmentRequestDTO> recruitmentDTOS = new ArrayList<RecruitmentRequestDTO>();
 
             List<RecruitmentEntity> recruitmentEntities = recruitmentRepository.findAll();
-            RecruitmentDTO dto = new RecruitmentDTO();
+            RecruitmentRequestDTO dto = new RecruitmentRequestDTO();
             if (CollectionUtils.isNotEmpty(recruitmentEntities)) {
-                recruitmentDTOS = recruitmentEntities.stream().map(item -> (RecruitmentDTO) recruitmentMapper.convertToDTO(dto, item))
+                recruitmentDTOS = recruitmentEntities.stream().map(item -> (RecruitmentRequestDTO) recruitmentMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
             return recruitmentDTOS;
@@ -44,5 +40,13 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
             e.printStackTrace();
             throw new ResourceNotFoundException(e.getMessage());
         }
+    }
+
+    @Override
+    @Transactional(rollbackOn = {Exception.class, Throwable.class})
+    public RecruitmentRequestDTO Create(RecruitmentRequestDTO request) {
+        RecruitmentEntity entity = new RecruitmentEntity();
+        entity = (RecruitmentEntity) recruitmentMapper.convertToEntity(request,entity);
+        return null;
     }
 }

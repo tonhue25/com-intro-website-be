@@ -1,9 +1,7 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.dto.MenuDTO;
-import com.altek.intro.dto.RecruitmentDTO;
+import com.altek.intro.dto.request.RecruitmentRequestDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
-import com.altek.intro.services.MenuService;
 import com.altek.intro.services.RecruitmentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +25,9 @@ public class RecruitmentController {
     private RecruitmentService recruitmentService;
 
     @GetMapping
-    public ResponseEntity<RecruitmentDTO> listAll() {
+    public ResponseEntity<RecruitmentRequestDTO> listAll() {
         try {
-            List<RecruitmentDTO> response = recruitmentService.getAllRecruitment();
+            List<RecruitmentRequestDTO> response = recruitmentService.getAllRecruitment();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());

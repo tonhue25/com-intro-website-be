@@ -1,6 +1,6 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.dto.NewsDetailDTO;
+import com.altek.intro.dto.request.NewsDetailRequestDTO;
 import com.altek.intro.entites.NewsDetailEntity;
 import com.altek.intro.entites.NewsEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
@@ -26,17 +26,17 @@ public class NewsDetailServiceImpl extends AbstractServiceImpl implements NewsDe
     private NewsDetailMapper newsDetailMapper;
 
     @Override
-    public NewsDetailDTO getNewsDetailByNewsId(long id) {
+    public NewsDetailRequestDTO getNewsDetailByNewsId(long id) {
         Optional<NewsEntity> optional = newsRepository.findById(id);
         if(!optional.isPresent()){
             throw new ResourceNotFoundException(String.format("news.not.found.with.id:%s", id));
         }
-        NewsDetailDTO pageDetailDTO = new NewsDetailDTO();
+        NewsDetailRequestDTO pageDetailDTO = new NewsDetailRequestDTO();
         Optional<NewsDetailEntity> optionalNewsDetail = newsDetailRepository.findByNewsId(id);
         if(!optionalNewsDetail.isPresent()){
             throw new ResourceNotFoundException(String.format("news.not.have.news.detail.id:%s", id));
         }
-        NewsDetailDTO dto = (NewsDetailDTO) newsDetailMapper.convertToDTO(pageDetailDTO,optionalNewsDetail.get());
+        NewsDetailRequestDTO dto = (NewsDetailRequestDTO) newsDetailMapper.convertToDTO(pageDetailDTO,optionalNewsDetail.get());
         return dto;
     }
 }

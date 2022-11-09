@@ -1,10 +1,8 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.dto.ContactDTO;
-import com.altek.intro.dto.MenuDTO;
+import com.altek.intro.dto.request.ContactRequestDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.ContactService;
-import com.altek.intro.services.MenuService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +25,9 @@ public class ContactController {
     private ContactService contactService;
 
     @GetMapping("")
-    public ResponseEntity<ContactDTO> listAll() {
+    public ResponseEntity<ContactRequestDTO> listAll() {
         try {
-            List<ContactDTO> response = contactService.getAllContact();
+            List<ContactRequestDTO> response = contactService.getAllContact();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());
