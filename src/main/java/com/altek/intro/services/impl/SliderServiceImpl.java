@@ -1,6 +1,6 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.dto.SliderDTO;
+import com.altek.intro.dto.response.SliderResponseDTO;
 import com.altek.intro.entites.SliderEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.SliderMapper;
@@ -24,14 +24,14 @@ public class SliderServiceImpl extends AbstractServiceImpl implements SliderServ
     private SliderMapper sliderMapper;
 
     @Override
-    public List<SliderDTO> getAll() {
+    public List<SliderResponseDTO> getAll() {
         try {
-            List<SliderDTO> sliderDTOs = new ArrayList<SliderDTO>();
+            List<SliderResponseDTO> sliderDTOs = new ArrayList<SliderResponseDTO>();
 
             List<SliderEntity> sliderEntities = sliderRepository.findAll();
-            SliderDTO dto = new SliderDTO();
+            SliderResponseDTO dto = new SliderResponseDTO();
             if (CollectionUtils.isNotEmpty(sliderEntities)) {
-                sliderDTOs = sliderEntities.stream().map(item -> (SliderDTO) sliderMapper.convertToDTO(dto, item))
+                sliderDTOs = sliderEntities.stream().map(item -> (SliderResponseDTO) sliderMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
             return sliderDTOs;

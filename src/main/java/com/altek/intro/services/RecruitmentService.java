@@ -5,15 +5,15 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.altek.intro.dto.RecruitmentDTO;
 import com.altek.intro.dto.request.ListRequestDto;
 import com.altek.intro.dto.response.ListResponseDto;
+import com.altek.intro.dto.response.RecruitmentResponseDTO;
 
 @Service
 public interface RecruitmentService extends AbstractService{
     
-    List<RecruitmentDTO> getAllRecruitment();
+    List<RecruitmentResponseDTO> getAllRecruitment();
 
-    ListResponseDto<RecruitmentDTO> getList(ListRequestDto requestDto);
+    ListResponseDto<RecruitmentResponseDTO> getList(ListRequestDto requestDto);
 
 }

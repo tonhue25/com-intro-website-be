@@ -8,7 +8,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.altek.intro.dto.NewsDTO;
+import com.altek.intro.dto.response.NewsResponseDTO;
 import com.altek.intro.entites.NewsEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.NewsMapper;
@@ -25,13 +25,13 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
     private NewsMapper newsMapper;
 
     @Override
-    public List<NewsDTO> getAll() {
+    public List<NewsResponseDTO> getAll() {
         try {
-            List<NewsDTO> listDto = new ArrayList<>();
+            List<NewsResponseDTO> listDto = new ArrayList<>();
             List<NewsEntity> listEntity = newsRepository.findAll();
-            NewsDTO dto = new NewsDTO();
+            NewsResponseDTO dto = new NewsResponseDTO();
             if (CollectionUtils.isNotEmpty(listEntity)) {
-                listDto = listEntity.stream().map(item -> (NewsDTO) newsMapper.convertToDTO(dto, item))
+                listDto = listEntity.stream().map(item -> (NewsResponseDTO) newsMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
             return listDto;

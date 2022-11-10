@@ -5,13 +5,13 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.altek.intro.dto.MenuDTO;
 import com.altek.intro.dto.request.MenuRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
+import com.altek.intro.dto.response.MenuResponseDTO;
 
 @Service
 public interface MenuService extends AbstractService{
-    List<MenuDTO> getAll();
+    List<MenuResponseDTO> getAll();
 
     BaseResponse create(MenuRequestDto request);
 

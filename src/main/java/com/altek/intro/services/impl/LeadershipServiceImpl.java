@@ -8,7 +8,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.altek.intro.dto.LeadershipDTO;
+import com.altek.intro.dto.response.LeadershipResponseDTO;
 import com.altek.intro.entites.LeadershipEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.LeadershipMapper;
@@ -24,14 +24,14 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
     private LeadershipMapper leadershipMapper;
 
     @Override
-    public List<LeadershipDTO> getAllLeadership() {
+    public List<LeadershipResponseDTO> getAllLeadership() {
         try {
-            List<LeadershipDTO> leadershipDTOS = new ArrayList<LeadershipDTO>();
+            List<LeadershipResponseDTO> leadershipDTOS = new ArrayList<LeadershipResponseDTO>();
 
             List<LeadershipEntity> leadershipEntities = leadershipRepository.findAll();
-            LeadershipDTO dto = new LeadershipDTO();
+            LeadershipResponseDTO dto = new LeadershipResponseDTO();
             if (CollectionUtils.isNotEmpty(leadershipEntities)) {
-                leadershipDTOS = leadershipEntities.stream().map(item -> (LeadershipDTO) leadershipMapper.convertToDTO(dto, item))
+                leadershipDTOS = leadershipEntities.stream().map(item -> (LeadershipResponseDTO) leadershipMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
             return leadershipDTOS;

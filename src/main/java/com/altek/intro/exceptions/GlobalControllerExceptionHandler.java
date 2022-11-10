@@ -1,13 +1,12 @@
 package com.altek.intro.exceptions;
 
-import com.altek.intro.dto.ErrorResponse;
-import com.altek.intro.dto.response.BaseResponse;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
+
+import com.altek.intro.dto.response.ErrorResponse;
 
 @ControllerAdvice
 public class GlobalControllerExceptionHandler {

@@ -17,8 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.altek.intro.dto.PageContentDTO;
+import com.altek.intro.dto.request.PageContentRequestDTO;
 import com.altek.intro.dto.response.BaseResponse;
+import com.altek.intro.dto.response.PageContentResponseDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.PageContentService;
 import com.altek.intro.utils.Constant;
@@ -37,9 +38,9 @@ public class PageContentController {
     private ResponseUtil responseUtil;
 
     @GetMapping
-    public ResponseEntity<PageContentDTO> listAll() {
+    public ResponseEntity<PageContentResponseDTO> listAll() {
         try {
-            List<PageContentDTO> response = pageContentService.getAll();
+            List<PageContentResponseDTO> response = pageContentService.getAll();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());
@@ -52,12 +53,12 @@ public class PageContentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<PageContentDTO>> listPageContentByMenuId(@PathVariable Long id){
+    public ResponseEntity<List<PageContentResponseDTO>> listPageContentByMenuId(@PathVariable Long id){
          return new ResponseEntity<>(pageContentService.listPageContentByMenuId(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponse> create(@RequestBody PageContentDTO request) {
+    public ResponseEntity<BaseResponse> create(@RequestBody PageContentRequestDTO request) {
         try {
             return new ResponseEntity<BaseResponse>(pageContentService.create(request), HttpStatus.OK);
         } catch (Exception ex) {

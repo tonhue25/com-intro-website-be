@@ -5,9 +5,10 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.altek.intro.dto.LeadershipDTO;
+import com.altek.intro.dto.response.LeadershipResponseDTO;
+
 
 @Service
 public interface LeadershipService extends AbstractService{
-    List<LeadershipDTO> getAllLeadership();
+    List<LeadershipResponseDTO> getAllLeadership();
 }

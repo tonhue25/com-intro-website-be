@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.altek.intro.dto.NewsDTO;
+import com.altek.intro.dto.response.NewsResponseDTO;
 import com.altek.intro.services.NewsService;
 
 @RestController
@@ -22,8 +22,8 @@ public class NewsController {
     private NewsService newsService;
 
     @GetMapping
-    public ResponseEntity<NewsDTO> listAll() {
-        List<NewsDTO> response = newsService.getAll();
+    public ResponseEntity<NewsResponseDTO> listAll() {
+        List<NewsResponseDTO> response = newsService.getAll();
         return new ResponseEntity(response, HttpStatus.OK);
     }
 }

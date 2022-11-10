@@ -4,17 +4,18 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.altek.intro.dto.PageContentDTO;
+import com.altek.intro.dto.request.PageContentRequestDTO;
 import com.altek.intro.dto.response.BaseResponse;
+import com.altek.intro.dto.response.PageContentResponseDTO;
 
 @Service
 public interface PageContentService extends AbstractService{
 
-    List<PageContentDTO> getAll();
+    List<PageContentResponseDTO> getAll();
 
-    List<PageContentDTO> listPageContentByMenuId(Long id);
+    List<PageContentResponseDTO> listPageContentByMenuId(Long id);
 
-    BaseResponse create(PageContentDTO request);
+    BaseResponse create(PageContentRequestDTO request);
 
     BaseResponse delete(Long id);
 }

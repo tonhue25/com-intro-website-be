@@ -1,12 +1,14 @@
-package com.altek.intro.dto;
+package com.altek.intro.dto.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-public class PageDetailDTO{
-    
-    private Long id;
-    private Integer status;
+@AllArgsConstructor
+@NoArgsConstructor
+public class PageDetailResponseDTO {
+
     private String title;
     private String shortDescription;
     private  String content;

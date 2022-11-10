@@ -1,7 +1,8 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.dto.ContactDTO;
+import com.altek.intro.dto.request.ContactRequestDTO;
 import com.altek.intro.dto.response.BaseResponse;
+import com.altek.intro.dto.response.ContactResponseDTO;
 import com.altek.intro.entites.ContactEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.ContactMapper;
@@ -36,14 +37,13 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
     private ModelMapper modelMapper;
 
     @Override
-    public List<ContactDTO> getAllContact() {
+    public List<ContactResponseDTO> getAllContact() {
         try {
-            List<ContactDTO> contactDTOS = new ArrayList<ContactDTO>();
-
+            List<ContactResponseDTO> contactDTOS = new ArrayList<ContactResponseDTO>();
             List<ContactEntity> contactEntities = contactRepository.findAll();
-            ContactDTO dto = new ContactDTO();
+            ContactResponseDTO dto = new ContactResponseDTO();
             if (CollectionUtils.isNotEmpty(contactEntities)) {
-                contactDTOS = contactEntities.stream().map(item -> (ContactDTO) contactMapper.convertToDTO(dto, item))
+                contactDTOS = contactEntities.stream().map(item -> (ContactResponseDTO) contactMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
             return contactDTOS;
@@ -51,11 +51,10 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
             e.printStackTrace();
             throw new ResourceNotFoundException(e.getMessage());
         }
-
     }
 
     @Override
-    public BaseResponse create(ContactDTO request) {
+    public BaseResponse create(ContactRequestDTO request) {
         try {
             // checkInputParams(request);
             if (StringUtils.isBlank(request.getEmail())) {
@@ -64,7 +63,7 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
             ContactEntity entity = new ContactEntity();
             entity = (ContactEntity) contactMapper.convertToEntity(request, entity);
             entity = contactRepository.save(entity);
-            ContactDTO response = modelMapper.map(entity, ContactDTO.class);
+            ContactResponseDTO response = modelMapper.map(entity, ContactResponseDTO.class);
             return responseUtil.responseBean(Constant.SUCCESS, "add.or.update.contact", response);
         } catch (Exception ex) {
             return responseUtil.responseBean(Constant.ERROR_SYSTEM, "ex.common.system.error.");
@@ -81,7 +80,7 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
             ContactEntity entity = optional.get();
             entity.setStatus(Constant.DELETE);
             entity = contactRepository.save(entity);
-            ContactDTO response = modelMapper.map(entity, ContactDTO.class);
+            ContactResponseDTO response = modelMapper.map(entity, ContactResponseDTO.class);
             return responseUtil.responseBean(Constant.SUCCESS, String.format("delete.contact.with.id:%s", id),
                     response);
         } catch (Exception ex) {

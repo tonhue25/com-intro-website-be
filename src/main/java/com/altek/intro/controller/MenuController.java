@@ -10,21 +10,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.altek.intro.dto.MenuDTO;
 import com.altek.intro.dto.request.MenuRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
+import com.altek.intro.dto.response.MenuResponseDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.MenuService;
 import com.altek.intro.utils.Constant;
 import com.altek.intro.utils.ResponseUtil;
-
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/menu")
@@ -39,9 +37,9 @@ public class MenuController {
     private ResponseUtil responseUtil;
 
     @GetMapping
-    public ResponseEntity<MenuDTO> listAll() {
+    public ResponseEntity<MenuResponseDTO> listAll() {
         try {
-            List<MenuDTO> response = menuService.getAll();
+            List<MenuResponseDTO> response = menuService.getAll();
             return new ResponseEntity(response, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());
@@ -73,6 +71,4 @@ public class MenuController {
                     "ex.common.system.error."), HttpStatus.OK);
         }
     }
-
-    
 }

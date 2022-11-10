@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.altek.intro.dto.NewsDetailDTO;
+import com.altek.intro.dto.response.NewsDetailResponseDTO;
 import com.altek.intro.services.NewsDetailService;
 
 @RestController
@@ -21,7 +21,7 @@ public class NewsDetailController {
     private NewsDetailService newsDetailService;
 
     @GetMapping
-    public ResponseEntity<NewsDetailDTO> getNewsDetailByNewsId(@RequestParam("newsId") long newsId){
+    public ResponseEntity<NewsDetailResponseDTO> getNewsDetailByNewsId(@RequestParam("newsId") long newsId){
         return new ResponseEntity<>(newsDetailService.getNewsDetailByNewsId(newsId), HttpStatus.OK);
     }
 }

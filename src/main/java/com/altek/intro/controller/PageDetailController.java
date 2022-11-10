@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.altek.intro.dto.PageDetailDTO;
+import com.altek.intro.dto.request.PageDetailRequestDTO;
 import com.altek.intro.dto.response.BaseResponse;
+import com.altek.intro.dto.response.PageDetailResponseDTO;
 import com.altek.intro.services.PageDetailService;
 import com.altek.intro.utils.Constant;
 import com.altek.intro.utils.ResponseUtil;
@@ -35,12 +36,12 @@ public class PageDetailController {
     private ResponseUtil responseUtil;
 
     @GetMapping("/{id}")
-    public ResponseEntity<PageDetailDTO> listPageContentByMenuId(@PathVariable long id) {
+    public ResponseEntity<PageDetailResponseDTO> listPageContentByMenuId(@PathVariable long id) {
         return new ResponseEntity<>(pageDetailService.getByPageContentId(id), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponse> create(@RequestBody PageDetailDTO request) {
+    public ResponseEntity<BaseResponse> create(@RequestBody PageDetailRequestDTO request) {
         try {
             return new ResponseEntity<BaseResponse>(pageDetailService.create(request), HttpStatus.OK);
         } catch (Exception ex) {

@@ -1,9 +1,9 @@
-package com.altek.intro.dto;
+package com.altek.intro.dto.request;
 
 import lombok.Data;
 
 @Data
-public class NewsDetailDTO{
+public class NewsDetailRequestDTO {
     private String content;
     private Long newsId;
 }

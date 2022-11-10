@@ -1,21 +1,13 @@
 package com.altek.intro.dto.request;
 
-import java.math.BigDecimal;
+import lombok.Data;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Data
 public class MenuRequestDto {
 
     private Long id;
     private String label;
     private String link;
-    private int status;
+    private String status;
 
 }

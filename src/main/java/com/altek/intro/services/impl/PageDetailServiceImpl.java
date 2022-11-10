@@ -6,8 +6,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.altek.intro.dto.PageDetailDTO;
+import com.altek.intro.dto.request.PageDetailRequestDTO;
 import com.altek.intro.dto.response.BaseResponse;
+import com.altek.intro.dto.response.PageDetailResponseDTO;
 import com.altek.intro.entites.PageContentEntity;
 import com.altek.intro.entites.PageDetailEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
@@ -37,22 +38,22 @@ public class PageDetailServiceImpl extends AbstractServiceImpl implements PageDe
     private ResponseUtil responseUtil;
 
     @Override
-    public PageDetailDTO getByPageContentId(Long id) {
+    public PageDetailResponseDTO getByPageContentId(Long id) {
         Optional<PageContentEntity> optional = pageContentRepository.findById(id);
         if (!optional.isPresent()) {
             throw new ResourceNotFoundException(String.format("page.content.not.found.with.id:%s", id));
         }
-        PageDetailDTO pageDetailDTO = new PageDetailDTO();
+        PageDetailResponseDTO pageDetailDTO = new PageDetailResponseDTO();
         Optional<PageDetailEntity> optionalPageDetail = pageDetailRepository.findByPageContentId(id);
         if (!optionalPageDetail.isPresent()) {
             throw new ResourceNotFoundException(String.format("page.content.no.have.page.detail.id:%s", id));
         }
-        PageDetailDTO dto = (PageDetailDTO) pageDetailMapper.convertToDTO(pageDetailDTO, optionalPageDetail.get());
+        PageDetailResponseDTO dto = (PageDetailResponseDTO) pageDetailMapper.convertToDTO(pageDetailDTO, optionalPageDetail.get());
         return dto;
     }
 
     @Override
-    public BaseResponse create(PageDetailDTO request) {
+    public BaseResponse create(PageDetailRequestDTO request) {
         try {
             Optional<PageContentEntity> optional = pageContentRepository.findById(request.getPageContentId());
             if (!optional.isPresent()) {
@@ -62,7 +63,7 @@ public class PageDetailServiceImpl extends AbstractServiceImpl implements PageDe
             PageDetailEntity entity = new PageDetailEntity();
             entity = (PageDetailEntity) pageDetailMapper.convertToEntity(request, entity);
             entity = pageDetailRepository.save(entity);
-            PageDetailDTO response = modelMapper.map(entity, PageDetailDTO.class);
+            PageDetailResponseDTO response = modelMapper.map(entity, PageDetailResponseDTO.class);
             return responseUtil.responseBean(Constant.SUCCESS, "add.or.update.page.detail", response);
         } catch (Exception ex) {
             return responseUtil.responseBean(Constant.ERROR_SYSTEM, "ex.common.system.error.");
@@ -79,7 +80,7 @@ public class PageDetailServiceImpl extends AbstractServiceImpl implements PageDe
             PageDetailEntity entity = optional.get();
             entity.setStatus(Constant.DELETE);
             entity = pageDetailRepository.save(entity);
-            PageDetailDTO response = modelMapper.map(entity, PageDetailDTO.class);
+            PageDetailResponseDTO response = modelMapper.map(entity, PageDetailResponseDTO.class);
             return responseUtil.responseBean(Constant.SUCCESS, String.format("delete.page.detail.with.id:%s", id),
                     response);
         } catch (Exception ex) {

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.altek.intro.dto.LeadershipDTO;
+import com.altek.intro.dto.response.LeadershipResponseDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.LeadershipService;
 
@@ -26,9 +26,9 @@ public class LeadershipController {
     private LeadershipService leadershipService;
 
     @GetMapping
-    public ResponseEntity<LeadershipDTO> listAll() {
+    public ResponseEntity<LeadershipResponseDTO> listAll() {
         try {
-            List<LeadershipDTO> response = leadershipService.getAllLeadership();
+            List<LeadershipResponseDTO> response = leadershipService.getAllLeadership();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());

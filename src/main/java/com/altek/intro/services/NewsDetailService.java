@@ -1,7 +1,7 @@
 package com.altek.intro.services;
 
-import com.altek.intro.dto.NewsDetailDTO;
+import com.altek.intro.dto.response.NewsDetailResponseDTO;
 
 public interface NewsDetailService extends AbstractService{
-    NewsDetailDTO getNewsDetailByNewsId(long id);
+    NewsDetailResponseDTO getNewsDetailByNewsId(long id);
 }

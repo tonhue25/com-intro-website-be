@@ -1,10 +1,9 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.dto.MenuDTO;
 import com.altek.intro.dto.request.MenuRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
+import com.altek.intro.dto.response.MenuResponseDTO;
 import com.altek.intro.entites.MenuEntity;
-import com.altek.intro.exceptions.MissingServletRequestParameterException;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.MenuMapper;
 import com.altek.intro.repository.MenuRepository;
@@ -33,20 +32,17 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
     @Autowired
     private ModelMapper modelMapper;
 
-    private static final String DES_SUC = "su.des.suc.";
-    private static final String DES_FAIL = "ex.des.fai.";
-
     @Autowired
     private ResponseUtil responseUtil;
 
     @Override
-    public List<MenuDTO> getAll() {
+    public List<MenuResponseDTO> getAll() {
         try {
-            List<MenuDTO> menuDTOs = new ArrayList<MenuDTO>();
+            List<MenuResponseDTO> menuDTOs = new ArrayList<MenuResponseDTO>();
             List<MenuEntity> menuEntities = menuRepository.findAll();
-            MenuDTO dto = new MenuDTO();
+            MenuResponseDTO dto = new MenuResponseDTO();
             if (CollectionUtils.isNotEmpty(menuEntities)) {
-                menuDTOs = menuEntities.stream().map(item -> (MenuDTO) menuMapper.convertToDTO(dto, item))
+                menuDTOs = menuEntities.stream().map(item -> (MenuResponseDTO) menuMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
             return menuDTOs;
@@ -62,7 +58,7 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
             MenuEntity entity = new MenuEntity();
             entity = (MenuEntity) menuMapper.convertToEntity(request, entity);
             entity = menuRepository.save(entity);
-            MenuDTO response = modelMapper.map(entity, MenuDTO.class);
+            MenuResponseDTO response = modelMapper.map(entity, MenuResponseDTO.class);
             return responseUtil.responseBean(Constant.SUCCESS, "add.or.update.menu", response);
         } catch (Exception ex) {
             return responseUtil.responseBean(Constant.ERROR_SYSTEM, "ex.common.system.error.");
@@ -79,7 +75,7 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
             MenuEntity entity = optional.get();
             entity.setStatus(Constant.DELETE);
             entity = menuRepository.save(entity);
-            MenuDTO response = modelMapper.map(entity, MenuDTO.class);
+            MenuResponseDTO response = modelMapper.map(entity, MenuResponseDTO.class);
             return responseUtil.responseBean(Constant.SUCCESS, String.format("delete.menu.with.id:%s", id), response);
         } catch (Exception ex) {
             return responseUtil.responseBean(Constant.ERROR_SYSTEM,

@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.altek.intro.dto.ContactDTO;
+import com.altek.intro.dto.request.ContactRequestDTO;
 import com.altek.intro.dto.response.BaseResponse;
+import com.altek.intro.dto.response.ContactResponseDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.ContactService;
 import com.altek.intro.utils.Constant;
@@ -35,10 +36,10 @@ public class ContactController {
     @Autowired
     private ResponseUtil responseUtil;
 
-    @GetMapping("")
-    public ResponseEntity<ContactDTO> listAll() {
+    @GetMapping
+    public ResponseEntity<ContactResponseDTO> listAll() {
         try {
-            List<ContactDTO> response = contactService.getAllContact();
+            List<ContactResponseDTO> response = contactService.getAllContact();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());
@@ -51,7 +52,7 @@ public class ContactController {
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponse> create(@RequestBody ContactDTO request) {
+    public ResponseEntity<BaseResponse> create(@RequestBody ContactRequestDTO request) {
         try {
             return new ResponseEntity<BaseResponse>(contactService.create(request), HttpStatus.OK);
         } catch (Exception ex) {

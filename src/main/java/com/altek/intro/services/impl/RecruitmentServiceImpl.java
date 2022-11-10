@@ -12,9 +12,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.altek.intro.dto.RecruitmentDTO;
 import com.altek.intro.dto.request.ListRequestDto;
 import com.altek.intro.dto.response.ListResponseDto;
+import com.altek.intro.dto.response.RecruitmentResponseDTO;
 import com.altek.intro.entites.RecruitmentEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.RecruitmentMapper;
@@ -30,14 +30,14 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
     private RecruitmentMapper recruitmentMapper;
 
     @Override
-    public List<RecruitmentDTO> getAllRecruitment() {
+    public List<RecruitmentResponseDTO> getAllRecruitment() {
         try {
-            List<RecruitmentDTO> recruitmentDTOS = new ArrayList<RecruitmentDTO>();
+            List<RecruitmentResponseDTO> recruitmentDTOS = new ArrayList<RecruitmentResponseDTO>();
             List<RecruitmentEntity> recruitmentEntities = recruitmentRepository.findAll();
-            RecruitmentDTO dto = new RecruitmentDTO();
+            RecruitmentResponseDTO dto = new RecruitmentResponseDTO();
             if (CollectionUtils.isNotEmpty(recruitmentEntities)) {
                 recruitmentDTOS = recruitmentEntities.stream()
-                        .map(item -> (RecruitmentDTO) recruitmentMapper.convertToDTO(dto, item))
+                        .map(item -> (RecruitmentResponseDTO) recruitmentMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
             return recruitmentDTOS;
@@ -48,18 +48,18 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
     }
 
     @Override
-    public ListResponseDto<RecruitmentDTO> getList(ListRequestDto requestDto) {
+    public ListResponseDto<RecruitmentResponseDTO> getList(ListRequestDto requestDto) {
         Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize());
         Page<RecruitmentEntity> pageEntity = recruitmentRepository.getList(requestDto.getSearch().toLowerCase(),
                 pageable);
         List<RecruitmentEntity> listEntity = pageEntity.getContent();
-        RecruitmentDTO dto = new RecruitmentDTO();
-        List<RecruitmentDTO> listDTO = new ArrayList<>();
+        RecruitmentResponseDTO dto = new RecruitmentResponseDTO();
+        List<RecruitmentResponseDTO> listDTO = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(listEntity)) {
-            listDTO = listEntity.stream().map(item -> (RecruitmentDTO) recruitmentMapper.convertToDTO(dto, item))
+            listDTO = listEntity.stream().map(item -> (RecruitmentResponseDTO) recruitmentMapper.convertToDTO(dto, item))
                     .collect(Collectors.toList());
         }
-        ListResponseDto<RecruitmentDTO> responseDto = new ListResponseDto<>();
+        ListResponseDto<RecruitmentResponseDTO> responseDto = new ListResponseDto<>();
         responseDto.setData(listDTO);
         responseDto.setSize(pageEntity.getNumberOfElements());
         responseDto.setRecordPerPage(pageable.getPageSize());

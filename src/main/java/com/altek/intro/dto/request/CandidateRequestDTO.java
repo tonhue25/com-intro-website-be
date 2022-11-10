@@ -1,11 +1,10 @@
-package com.altek.intro.model;
+package com.altek.intro.dto.request;
 
 import lombok.Data;
 
-// tranfer.
-
+// return client
 @Data
-public class CandidateModel extends AbstractModel {
+public class CandidateRequestDTO {
     private String fullName;
     private String email;
     private String phoneNumber;

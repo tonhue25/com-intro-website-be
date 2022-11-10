@@ -1,9 +1,9 @@
-package com.altek.intro.model;
+package com.altek.intro.dto.request;
 
 import lombok.Data;
 
 @Data
-public class PageDetailModel extends AbstractModel {
+public class PageDetailRequestDTO {
 
     private String title;
     private String shortDescription;
@@ -11,5 +11,5 @@ public class PageDetailModel extends AbstractModel {
     private  String thumbnail;
     private  String image;
     private Long pageContentId;
-    
+
 }

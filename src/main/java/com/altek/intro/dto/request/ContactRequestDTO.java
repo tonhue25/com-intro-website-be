@@ -1,9 +1,9 @@
-package com.altek.intro.model;
+package com.altek.intro.dto.request;
 
 import lombok.Data;
 
 @Data
-public class ContactModel extends AbstractModel {
+public class ContactRequestDTO {
 
     private String name;
     private String phoneNumber;

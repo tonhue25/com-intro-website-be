@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.altek.intro.dto.RecruitmentDTO;
 import com.altek.intro.dto.request.ListRequestDto;
+import com.altek.intro.dto.request.RecruitmentRequestDTO;
 import com.altek.intro.dto.response.ListResponseDto;
+import com.altek.intro.dto.response.RecruitmentResponseDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.RecruitmentService;
 
@@ -30,9 +31,9 @@ public class RecruitmentController {
     private RecruitmentService recruitmentService;
 
     @GetMapping
-    public ResponseEntity<RecruitmentDTO> listAll() {
+    public ResponseEntity<RecruitmentResponseDTO> listAll() {
         try {
-            List<RecruitmentDTO> response = recruitmentService.getAllRecruitment();
+            List<RecruitmentResponseDTO> response = recruitmentService.getAllRecruitment();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());
@@ -45,9 +46,9 @@ public class RecruitmentController {
     }
 
     @PostMapping
-    public ResponseEntity<RecruitmentDTO> list(@RequestBody ListRequestDto requestDto) {
+    public ResponseEntity<RecruitmentResponseDTO> list(@RequestBody ListRequestDto requestDto) {
         try {
-            ListResponseDto<RecruitmentDTO> response = recruitmentService.getList(requestDto);
+            ListResponseDto<RecruitmentResponseDTO> response = recruitmentService.getList(requestDto);
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());
