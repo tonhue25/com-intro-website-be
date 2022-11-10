@@ -1,4 +1,7 @@
 package com.altek.intro.mapper;
+
+import java.util.List;
+
 /**
  * AbstractMapper
  *
@@ -8,4 +11,5 @@ package com.altek.intro.mapper;
 public interface AbstractMapper {
     Object convertToDTO(Object dto, Object entity);
     Object convertToEntity(Object dto, Object entity);
+    List<Object> mapList(List<Object> list, Object object);
 }

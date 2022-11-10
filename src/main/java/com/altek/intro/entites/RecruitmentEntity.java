@@ -24,4 +24,8 @@ public class RecruitmentEntity extends AbstractEntity implements Serializable {
 
     @Column(name = "FILE")
     private String file;
+
+    @Column(name = "LOCATION")
+    private String location;
+
 }

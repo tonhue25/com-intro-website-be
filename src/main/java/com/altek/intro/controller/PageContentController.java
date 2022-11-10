@@ -63,7 +63,7 @@ public class PageContentController {
         } catch (Exception ex) {
             BaseResponse result = responseUtil.responseBean(Constant.ERROR_SYSTEM,
                     "ex.common.system.error.");
-            return new ResponseEntity<BaseResponse>(result, HttpStatus.OK);
+            return new ResponseEntity<BaseResponse>(result, HttpStatus.CREATED);
         }
     }
 
@@ -77,3 +77,4 @@ public class PageContentController {
         }
     }
 }
+

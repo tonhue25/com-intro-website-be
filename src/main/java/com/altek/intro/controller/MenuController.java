@@ -65,9 +65,8 @@ public class MenuController {
     }
 
     @DeleteMapping
-    public ResponseEntity<BaseResponse> delete(@RequestParam(value = "id", required = true) Long id) {
+    public ResponseEntity<?> delete(@RequestParam(value = "id", required = true) Long id) {
         try {
-            
             return new ResponseEntity<BaseResponse>(menuService.delete(id), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<BaseResponse>(responseUtil.responseBean(Constant.ERROR_SYSTEM,
@@ -75,4 +74,5 @@ public class MenuController {
         }
     }
 
+    
 }

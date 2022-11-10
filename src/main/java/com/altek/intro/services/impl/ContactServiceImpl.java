@@ -1,6 +1,5 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.controller.ContactDto;
 import com.altek.intro.dto.ContactDTO;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.entites.ContactEntity;
@@ -12,6 +11,7 @@ import com.altek.intro.utils.Constant;
 import com.altek.intro.utils.ResponseUtil;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,11 +51,16 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
             e.printStackTrace();
             throw new ResourceNotFoundException(e.getMessage());
         }
+
     }
 
     @Override
     public BaseResponse create(ContactDTO request) {
         try {
+            // checkInputParams(request);
+            if (StringUtils.isBlank(request.getEmail())) {
+                throw new ResourceNotFoundException(null);
+            }
             ContactEntity entity = new ContactEntity();
             entity = (ContactEntity) contactMapper.convertToEntity(request, entity);
             entity = contactRepository.save(entity);
@@ -77,7 +82,8 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
             entity.setStatus(Constant.DELETE);
             entity = contactRepository.save(entity);
             ContactDTO response = modelMapper.map(entity, ContactDTO.class);
-            return responseUtil.responseBean(Constant.SUCCESS, String.format("delete.contact.with.id:%s", id), response);
+            return responseUtil.responseBean(Constant.SUCCESS, String.format("delete.contact.with.id:%s", id),
+                    response);
         } catch (Exception ex) {
             return responseUtil.responseBean(Constant.ERROR_SYSTEM,
                     "ex.common.system.error.");

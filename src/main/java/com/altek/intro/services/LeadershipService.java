@@ -1,11 +1,11 @@
 package com.altek.intro.services;
 
 
-import com.altek.intro.dto.LeadershipDTO;
-import com.altek.intro.dto.RecruitmentDTO;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import com.altek.intro.dto.LeadershipDTO;
 
 @Service
 public interface LeadershipService extends AbstractService{

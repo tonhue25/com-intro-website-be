@@ -72,7 +72,7 @@ public class PageContentServiceImpl extends AbstractServiceImpl implements PageC
         }
         return listDTO;
     }
-
+    
     @Override
     public BaseResponse create(PageContentDTO request) {
         try {

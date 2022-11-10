@@ -86,4 +86,5 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
                     "ex.common.system.error.");
         }
     }
+
 }
