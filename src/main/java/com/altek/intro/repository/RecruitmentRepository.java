@@ -11,11 +11,15 @@ import org.springframework.stereotype.Repository;
 import com.altek.intro.entites.RecruitmentEntity;
 
 @Repository
-public interface RecruitmentRepository extends  AbstractRepository<RecruitmentEntity, Long>{
-    
+public interface RecruitmentRepository extends AbstractRepository<RecruitmentEntity, Long> {
+
     @Query(value = "SELECT * FROM ALT_RECRUITMENT where STATUS = 1 ", nativeQuery = true)
     List<RecruitmentEntity> findAll();
 
-    @Query(value = "select * from ALT_RECRUITMENT where STATUS = 1 and LOWER(JOB_TITLE) like %:jobTitle%" , nativeQuery = true)
-    Page<RecruitmentEntity> getList(@Param("jobTitle") String jobTitle, Pageable pageable);
+    @Query("select e from RecruitmentEntity e where  e.status = 1 " +
+            "   and ( " +
+            "   lower(e.jobTitle) like lower(concat('%', :search, '%'))  or " +
+            "   lower(e.jobDescription) like lower(concat('%', :search, '%')) )")
+    Page<RecruitmentEntity> getList(@Param("search") String search,
+                                    Pageable pageable);
 }

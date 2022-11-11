@@ -1,13 +1,15 @@
 package com.altek.intro.dto.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RecruitmentResponseDTO {
+public class RecruitmentResponseDTO extends AbstractResponseDTO{
     private String jobTitle;
     private String jobDescription;
     private String image;

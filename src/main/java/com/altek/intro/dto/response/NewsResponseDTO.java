@@ -1,16 +1,16 @@
 package com.altek.intro.dto.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NewsResponseDTO {
+public class NewsResponseDTO extends AbstractResponseDTO{
 
-    private Long id;
-    private int status;
     private String title;
     private String thumbnail;
     private String shortDescription;

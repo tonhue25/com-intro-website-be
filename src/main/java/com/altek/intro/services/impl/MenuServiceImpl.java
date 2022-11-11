@@ -1,5 +1,15 @@
 package com.altek.intro.services.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.apache.commons.collections4.CollectionUtils;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.altek.intro.dto.request.MenuRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.MenuResponseDTO;
@@ -9,17 +19,8 @@ import com.altek.intro.mapper.MenuMapper;
 import com.altek.intro.repository.MenuRepository;
 import com.altek.intro.services.MenuService;
 import com.altek.intro.utils.Constant;
+import com.altek.intro.utils.DataUtil;
 import com.altek.intro.utils.ResponseUtil;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class MenuServiceImpl extends AbstractServiceImpl implements MenuService {
@@ -56,6 +57,12 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
     public BaseResponse create(MenuRequestDto request) {
         try {
             MenuEntity entity = new MenuEntity();
+            if(!DataUtil.isEmpty(request.getId())){
+                Optional<MenuEntity> optional = menuRepository.findById(request.getId());
+                if(optional.isPresent()){
+                    entity = optional.get();
+                }
+            }
             entity = (MenuEntity) menuMapper.convertToEntity(request, entity);
             entity = menuRepository.save(entity);
             MenuResponseDTO response = modelMapper.map(entity, MenuResponseDTO.class);

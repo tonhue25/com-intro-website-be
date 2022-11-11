@@ -29,13 +29,10 @@ import com.altek.intro.utils.ResponseUtil;
 @CrossOrigin(origins = "*", maxAge = 3600)
 public class ContactController {
     private static final Logger LOGGER = LoggerFactory.getLogger(ContactController.class);
-
     @Autowired
     private ContactService contactService;
-
     @Autowired
     private ResponseUtil responseUtil;
-
     @GetMapping
     public ResponseEntity<ContactResponseDTO> listAll() {
         try {
@@ -65,11 +62,11 @@ public class ContactController {
     @DeleteMapping
     public ResponseEntity<BaseResponse> delete(@RequestParam(value = "id", required = true) Long id) {
         try {
-            
             return new ResponseEntity<BaseResponse>(contactService.delete(id), HttpStatus.OK);
         } catch (Exception ex) {
             return new ResponseEntity<BaseResponse>(responseUtil.responseBean(Constant.ERROR_SYSTEM,
                     "ex.common.system.error."), HttpStatus.OK);
         }
     }
+    
 }

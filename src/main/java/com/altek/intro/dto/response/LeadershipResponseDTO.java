@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class LeadershipResponseDTO {
+public class LeadershipResponseDTO extends AbstractResponseDTO{
      String image;
      String name;
      String position;

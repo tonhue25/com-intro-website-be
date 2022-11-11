@@ -1,15 +1,15 @@
 package com.altek.intro.dto.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MenuResponseDTO {
-    private Long id;
+@Getter
+public class MenuResponseDTO extends AbstractResponseDTO{
     private String label;
     private String link;
-    private String status;
 }

@@ -14,7 +14,7 @@ public class ListRequestDto {
     private Integer size;
     private Integer page;
     private String search;
-    // private String sortType;
-    // private String sortBy;
+    private String sortType;
+    private String sortBy;
     
 }

@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContactResponseDTO {
+public class ContactResponseDTO extends AbstractResponseDTO{
     private String name;
     private String phoneNumber;
     private String email;
