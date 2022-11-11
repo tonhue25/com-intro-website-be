@@ -1,14 +1,13 @@
 package com.altek.intro.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-// server gửi thông tin về client.
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class LeadershipResponseDTO extends AbstractResponseDTO{
+
      String image;
      String name;
      String position;

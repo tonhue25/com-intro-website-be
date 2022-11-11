@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SliderResponseDTO extends AbstractResponseDTO{
+public class SliderResponseDTO extends AbstractResponseDTO {
 
     private String title;
     private String image;

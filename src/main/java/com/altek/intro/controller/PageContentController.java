@@ -38,11 +38,13 @@ public class PageContentController {
     private ResponseUtil responseUtil;
 
     @GetMapping
+
     public ResponseEntity<PageContentResponseDTO> listAll() {
         try {
             List<PageContentResponseDTO> response = pageContentService.getAll();
+
             return new ResponseEntity(response, HttpStatus.OK);
-        }catch (ResourceNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -53,8 +55,10 @@ public class PageContentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<PageContentResponseDTO>> listPageContentByMenuId(@PathVariable Long id){
-         return new ResponseEntity<>(pageContentService.listPageContentByMenuId(id), HttpStatus.OK);
+
+    public ResponseEntity<List<PageContentResponseDTO>> listPageContentByMenuId(@PathVariable Long id) {
+
+        return new ResponseEntity<>(pageContentService.listPageContentByMenuId(id), HttpStatus.OK);
     }
 
     @PostMapping

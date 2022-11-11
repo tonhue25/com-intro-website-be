@@ -3,6 +3,7 @@ package com.altek.intro.services.impl;
 import com.altek.intro.dto.request.ContactRequestDTO;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.ContactResponseDTO;
+
 import com.altek.intro.entites.ContactEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.ContactMapper;
@@ -44,6 +45,7 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
             ContactResponseDTO dto = new ContactResponseDTO();
             if (CollectionUtils.isNotEmpty(contactEntities)) {
                 contactDTOS = contactEntities.stream().map(item -> (ContactResponseDTO) contactMapper.convertToDTO(dto, item))
+
                         .collect(Collectors.toList());
             }
             return contactDTOS;

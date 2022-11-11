@@ -8,8 +8,9 @@ import com.altek.intro.dto.request.PageContentRequestDTO;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.PageContentResponseDTO;
 
+
 @Service
-public interface PageContentService extends AbstractService{
+public interface PageContentService extends AbstractService {
 
     List<PageContentResponseDTO> getAll();
 
@@ -18,4 +19,5 @@ public interface PageContentService extends AbstractService{
     BaseResponse create(PageContentRequestDTO request);
 
     BaseResponse delete(Long id);
+
 }

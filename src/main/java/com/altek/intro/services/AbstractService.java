@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
  */
 public interface AbstractService<D extends AbstractResponseDTO, E extends AbstractEntity> {
 
+
     /**
      * get Pageable object with sortable
      *

@@ -8,6 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CandidateResponseDTO extends AbstractResponseDTO{
+
     private String fullName;
     private String email;
     private String phoneNumber;

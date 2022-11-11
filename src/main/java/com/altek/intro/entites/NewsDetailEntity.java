@@ -20,10 +20,7 @@ public class NewsDetailEntity extends AbstractEntity implements Serializable {
     @Column(name = "CONTENT")
     private String content;
 
-    //    @Column(name = "NEWS_ID")
-//    private Long newsId;
     @OneToOne(fetch = FetchType.LAZY)
-    @Column(name = "NEWS_ID")
-    @MapsId
+    @JoinColumn(name = "NEWS_ID")
     private NewsEntity newsEntity;
 }

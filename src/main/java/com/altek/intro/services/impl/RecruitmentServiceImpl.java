@@ -1,18 +1,7 @@
 package com.altek.intro.services.impl;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.apache.commons.collections4.CollectionUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-
 import com.altek.intro.dto.request.ListRequestDto;
+import com.altek.intro.dto.request.RecruitmentRequestDTO;
 import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.dto.response.RecruitmentResponseDTO;
 import com.altek.intro.entites.RecruitmentEntity;
@@ -22,6 +11,18 @@ import com.altek.intro.mapper.RecruitmentMapper;
 import com.altek.intro.repository.RecruitmentRepository;
 import com.altek.intro.services.RecruitmentService;
 import com.altek.intro.utils.DataUtil;
+import org.apache.commons.collections4.CollectionUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class RecruitmentServiceImpl extends AbstractServiceImpl implements RecruitmentService {
@@ -82,4 +83,5 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
                 pageEntity, pageable);
         return responseDto;
     }
+
 }
