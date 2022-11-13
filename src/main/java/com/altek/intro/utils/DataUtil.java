@@ -1,18 +1,20 @@
 package com.altek.intro.utils;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.List;
 
 public class DataUtil {
 
     public static boolean isEmpty(Integer input) {
-        if (input == null) {
+        if (input == null || StringUtils.isBlank(input.toString())) {
             return true;
         }
         return false;
     }
 
     public static boolean isEmpty(Long input) {
-        if (input == null) {
+        if (input == null || StringUtils.isBlank(input.toString())) {
             return true;
         }
         return false;

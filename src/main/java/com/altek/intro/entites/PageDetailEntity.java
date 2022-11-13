@@ -2,9 +2,7 @@ package com.altek.intro.entites;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -34,6 +32,7 @@ public class PageDetailEntity extends AbstractEntity implements Serializable {
     @Column(name = "IMAGE")
     private String image;
 
-    @Column(name = "PAGE_CONTENT_ID")
-    private Long pageContentId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PAGE_CONTENT_ID")
+    private PageContentEntity pageContent;
 }

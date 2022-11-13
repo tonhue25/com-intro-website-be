@@ -5,6 +5,7 @@ import java.util.List;
 import com.altek.intro.dto.request.LeadershipRequestDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.LeadershipService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +18,8 @@ import com.altek.intro.dto.response.LeadershipResponseDTO;
 
 @RestController
 @RequestMapping("/leadership")
-@CrossOrigin(origins = "*", maxAge = 3600)
+@Slf4j
 public class LeadershipController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(LeadershipController.class);
 
     @Autowired
     private LeadershipService leadershipService;
@@ -30,10 +30,10 @@ public class LeadershipController {
             List<LeadershipResponseDTO> response = leadershipService.getAllLeadership();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -45,7 +45,7 @@ public class LeadershipController {
             LeadershipResponseDTO result = leadershipService.Create(request);
             return new ResponseEntity<LeadershipResponseDTO>(result,HttpStatus.OK);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }

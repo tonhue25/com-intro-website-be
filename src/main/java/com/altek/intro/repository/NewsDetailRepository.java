@@ -6,5 +6,5 @@ import com.altek.intro.entites.NewsEntity;
 import java.util.Optional;
 
 public interface NewsDetailRepository extends AbstractRepository<NewsDetailEntity, Long>{
-    Optional<NewsDetailEntity> findByNewsEntity(NewsEntity newsEntity);
+    Optional<NewsDetailEntity> findByNews(NewsEntity newsEntity);
 }

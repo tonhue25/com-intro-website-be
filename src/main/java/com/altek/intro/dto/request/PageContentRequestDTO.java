@@ -4,11 +4,9 @@ import lombok.Data;
 
 @Data
 public class PageContentRequestDTO {
-
     private Long id;
     private String pageTitle;
     private String shortDescription;
-    private String menuCode;
     private String address;
     private String phoneNumber;
     private String image;

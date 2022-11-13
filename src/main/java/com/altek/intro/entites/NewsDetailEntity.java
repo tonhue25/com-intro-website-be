@@ -16,11 +16,10 @@ import lombok.Setter;
 @Entity
 @Table(name = "ALT_DETAIL_NEWS")
 public class NewsDetailEntity extends AbstractEntity implements Serializable {
-
     @Column(name = "CONTENT")
     private String content;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "NEWS_ID")
-    private NewsEntity newsEntity;
+    private NewsEntity news;
 }

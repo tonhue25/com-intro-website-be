@@ -40,5 +40,4 @@ public class SliderServiceImpl extends AbstractServiceImpl implements SliderServ
             throw new ResourceNotFoundException(e.getMessage());
         }
     }
-
 }

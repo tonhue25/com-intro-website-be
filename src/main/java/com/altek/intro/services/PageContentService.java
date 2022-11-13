@@ -2,6 +2,7 @@ package com.altek.intro.services;
 
 import java.util.List;
 
+import com.altek.intro.dto.request.ListRequestDto;
 import org.springframework.stereotype.Service;
 
 import com.altek.intro.dto.request.PageContentRequestDTO;
@@ -20,4 +21,5 @@ public interface PageContentService extends AbstractService {
 
     BaseResponse delete(Long id);
 
+    BaseResponse listPageContent(ListRequestDto requestDto);
 }

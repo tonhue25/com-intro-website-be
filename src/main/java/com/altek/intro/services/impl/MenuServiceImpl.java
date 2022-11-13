@@ -21,7 +21,6 @@ import com.altek.intro.repository.MenuRepository;
 import com.altek.intro.services.MenuService;
 import com.altek.intro.utils.Constant;
 import com.altek.intro.utils.DataUtil;
-import com.altek.intro.utils.ResponseUtil;
 
 @Service
 public class MenuServiceImpl extends AbstractServiceImpl implements MenuService {
@@ -34,11 +33,8 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
     @Autowired
     private ModelMapper modelMapper;
 
-    @Autowired
-    private ResponseUtil responseUtil;
-
     @Override
-    public List<MenuResponseDTO> getAll() {
+    public BaseResponse getAll() {
         try {
             List<MenuResponseDTO> menuDTOs = new ArrayList<MenuResponseDTO>();
             List<MenuEntity> menuEntities = menuRepository.findAll();
@@ -47,48 +43,39 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
                 menuDTOs = menuEntities.stream().map(item -> (MenuResponseDTO) menuMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
-            return menuDTOs;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ResourceNotFoundException(e.getMessage());
+            return new BaseResponse(Constant.SUCCESS, "get.list.menu", menuDTOs);
+        } catch (Exception ex) {
+            return new BaseResponse(Constant.FAIL,
+                    ex.getMessage());
         }
     }
 
     @Override
     public BaseResponse create(MenuRequestDto request) {
-        try {
-            MenuEntity entity = new MenuEntity();
-            if(!DataUtil.isEmpty(request.getId())){
-                Optional<MenuEntity> optional = menuRepository.findById(request.getId());
-                if(optional.isPresent()){
-                    entity = optional.get();
-                }
+        MenuEntity entity = new MenuEntity();
+        if (!DataUtil.isEmpty(request.getId())) {
+            Optional<MenuEntity> optional = menuRepository.findById(request.getId());
+            if (optional.isPresent()) {
+                entity = optional.get();
             }
-            entity = (MenuEntity) menuMapper.convertToEntity(request, entity);
-            entity = menuRepository.save(entity);
-            MenuResponseDTO response = modelMapper.map(entity, MenuResponseDTO.class);
-            return responseUtil.responseBean(Constant.SUCCESS, "add.or.update.menu", response);
-        } catch (Exception ex) {
-            return responseUtil.responseBean(Constant.ERROR_SYSTEM, "ex.common.system.error.");
         }
+        entity = (MenuEntity) menuMapper.convertToEntity(request, entity);
+        entity = menuRepository.save(entity);
+        MenuResponseDTO response = modelMapper.map(entity, MenuResponseDTO.class);
+        return new BaseResponse(Constant.SUCCESS, "add.or.update.menu", response);
     }
 
     @Override
     public BaseResponse delete(Long id) {
-        try {
-            Optional<MenuEntity> optional = menuRepository.findById(id);
-            if (!optional.isPresent()) {
-                throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", id));
-            }
-            MenuEntity entity = optional.get();
-            entity.setStatus(Constant.DELETE);
-            entity = menuRepository.save(entity);
-            MenuResponseDTO response = modelMapper.map(entity, MenuResponseDTO.class);
-            return responseUtil.responseBean(Constant.SUCCESS, String.format("delete.menu.with.id:%s", id), response);
-        } catch (Exception ex) {
-            return responseUtil.responseBean(Constant.ERROR_SYSTEM,
-                    "ex.common.system.error.");
+        Optional<MenuEntity> optional = menuRepository.findById(id);
+        if (!optional.isPresent()) {
+            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", id));
         }
+        MenuEntity entity = optional.get();
+        entity.setStatus(Constant.DELETE);
+        entity = menuRepository.save(entity);
+        MenuResponseDTO response = modelMapper.map(entity, MenuResponseDTO.class);
+        return new BaseResponse(Constant.SUCCESS, String.format("delete.menu.with.id:%s", id), response);
     }
 
 }

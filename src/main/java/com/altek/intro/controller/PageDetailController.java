@@ -5,9 +5,7 @@ import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.PageDetailResponseDTO;
 import com.altek.intro.services.PageDetailService;
 import com.altek.intro.utils.Constant;
-import com.altek.intro.utils.ResponseUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,16 +13,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/pageDetail")
-@CrossOrigin(origins = "*", maxAge = 3600)
+@Slf4j
 public class PageDetailController {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PageDetailController.class);
 
     @Autowired
     private PageDetailService pageDetailService;
-
-    @Autowired
-    private ResponseUtil responseUtil;
 
     @GetMapping("/{id}")
     public ResponseEntity<PageDetailResponseDTO> listPageContentByMenuId(@PathVariable long id) {
@@ -36,8 +30,8 @@ public class PageDetailController {
         try {
             return new ResponseEntity<BaseResponse>(pageDetailService.create(request), HttpStatus.OK);
         } catch (Exception ex) {
-            BaseResponse result = responseUtil.responseBean(Constant.ERROR_SYSTEM,
-                    "ex.common.system.error.");
+            BaseResponse result = new BaseResponse(Constant.FAIL,
+                    ex.getMessage());
             return new ResponseEntity<BaseResponse>(result, HttpStatus.OK);
         }
     }
@@ -47,8 +41,8 @@ public class PageDetailController {
         try {
             return new ResponseEntity<BaseResponse>(pageDetailService.delete(id), HttpStatus.OK);
         } catch (Exception ex) {
-            return new ResponseEntity<BaseResponse>(responseUtil.responseBean(Constant.ERROR_SYSTEM,
-                    "ex.common.system.error."), HttpStatus.OK);
+            return new ResponseEntity<BaseResponse>(new BaseResponse(Constant.FAIL,
+                    ex.getMessage()), HttpStatus.OK);
         }
     }
 }

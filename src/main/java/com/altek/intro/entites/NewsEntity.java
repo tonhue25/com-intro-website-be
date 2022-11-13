@@ -17,7 +17,7 @@ import lombok.Setter;
 @Table(name = "ALT_NEWS")
 public class NewsEntity extends AbstractEntity implements Serializable {
 
-    @Column(name = "TITLE")
+    @Column(name = "TITLE", nullable = false)
     private String title;
     @Column(name = "THUMBNAIL")
     private String thumbnail;

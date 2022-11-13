@@ -1,14 +1,10 @@
 package com.altek.intro.entites;
 
 
+import java.io.Serializable;
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
@@ -23,12 +19,20 @@ import lombok.Setter;
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
-public class AbstractEntity {
+@Access(AccessType.PROPERTY)
+public abstract class AbstractEntity implements Serializable {
 
-    @Id 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "ID")
-	private Long id;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(final Long id) {
+        this.id = id;
+    }
 
     @Column(name = "STATUS")
     private Integer status;
@@ -37,15 +41,18 @@ public class AbstractEntity {
     @CreatedBy
     private String createdBy;
 
-    @Column(name = "CREATED_TIME", nullable = false, updatable = false, columnDefinition = "datetime")
-    @CreatedDate
     private Date createdTime;
+    @Column(name = "CREATED_TIME", nullable = false, updatable = false)
+    @CreatedDate
+    public Date getCreatedTime() {
+        return createdTime;
+    }
 
     @Column(name = "LAST_UPDATED_BY")
     @LastModifiedBy
     private String lastUpdatedBy;
 
-    @Column(name = "LAST_UPDATED_TIME" , columnDefinition = "datetime")
+    @Column(name = "LAST_UPDATED_TIME")
     @LastModifiedDate
     private Date lastUpdatedTime;
 }
