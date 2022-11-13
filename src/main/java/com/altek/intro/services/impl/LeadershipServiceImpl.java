@@ -1,6 +1,7 @@
 package com.altek.intro.services.impl;
 
 import com.altek.intro.dto.request.LeadershipRequestDTO;
+import com.altek.intro.dto.response.LeadershipResponseDTO;
 import com.altek.intro.entites.LeadershipEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.LeadershipMapper;
@@ -30,13 +31,13 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
     private ModelMapper modelMapper;
 
     @Override
-    public List<LeadershipRequestDTO> getAllLeadership() {
+    public List<LeadershipResponseDTO> getAllLeadership() {
         try {
-            List<LeadershipRequestDTO> leadershipDTOS = new ArrayList<LeadershipRequestDTO>();
+            List<LeadershipResponseDTO> leadershipDTOS = new ArrayList<LeadershipResponseDTO>();
             List<LeadershipEntity> leadershipEntities = leadershipRepository.findAll();
-            LeadershipRequestDTO dto = new LeadershipRequestDTO();
+            LeadershipResponseDTO dto = new LeadershipResponseDTO();
             if (CollectionUtils.isNotEmpty(leadershipEntities)) {
-                leadershipDTOS = leadershipEntities.stream().map(item -> (LeadershipRequestDTO) leadershipMapper.convertToDTO(dto, item))
+                leadershipDTOS = leadershipEntities.stream().map(item -> (LeadershipResponseDTO) leadershipMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
             return leadershipDTOS;
@@ -48,11 +49,11 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
 
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
-    public LeadershipRequestDTO Create(LeadershipRequestDTO request) {
+    public LeadershipResponseDTO Create(LeadershipRequestDTO request) {
         LeadershipEntity entity = new LeadershipEntity();
         entity = (LeadershipEntity) leadershipMapper.convertToEntity(request,entity);
         entity = leadershipRepository.save(entity);
-        LeadershipRequestDTO response = modelMapper.map(entity, LeadershipRequestDTO.class);
+        LeadershipResponseDTO response = modelMapper.map(entity, LeadershipResponseDTO.class);
         return response;
     }
 

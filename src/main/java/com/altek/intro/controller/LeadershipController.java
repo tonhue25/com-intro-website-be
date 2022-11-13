@@ -1,6 +1,7 @@
 package com.altek.intro.controller;
 
 import com.altek.intro.dto.request.LeadershipRequestDTO;
+import com.altek.intro.dto.response.LeadershipResponseDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.LeadershipService;
 import org.slf4j.Logger;
@@ -21,9 +22,9 @@ public class LeadershipController {
     private LeadershipService leadershipService;
 
     @GetMapping
-    public ResponseEntity<LeadershipRequestDTO> listAll() {
+    public ResponseEntity<LeadershipResponseDTO> listAll() {
         try {
-            List<LeadershipRequestDTO> response = leadershipService.getAllLeadership();
+            List<LeadershipResponseDTO> response = leadershipService.getAllLeadership();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             LOGGER.error(e.getMessage());
@@ -36,10 +37,10 @@ public class LeadershipController {
     }
 
     @PostMapping
-    public ResponseEntity<LeadershipRequestDTO> Create(@RequestBody LeadershipRequestDTO request){
+    public ResponseEntity<LeadershipResponseDTO> Create(@RequestBody LeadershipRequestDTO request){
         try {
-            LeadershipRequestDTO result = leadershipService.Create(request);
-            return new ResponseEntity<LeadershipRequestDTO>(result,HttpStatus.OK);
+            LeadershipResponseDTO result = leadershipService.Create(request);
+            return new ResponseEntity<LeadershipResponseDTO>(result,HttpStatus.OK);
         } catch (Exception e) {
             LOGGER.error(e.getMessage());
             e.printStackTrace();
