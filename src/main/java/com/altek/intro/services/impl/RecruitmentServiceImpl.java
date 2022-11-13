@@ -4,7 +4,7 @@ import com.altek.intro.dto.request.ListRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.dto.response.RecruitmentResponseDTO;
-import com.altek.intro.entites.RecruitmentEntity;
+import com.altek.intro.entities.RecruitmentEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.ListResponseMapper;
 import com.altek.intro.mapper.RecruitmentMapper;

@@ -12,14 +12,7 @@ import com.altek.intro.dto.response.LeadershipResponseDTO;
 
 @Service
 public interface LeadershipService extends AbstractService{
-<<<<<<< HEAD
     List<LeadershipResponseDTO> getAllLeadership();
-    LeadershipResponseDTO Create(LeadershipRequestDTO request);
-    LeadershipRequestDTO Delete(Long id);
-=======
-
-    List<LeadershipResponseDTO> getAllLeadership();
-    LeadershipResponseDTO Create(LeadershipRequestDTO request);
-    LeadershipResponseDTO Delete(Long id);
->>>>>>> tonhue
+    LeadershipResponseDTO create(LeadershipRequestDTO request);
+    LeadershipResponseDTO delete(Long id);
 }

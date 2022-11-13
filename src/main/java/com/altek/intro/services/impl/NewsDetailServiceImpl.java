@@ -3,8 +3,8 @@ package com.altek.intro.services.impl;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.NewsDetailResponseDTO;
 
-import com.altek.intro.entites.NewsDetailEntity;
-import com.altek.intro.entites.NewsEntity;
+import com.altek.intro.entities.NewsDetailEntity;
+import com.altek.intro.entities.NewsEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.NewsDetailMapper;
 import com.altek.intro.repository.NewsDetailRepository;
@@ -14,8 +14,6 @@ import com.altek.intro.utils.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service

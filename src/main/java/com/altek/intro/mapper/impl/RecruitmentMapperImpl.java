@@ -1,13 +1,7 @@
 package com.altek.intro.mapper.impl;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import com.altek.intro.dto.response.RecruitmentResponseDTO;
-import com.altek.intro.entites.RecruitmentEntity;
 import com.altek.intro.mapper.RecruitmentMapper;
 
 @Component

@@ -1,6 +1,6 @@
 package com.altek.intro.repository;
 
-import com.altek.intro.entites.ContactEntity;
+import com.altek.intro.entities.ContactEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 

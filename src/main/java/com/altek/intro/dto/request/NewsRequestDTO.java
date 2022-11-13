@@ -8,11 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NewsRequestDTO {
-
-    private Long id;
-    private int status;
     private String title;
     private String thumbnail;
     private String shortDescription;
-
 }

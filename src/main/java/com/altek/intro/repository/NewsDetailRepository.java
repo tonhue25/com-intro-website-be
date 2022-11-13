@@ -1,7 +1,7 @@
 package com.altek.intro.repository;
 
-import com.altek.intro.entites.NewsDetailEntity;
-import com.altek.intro.entites.NewsEntity;
+import com.altek.intro.entities.NewsDetailEntity;
+import com.altek.intro.entities.NewsEntity;
 
 import java.util.Optional;
 

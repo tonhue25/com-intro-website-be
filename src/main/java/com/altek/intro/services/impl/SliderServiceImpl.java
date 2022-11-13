@@ -1,7 +1,7 @@
 package com.altek.intro.services.impl;
 
 import com.altek.intro.dto.response.SliderResponseDTO;
-import com.altek.intro.entites.SliderEntity;
+import com.altek.intro.entities.SliderEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.SliderMapper;
 import com.altek.intro.repository.SliderRepository;

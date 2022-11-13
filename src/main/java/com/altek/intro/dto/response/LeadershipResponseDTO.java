@@ -7,10 +7,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LeadershipResponseDTO extends AbstractResponseDTO{
-
      String image;
      String name;
      String position;
      String information;
-     private String lastUpdatedBy;
 }

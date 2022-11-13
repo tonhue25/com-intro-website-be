@@ -1,7 +1,6 @@
 package com.altek.intro.repository;
 
-import com.altek.intro.entites.NewsEntity;
-import com.altek.intro.entites.RecruitmentEntity;
+import com.altek.intro.entities.NewsEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;

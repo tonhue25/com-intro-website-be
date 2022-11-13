@@ -1,7 +1,7 @@
 package com.altek.intro.repository;
 
-import com.altek.intro.entites.MenuEntity;
-import com.altek.intro.entites.PageContentEntity;
+import com.altek.intro.entities.MenuEntity;
+import com.altek.intro.entities.PageContentEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;

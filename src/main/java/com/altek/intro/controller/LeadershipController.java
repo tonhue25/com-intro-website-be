@@ -41,10 +41,10 @@ public class LeadershipController {
     }
 
     @PostMapping
-    public ResponseEntity<LeadershipResponseDTO> Create(@RequestBody LeadershipRequestDTO request){
+    public ResponseEntity<LeadershipResponseDTO> create(@RequestBody LeadershipRequestDTO request){
         try {
-            LeadershipResponseDTO result = leadershipService.Create(request);
-            return new ResponseEntity<LeadershipResponseDTO>(result,HttpStatus.OK);
+            LeadershipResponseDTO result = leadershipService.create(request);
+            return new ResponseEntity<LeadershipResponseDTO>(result,HttpStatus.CREATED);
         } catch (Exception e) {
             log.error(e.getMessage());
             e.printStackTrace();
@@ -54,7 +54,7 @@ public class LeadershipController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<LeadershipResponseDTO> delete(@PathVariable("id") Long id){
-        LeadershipResponseDTO result = leadershipService.Delete(id);
+        LeadershipResponseDTO result = leadershipService.delete(id);
         return new ResponseEntity<LeadershipResponseDTO>(result, HttpStatus.OK);
     }
 

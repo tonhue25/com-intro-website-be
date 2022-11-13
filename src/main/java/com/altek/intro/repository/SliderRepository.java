@@ -1,6 +1,6 @@
 package com.altek.intro.repository;
 
-import com.altek.intro.entites.SliderEntity;
+import com.altek.intro.entities.SliderEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
