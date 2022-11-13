@@ -1,15 +1,23 @@
 package com.altek.intro.entites;
 
-import lombok.Data;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Data
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "ALT_LEADERSHIP")
-public class LeadershipEntity extends AbstractEntity{
+public class LeadershipEntity extends AbstractEntity implements Serializable {
 
     @Column(name = "IMAGE")
     private String image;

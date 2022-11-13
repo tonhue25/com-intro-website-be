@@ -1,13 +1,23 @@
 package com.altek.intro.entites;
 
-import lombok.Data;
+import java.io.Serializable;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
-@Data
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name="ALT_PAGE_CONTENT")
-public class PageContentEntity extends AbstractEntity{
+@Table(name = "ALT_PAGE_CONTENT")
+public class PageContentEntity extends AbstractEntity implements Serializable {
 
     @Column(name = "PAGE_TITLE")
     private String pageTitle;

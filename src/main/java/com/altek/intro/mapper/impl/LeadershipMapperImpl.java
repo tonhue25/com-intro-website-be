@@ -1,8 +1,8 @@
 package com.altek.intro.mapper.impl;
 
-import com.altek.intro.mapper.LeadershipMapper;
-import com.altek.intro.mapper.RecruitmentMapper;
 import org.springframework.stereotype.Component;
+
+import com.altek.intro.mapper.LeadershipMapper;
 
 @Component
 public class LeadershipMapperImpl extends AbstractMapperImpl implements LeadershipMapper {

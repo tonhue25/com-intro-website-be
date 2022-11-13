@@ -1,15 +1,16 @@
 package com.altek.intro.dto.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageContentResponseDTO {
+public class PageContentResponseDTO extends AbstractResponseDTO{
 
-    private Long id;
     private String pageTitle;
     private String shortDescription;
     private String menuCode;

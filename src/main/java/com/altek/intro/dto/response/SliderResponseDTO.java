@@ -1,13 +1,16 @@
 package com.altek.intro.dto.response;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SliderResponseDTO {
+public class SliderResponseDTO extends AbstractResponseDTO {
+
     private String title;
     private String image;
     private String content;

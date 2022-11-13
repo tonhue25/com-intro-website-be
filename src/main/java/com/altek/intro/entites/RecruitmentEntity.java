@@ -1,15 +1,23 @@
 package com.altek.intro.entites;
 
-import lombok.Data;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Data
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "ALT_RECRUITMENT")
-public class RecruitmentEntity extends AbstractEntity{
+public class RecruitmentEntity extends AbstractEntity implements Serializable {
 
     @Column(name = "JOB_TITLE")
     private String jobTitle;
@@ -22,4 +30,8 @@ public class RecruitmentEntity extends AbstractEntity{
 
     @Column(name = "FILE")
     private String file;
+
+    @Column(name = "LOCATION")
+    private String location;
+
 }

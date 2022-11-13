@@ -1,5 +1,6 @@
 package com.altek.intro.services.impl;
 
+
 import com.altek.intro.dto.request.LeadershipRequestDTO;
 import com.altek.intro.dto.response.LeadershipResponseDTO;
 import com.altek.intro.entites.LeadershipEntity;
@@ -17,7 +18,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service
 public class LeadershipServiceImpl extends AbstractServiceImpl implements LeadershipService {
@@ -30,15 +31,29 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
     @Autowired
     private ModelMapper modelMapper;
 
+
     @Override
     public List<LeadershipResponseDTO> getAllLeadership() {
         try {
+<<<<<<< HEAD
             List<LeadershipResponseDTO> leadershipDTOS = new ArrayList<LeadershipResponseDTO>();
             List<LeadershipEntity> leadershipEntities = leadershipRepository.findAll();
             LeadershipResponseDTO dto = new LeadershipResponseDTO();
             if (CollectionUtils.isNotEmpty(leadershipEntities)) {
                 leadershipDTOS = leadershipEntities.stream().map(item -> (LeadershipResponseDTO) leadershipMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
+=======
+            List<LeadershipResponseDTO> leadershipDTOS = new ArrayList<>();
+            List<LeadershipEntity> leadershipEntities = leadershipRepository.findAll();
+            LeadershipResponseDTO dto = new LeadershipResponseDTO();
+            if (CollectionUtils.isNotEmpty(leadershipEntities)) {
+                List<LeadershipResponseDTO> list = new ArrayList<>();
+                for (LeadershipEntity item : leadershipEntities) {
+                    Object o = leadershipMapper.convertToDTO(item, dto);
+                    list.add((LeadershipResponseDTO) o);
+                }
+                leadershipDTOS = list;
+>>>>>>> tonhue
             }
             return leadershipDTOS;
         } catch (Exception e) {
@@ -51,7 +66,7 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
     public LeadershipResponseDTO Create(LeadershipRequestDTO request) {
         LeadershipEntity entity = new LeadershipEntity();
-        entity = (LeadershipEntity) leadershipMapper.convertToEntity(request,entity);
+        entity = (LeadershipEntity) leadershipMapper.convertToEntity(request, entity);
         entity = leadershipRepository.save(entity);
         LeadershipResponseDTO response = modelMapper.map(entity, LeadershipResponseDTO.class);
         return response;
@@ -59,15 +74,15 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
 
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
-    public LeadershipRequestDTO Delete(Long id) {
+    public LeadershipResponseDTO Delete(Long id) {
         Optional<LeadershipEntity> optional = leadershipRepository.findById(id);
-        if(!optional.isPresent()){
+        if (!optional.isPresent()) {
             throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", id));
         }
         LeadershipEntity entity = optional.get();
         entity.setStatus(Constant.DELETE);
         leadershipRepository.save(entity);
-        LeadershipRequestDTO response = modelMapper.map(entity, LeadershipRequestDTO.class);
+        LeadershipResponseDTO response = modelMapper.map(entity, LeadershipResponseDTO.class);
         return response;
     }
 }

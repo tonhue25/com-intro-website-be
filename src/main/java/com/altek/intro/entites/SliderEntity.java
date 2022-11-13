@@ -1,15 +1,23 @@
 package com.altek.intro.entites;
 
-import lombok.Data;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Data
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name="ALT_SLIDER")
-public class SliderEntity extends AbstractEntity{
+@Table(name = "ALT_SLIDER")
+public class SliderEntity extends AbstractEntity implements Serializable {
 
     @Column(name = "TITLE")
     private String title;

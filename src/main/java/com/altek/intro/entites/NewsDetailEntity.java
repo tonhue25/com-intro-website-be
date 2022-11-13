@@ -1,19 +1,26 @@
 package com.altek.intro.entites;
 
-import lombok.Data;
+import java.io.Serializable;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
-@Data
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "ALT_DETAIL_NEWS")
-public class NewsDetailEntity extends AbstractEntity {
+public class NewsDetailEntity extends AbstractEntity implements Serializable {
 
     @Column(name = "CONTENT")
     private String content;
 
-    @Column(name = "NEWS_ID")
-    private Long newsId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "NEWS_ID")
+    private NewsEntity newsEntity;
 }

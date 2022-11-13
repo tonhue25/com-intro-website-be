@@ -1,14 +1,14 @@
 package com.altek.intro.dto.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 // return client
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CandidateResponseDTO {
+public class CandidateResponseDTO extends AbstractResponseDTO{
+
     private String fullName;
     private String email;
     private String phoneNumber;

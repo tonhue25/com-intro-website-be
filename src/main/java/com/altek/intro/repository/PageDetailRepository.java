@@ -1,12 +1,10 @@
 package com.altek.intro.repository;
 
-import com.altek.intro.entites.PageContentEntity;
-import com.altek.intro.entites.PageDetailEntity;
-import org.springframework.data.jpa.repository.Query;
+import java.util.Optional;
+
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
+import com.altek.intro.entites.PageDetailEntity;
 
 @Repository
 public interface PageDetailRepository extends AbstractRepository<PageDetailEntity, Long>{

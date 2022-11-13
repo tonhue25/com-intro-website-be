@@ -1,5 +1,6 @@
 package com.altek.intro.services.impl;
 
+import com.altek.intro.dto.response.AbstractResponseDTO;
 import com.altek.intro.entites.AbstractEntity;
 import com.altek.intro.services.AbstractService;
 import org.springframework.data.domain.PageRequest;
@@ -12,7 +13,9 @@ import org.springframework.data.domain.Sort;
  * @author NGUYEN HOANG VU
  * @return
  */
-public class AbstractServiceImpl<D extends AbstractEntity, E extends AbstractEntity> implements AbstractService<D, E> {
+
+public class AbstractServiceImpl<D extends AbstractResponseDTO, E extends AbstractEntity> implements AbstractService<D, E> {
+
 
     /**
      * get Pageable object with sortable

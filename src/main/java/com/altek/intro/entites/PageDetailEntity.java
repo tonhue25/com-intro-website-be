@@ -1,15 +1,23 @@
 package com.altek.intro.entites;
 
-import lombok.Data;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Data
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name="ALT_DETAIL_CONTENT")
-public class PageDetailEntity extends AbstractEntity{
+@Table(name = "ALT_DETAIL_CONTENT")
+public class PageDetailEntity extends AbstractEntity implements Serializable {
 
     @Column(name = "TITLE")
     private String title;
@@ -18,15 +26,14 @@ public class PageDetailEntity extends AbstractEntity{
     private String shortDescription;
 
     @Column(name = "CONTENT")
-    private  String content;
+    private String content;
 
     @Column(name = "THUMBNAIL")
-    private  String thumbnail;
+    private String thumbnail;
 
     @Column(name = "IMAGE")
-    private  String image;
+    private String image;
 
     @Column(name = "PAGE_CONTENT_ID")
     private Long pageContentId;
 }
-
