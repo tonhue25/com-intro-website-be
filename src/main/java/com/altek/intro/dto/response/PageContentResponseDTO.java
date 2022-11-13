@@ -10,10 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PageContentResponseDTO extends AbstractResponseDTO{
-
     private String pageTitle;
     private String shortDescription;
-    private String menuCode;
     private String address;
     private String phoneNumber;
     private String image;

@@ -1,10 +1,12 @@
 package com.altek.intro.controller;
 
 import com.altek.intro.dto.request.ListRequestDto;
+import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.dto.response.RecruitmentResponseDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.RecruitmentService;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +18,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/recruitment")
-@CrossOrigin(origins = "*", maxAge = 3600)
+@Slf4j
 public class RecruitmentController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RecruitmentController.class);
 
     @Autowired
     private RecruitmentService recruitmentService;
@@ -28,29 +29,18 @@ public class RecruitmentController {
         try {
             List<RecruitmentResponseDTO> response = recruitmentService.getAllRecruitment();
             return new ResponseEntity(response, HttpStatus.OK);
-        }catch (ResourceNotFoundException e) {
-            LOGGER.error(e.getMessage());
+        } catch (ResourceNotFoundException e) {
+            log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            LOGGER.error(e.getMessage());
+            log.error(e.getMessage());
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping
-    public ResponseEntity<RecruitmentResponseDTO> list(@RequestBody ListRequestDto requestDto) {
-        try {
-            ListResponseDto<RecruitmentResponseDTO> response = recruitmentService.getList(requestDto);
-            return new ResponseEntity(response, HttpStatus.OK);
-        }catch (ResourceNotFoundException e) {
-            LOGGER.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            LOGGER.error(e.getMessage());
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    public ResponseEntity<BaseResponse> list(@RequestBody ListRequestDto requestDto) {
+        return new ResponseEntity(recruitmentService.getList(requestDto), HttpStatus.OK);
     }
-
 }

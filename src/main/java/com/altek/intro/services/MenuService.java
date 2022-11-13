@@ -10,7 +10,7 @@ import com.altek.intro.dto.response.MenuResponseDTO;
 
 @Service
 public interface MenuService extends AbstractService {
-    List<MenuResponseDTO> getAll();
+    BaseResponse getAll();
 
     BaseResponse create(MenuRequestDto request);
 

@@ -15,7 +15,7 @@ public class ListResponseMapperImpl<D, E> implements ListResponseMapper<D,E>{
     public ListResponseDto<D> setDataListResponse(List<D> listDTO,
             Page<E> pageEntity, Pageable pageable) {
         ListResponseDto<D> responseDto = new ListResponseDto<>();
-        responseDto.setData(listDTO);
+        responseDto.setList(listDTO);
         responseDto.setSize(pageEntity.getNumberOfElements());
         responseDto.setRecordPerPage(pageable.getPageSize());
         responseDto.setTotalPages(pageEntity.getTotalPages());
@@ -26,6 +26,4 @@ public class ListResponseMapperImpl<D, E> implements ListResponseMapper<D,E>{
         responseDto.setPage(pageNumber);
         return responseDto;
     }
-
-    
 }

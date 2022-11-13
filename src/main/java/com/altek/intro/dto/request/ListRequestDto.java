@@ -16,5 +16,6 @@ public class ListRequestDto {
     private String search;
     private String sortType;
     private String sortBy;
+    private Long id;
     
 }

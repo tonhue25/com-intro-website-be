@@ -14,14 +14,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "ALT_NEWS")
-public class NewsEntity extends AbstractEntity implements Serializable {
+@Table(name = "ALT_SLIDER")
+public class SliderEntity extends AbstractEntity implements Serializable {
 
     @Column(name = "TITLE")
     private String title;
-    @Column(name = "THUMBNAIL")
-    private String thumbnail;
-    @Column(name = "SHORT_DESCRIPTION")
-    private String shortDescription;
 
+    @Column(name = "IMAGE")
+    private String image;
+
+    @Column(name = "CONTENT")
+    private String content;
 }

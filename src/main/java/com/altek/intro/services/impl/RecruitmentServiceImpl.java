@@ -1,7 +1,7 @@
 package com.altek.intro.services.impl;
 
 import com.altek.intro.dto.request.ListRequestDto;
-import com.altek.intro.dto.request.RecruitmentRequestDTO;
+import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.dto.response.RecruitmentResponseDTO;
 import com.altek.intro.entites.RecruitmentEntity;
@@ -10,6 +10,7 @@ import com.altek.intro.mapper.ListResponseMapper;
 import com.altek.intro.mapper.RecruitmentMapper;
 import com.altek.intro.repository.RecruitmentRepository;
 import com.altek.intro.services.RecruitmentService;
+import com.altek.intro.utils.Constant;
 import com.altek.intro.utils.DataUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,6 +31,9 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
 
     @Autowired
     private RecruitmentMapper recruitmentMapper;
+
+    @Autowired
+    ListResponseMapper<RecruitmentResponseDTO, RecruitmentEntity> listResponseMapper;
 
     @Override
     public List<RecruitmentResponseDTO> getAllRecruitment() {
@@ -50,38 +53,35 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
         }
     }
 
-    @Autowired
-    ListResponseMapper<RecruitmentResponseDTO, RecruitmentEntity> listResponseMapper;
-
     @Override
-    public ListResponseDto<RecruitmentResponseDTO> getList(ListRequestDto requestDto) {
+    public BaseResponse getList(ListRequestDto requestDto) {
         if (DataUtil.isEmpty(requestDto.getPage())) {
-            //
+            throw new IllegalArgumentException("page.is.invalid");
         }
         if (DataUtil.isEmpty(requestDto.getSize())) {
-            //
+            throw new IllegalArgumentException("size.is.invalid");
         }
-        Sort sort;
-        if (requestDto.getSortType().equals("DESC")) {
-            sort = Sort.by(Sort.Direction.DESC, requestDto.getSortBy());
-        } else {
-            sort = Sort.by(Sort.Direction.ASC, requestDto.getSortBy());
+        Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize());
+        if (!DataUtil.isEmpty(requestDto.getSortBy()) && !DataUtil.isEmpty(requestDto.getSortType())) {
+            Sort.Direction sort = Sort.Direction.ASC;
+            if (requestDto.getSortType().equals("DESC")) {
+                sort = Sort.Direction.DESC;
+            }
+            pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(),
+                    Sort.by(sort, requestDto.getSortBy()));
         }
-        Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(),
-                sort);
-        Page<RecruitmentEntity> pageEntity = recruitmentRepository.getList(requestDto.getSearch().toLowerCase(),
+        Page<RecruitmentEntity> pageEntity = recruitmentRepository.getList(requestDto.getSearch(),
                 pageable);
         List<RecruitmentEntity> listEntity = pageEntity.getContent();
         List<RecruitmentResponseDTO> listDTO = new ArrayList<>();
         RecruitmentResponseDTO dto = new RecruitmentResponseDTO();
-        if (CollectionUtils.isNotEmpty(listEntity)) {
+        if (!CollectionUtils.isNotEmpty(listEntity)) {
             listDTO = listEntity.stream()
                     .map(item -> (RecruitmentResponseDTO) recruitmentMapper.convertToDTO(dto, item))
                     .collect(Collectors.toList());
         }
-        ListResponseDto<RecruitmentResponseDTO> responseDto = listResponseMapper.setDataListResponse(listDTO,
+        ListResponseDto<RecruitmentResponseDTO> response = listResponseMapper.setDataListResponse(listDTO,
                 pageEntity, pageable);
-        return responseDto;
+        return new BaseResponse(Constant.SUCCESS, "get.list.recruitment", response);
     }
-
 }

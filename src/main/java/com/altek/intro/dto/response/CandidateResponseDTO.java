@@ -2,7 +2,6 @@ package com.altek.intro.dto.response;
 
 import lombok.*;
 
-// return client
 @Getter
 @Setter
 @AllArgsConstructor

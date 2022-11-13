@@ -10,7 +10,6 @@ import com.altek.intro.mapper.ContactMapper;
 import com.altek.intro.repository.ContactRepository;
 import com.altek.intro.services.ContactService;
 import com.altek.intro.utils.Constant;
-import com.altek.intro.utils.ResponseUtil;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -31,8 +30,6 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
     @Autowired
     private ContactMapper contactMapper;
 
-    @Autowired
-    private ResponseUtil responseUtil;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -66,9 +63,9 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
             entity = (ContactEntity) contactMapper.convertToEntity(request, entity);
             entity = contactRepository.save(entity);
             ContactResponseDTO response = modelMapper.map(entity, ContactResponseDTO.class);
-            return responseUtil.responseBean(Constant.SUCCESS, "add.or.update.contact", response);
+            return new BaseResponse(Constant.SUCCESS, "add.or.update.contact", response);
         } catch (Exception ex) {
-            return responseUtil.responseBean(Constant.ERROR_SYSTEM, "ex.common.system.error.");
+            return new BaseResponse(Constant.FAIL, ex.getMessage());
         }
     }
 
@@ -83,11 +80,11 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
             entity.setStatus(Constant.DELETE);
             entity = contactRepository.save(entity);
             ContactResponseDTO response = modelMapper.map(entity, ContactResponseDTO.class);
-            return responseUtil.responseBean(Constant.SUCCESS, String.format("delete.contact.with.id:%s", id),
+            return new BaseResponse(Constant.SUCCESS, String.format("delete.contact.with.id:%s", id),
                     response);
         } catch (Exception ex) {
-            return responseUtil.responseBean(Constant.ERROR_SYSTEM,
-                    "ex.common.system.error.");
+            return new BaseResponse(Constant.FAIL,
+                    ex.getMessage());
         }
     }
 }
