@@ -13,5 +13,6 @@ public class PageContentRequestDTO {
     private String timeLine;
     private String eventName;
     private Long menuId;
+    private Integer status;
 
 }

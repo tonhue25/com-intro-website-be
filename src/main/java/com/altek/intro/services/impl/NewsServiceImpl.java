@@ -70,7 +70,9 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
         return new BaseResponse(Constant.SUCCESS, "get.list.news", response);
     }
 
-
+    // update and create.
+    // request have id => update
+    // update find=>update.
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
     public NewsResponseDTO create(NewsRequestDTO request) {

@@ -43,6 +43,10 @@ public class PageContentEntity extends AbstractEntity implements Serializable {
         return pageDetail;
     }
 
+    public void setPageDetail(PageDetailEntity pageDetail) {
+        this.pageDetail = pageDetail;
+    }
+
     private MenuEntity menu;
     @ManyToOne(fetch = FetchType.LAZY)
     public MenuEntity getMenu() {

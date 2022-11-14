@@ -24,10 +24,9 @@ public class PageContentController {
     private PageContentService pageContentService;
 
     @GetMapping
-    public ResponseEntity<PageContentResponseDTO> listAll() {
+    public ResponseEntity<BaseResponse> listAll() {
         try {
-            List<PageContentResponseDTO> response = pageContentService.getAll();
-            return new ResponseEntity(response, HttpStatus.OK);
+            return new ResponseEntity(pageContentService.getAll(), HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -39,7 +38,7 @@ public class PageContentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<List<PageContentResponseDTO>> listPageContentByMenuId(@PathVariable Long id) {
+    public ResponseEntity<BaseResponse> listPageContentByMenuId(@PathVariable Long id) {
         return new ResponseEntity<>(pageContentService.listPageContentByMenuId(id), HttpStatus.OK);
     }
 

@@ -38,4 +38,8 @@ public class PageDetailEntity extends AbstractEntity implements Serializable {
     public PageContentEntity getPageContent() {
         return pageContent;
     }
+
+    public void setPageContent(PageContentEntity pageContent) {
+        this.pageContent = pageContent;
+    }
 }
