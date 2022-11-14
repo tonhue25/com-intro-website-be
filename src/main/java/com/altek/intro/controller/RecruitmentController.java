@@ -42,10 +42,10 @@ public class RecruitmentController {
         }
     }
 
-//    @PostMapping
-//    public ResponseEntity<BaseResponse> list(@RequestBody ListRequestDto requestDto) {
-//        return new ResponseEntity(recruitmentService.getList(requestDto), HttpStatus.OK);
-//    }
+    @PostMapping
+    public ResponseEntity<BaseResponse> list(@RequestBody ListRequestDto requestDto) {
+        return new ResponseEntity(recruitmentService.getList(requestDto), HttpStatus.OK);
+    }
 
     @PostMapping
     public ResponseEntity<RecruitmentResponseDTO> create(@RequestBody RecruitmentRequestDTO request){
