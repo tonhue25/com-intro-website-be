@@ -6,6 +6,7 @@ import org.hibernate.HibernateException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaSystemException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -37,11 +38,10 @@ public class GlobalControllerExceptionHandler {
         return new ResponseEntity<Object>(error, HttpStatus.METHOD_NOT_ALLOWED);
     }
 
-    @ExceptionHandler({org.springframework.orm.jpa.JpaSystemException.class})
+    @ExceptionHandler({BadCredentialsException.class})
     public ResponseEntity<Object> handleJpaSystemException(HttpServletRequest request,
-                                                           JpaSystemException ex) {
-        ErrorResponse error = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, request, ex);
-        return new ResponseEntity<Object>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+                                                           BadCredentialsException ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.UNAUTHORIZED, request, ex);
+        return new ResponseEntity<Object>(error, HttpStatus.UNAUTHORIZED);
     }
-
 }

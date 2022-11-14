@@ -1,8 +1,7 @@
 package com.altek.intro.mapper.impl;
 
 import com.altek.intro.dto.response.ContactResponseDTO;
-import com.altek.intro.dto.response.RecruitmentResponseDTO;
-import com.altek.intro.entities.ContactEntity;
+import com.altek.intro.entities.Contact;
 import com.altek.intro.mapper.ContactMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ public class ContactMapperImpl extends AbstractMapperImpl implements ContactMapp
     private ModelMapper modelMapper;
 
     @Override
-    public List<ContactResponseDTO> mapList(List<ContactEntity> list) {
+    public List<ContactResponseDTO> mapList(List<Contact> list) {
         List<ContactResponseDTO> response = list.stream().map(item -> modelMapper.map(item, ContactResponseDTO.class))
                 .collect(Collectors.toList());
         return response;

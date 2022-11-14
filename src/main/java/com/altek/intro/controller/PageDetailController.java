@@ -1,8 +1,7 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.dto.request.PageDetailRequestDTO;
+import com.altek.intro.dto.request.PageDetailRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.PageDetailResponseDTO;
 import com.altek.intro.services.PageDetailService;
 import com.altek.intro.utils.Constant;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +25,7 @@ public class PageDetailController {
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponse> create(@RequestBody PageDetailRequestDTO request) {
+    public ResponseEntity<BaseResponse> create(@RequestBody PageDetailRequestDto request) {
         try {
             return new ResponseEntity<BaseResponse>(pageDetailService.create(request), HttpStatus.OK);
         } catch (Exception ex) {

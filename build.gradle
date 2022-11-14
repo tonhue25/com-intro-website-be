@@ -34,7 +34,13 @@ dependencies {
 	implementation 'com.oracle.ojdbc:ojdbc8:19.3.0.0'
 	implementation 'org.postgresql:postgresql:42.2.0'
 
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+	implementation 'org.springframework.boot:spring-boot-starter-jetty'
+	implementation 'io.jsonwebtoken:jjwt:0.9.1'
+	implementation 'com.auth0:java-jwt:3.10.3'
+	implementation 'org.springframework.security:spring-security-core:5.7.3'
+	implementation 'org.springframework.security:spring-security-config:5.7.1'
+	implementation 'org.springframework.security:spring-security-web:5.7.1'
+	testImplementation('org.springframework.boot:spring-boot-starter-security') {
 		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
 	}
 }
@@ -42,3 +48,5 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+

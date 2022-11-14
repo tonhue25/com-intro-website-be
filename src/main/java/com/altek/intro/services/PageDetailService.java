@@ -1,14 +1,13 @@
 package com.altek.intro.services;
 
-import com.altek.intro.dto.request.PageDetailRequestDTO;
+import com.altek.intro.dto.request.PageDetailRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.PageDetailResponseDTO;
 
 public interface PageDetailService extends AbstractService{
 
     BaseResponse getByPageContentId(Long id);
 
-    BaseResponse create(PageDetailRequestDTO request);
+    BaseResponse create(PageDetailRequestDto request);
 
     BaseResponse delete(Long id);
 

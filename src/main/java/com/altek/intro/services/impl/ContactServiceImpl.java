@@ -1,14 +1,12 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.dto.request.ContactRequestDTO;
+import com.altek.intro.dto.request.ContactRequestDto;
 import com.altek.intro.dto.request.ListRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.ContactResponseDTO;
 
 import com.altek.intro.dto.response.ListResponseDto;
-import com.altek.intro.dto.response.RecruitmentResponseDTO;
-import com.altek.intro.entities.ContactEntity;
-import com.altek.intro.entities.RecruitmentEntity;
+import com.altek.intro.entities.Contact;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.ContactMapper;
 import com.altek.intro.mapper.ListResponseMapper;
@@ -18,7 +16,6 @@ import com.altek.intro.utils.Constant;
 
 import com.altek.intro.utils.DataUtil;
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,7 +44,7 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
     public BaseResponse getAllContact() {
         try {
             List<ContactResponseDTO> responseDTOList = new ArrayList<>();
-            List<ContactEntity> contactEntities = contactRepository.findAll();
+            List<Contact> contactEntities = contactRepository.findAll();
             ContactResponseDTO dto = new ContactResponseDTO();
             if (CollectionUtils.isNotEmpty(contactEntities)) {
                 responseDTOList = contactEntities.stream().map(item -> (ContactResponseDTO) contactMapper.convertToDTO(dto, item)).collect(Collectors.toList());
@@ -60,15 +57,15 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
     }
 
     @Override
-    public BaseResponse create(ContactRequestDTO request) {
-        ContactEntity entity = new ContactEntity();
+    public BaseResponse create(ContactRequestDto request) {
+        Contact entity = new Contact();
         if (!DataUtil.isEmpty(request.getId())) {
-            Optional<ContactEntity> optional = contactRepository.findById(request.getId());
+            Optional<Contact> optional = contactRepository.findById(request.getId());
             if (optional.isPresent()) {
                 entity = optional.get();
             }
         }
-        entity = (ContactEntity) contactMapper.convertToEntity(request, entity);
+        entity = (Contact) contactMapper.convertToEntity(request, entity);
         entity = contactRepository.save(entity);
         ContactResponseDTO response = modelMapper.map(entity, ContactResponseDTO.class);
         return new BaseResponse(Constant.SUCCESS, "add.or.update.contact.success", response);
@@ -76,18 +73,21 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
 
     @Override
     public BaseResponse delete(Long id) {
-        Optional<ContactEntity> optional = contactRepository.findById(id);
+        Optional<Contact> optional = contactRepository.findById(id);
         if (!optional.isPresent()) {
             throw new ResourceNotFoundException(String.format("contact.not.found.with.id:%s", id));
         }
-        ContactEntity entity = optional.get();
+        Contact entity = optional.get();
+        if(entity.getStatus().equals(Constant.DELETE)){
+            return new BaseResponse(Constant.SUCCESS, String.format("contact.already.delete.with.id:%s", id));
+        }
         entity.setStatus(Constant.DELETE);
         entity = contactRepository.save(entity);
         return new BaseResponse(Constant.SUCCESS, String.format("delete.contact.with.id:%s.success", id));
     }
 
     @Autowired
-    ListResponseMapper<ContactResponseDTO, ContactEntity> listResponseMapper;
+    ListResponseMapper<ContactResponseDTO, Contact> listResponseMapper;
 
     @Override
     public BaseResponse getAllContact(ListRequestDto requestDto) {
@@ -105,8 +105,8 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
             }
             pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(), Sort.by(sort, requestDto.getSortBy()));
         }
-        Page<ContactEntity> pageEntity = contactRepository.getList(requestDto.getSearch(), pageable);
-        List<ContactEntity> listEntity = pageEntity.getContent();
+        Page<Contact> pageEntity = contactRepository.getList(requestDto.getSearch(), pageable);
+        List<Contact> listEntity = pageEntity.getContent();
         List<ContactResponseDTO> listResponse = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(listEntity)) {
             listResponse = contactMapper.mapList(listEntity);

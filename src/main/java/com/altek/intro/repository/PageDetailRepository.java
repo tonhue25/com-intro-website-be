@@ -2,14 +2,14 @@ package com.altek.intro.repository;
 
 import java.util.Optional;
 
-import com.altek.intro.entities.PageContentEntity;
+import com.altek.intro.entities.Page;
 import org.springframework.stereotype.Repository;
 
-import com.altek.intro.entities.PageDetailEntity;
+import com.altek.intro.entities.PageDetail;
 
 @Repository
-public interface PageDetailRepository extends AbstractRepository<PageDetailEntity, Long>{
-    Optional<PageDetailEntity> findByPageContent(PageContentEntity pageContent);
+public interface PageDetailRepository extends AbstractRepository<PageDetail, Long>{
+    Optional<PageDetail> findByPageContent(Page pageContent);
 
-    boolean existsByPageContent(PageContentEntity pageContent);
+    boolean existsByPageContent(Page pageContent);
 }

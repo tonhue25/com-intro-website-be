@@ -2,9 +2,8 @@ package com.altek.intro.services;
 
 
 import com.altek.intro.dto.request.ListRequestDto;
-import com.altek.intro.dto.request.RecruitmentRequestDTO;
+import com.altek.intro.dto.request.RecruitmentRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.dto.response.RecruitmentResponseDTO;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +14,7 @@ public interface RecruitmentService extends AbstractService{
 
     BaseResponse getList(ListRequestDto requestDto);
 
-    RecruitmentResponseDTO create(RecruitmentRequestDTO request);
+    RecruitmentResponseDTO create(RecruitmentRequestDto request);
 
     RecruitmentResponseDTO delete(Long id);
 
