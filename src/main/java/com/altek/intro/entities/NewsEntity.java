@@ -1,4 +1,4 @@
-package com.altek.intro.entites;
+package com.altek.intro.entities;
 
 import java.io.Serializable;
 
@@ -24,4 +24,9 @@ public class NewsEntity extends AbstractEntity implements Serializable {
     @Column(name = "SHORT_DESCRIPTION")
     private String shortDescription;
 
+    private NewsDetailEntity newsDetail;
+    @OneToOne(mappedBy = "news")
+    public NewsDetailEntity getNewsDetail() {
+        return newsDetail;
+    }
 }

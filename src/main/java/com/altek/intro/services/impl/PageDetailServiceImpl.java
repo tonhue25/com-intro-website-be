@@ -1,7 +1,5 @@
 package com.altek.intro.services.impl;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 import org.modelmapper.ModelMapper;
@@ -11,8 +9,8 @@ import org.springframework.stereotype.Service;
 import com.altek.intro.dto.request.PageDetailRequestDTO;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.PageDetailResponseDTO;
-import com.altek.intro.entites.PageContentEntity;
-import com.altek.intro.entites.PageDetailEntity;
+import com.altek.intro.entities.PageContentEntity;
+import com.altek.intro.entities.PageDetailEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.PageDetailMapper;
 import com.altek.intro.repository.PageContentRepository;

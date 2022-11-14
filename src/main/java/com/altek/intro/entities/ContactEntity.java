@@ -1,4 +1,4 @@
-package com.altek.intro.entites;
+package com.altek.intro.entities;
 
 import java.io.Serializable;
 

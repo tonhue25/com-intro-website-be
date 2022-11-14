@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.altek.intro.entites.LeadershipEntity;
+import com.altek.intro.entities.LeadershipEntity;
 
 @Repository
 public interface LeadershipRepository extends  AbstractRepository<LeadershipEntity, Long>{

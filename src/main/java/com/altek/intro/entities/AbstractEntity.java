@@ -1,4 +1,4 @@
-package com.altek.intro.entites;
+package com.altek.intro.entities;
 
 
 import java.io.Serializable;
@@ -29,10 +29,6 @@ public abstract class AbstractEntity implements Serializable {
     public Long getId() {
         return id;
     }
-
-//    public void setId(final Long id) {
-//        this.id = id;
-//    }
 
     @Column(name = "STATUS")
     private Integer status;

@@ -1,6 +1,6 @@
 package com.altek.intro.repository;
 
-import com.altek.intro.entites.MenuEntity;
+import com.altek.intro.entities.MenuEntity;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 

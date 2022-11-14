@@ -15,6 +15,7 @@ public class Constant {
     public static final String ACTION_EDIT = "Edit";
     public static final String ACTION_DELETE = "Delete";
     public static final Integer DELETE = 0;
+    public static final Integer INSERT = 1;
     public static final String KEY_GOODS_RECEIPT_REPORT = "key_goods_receipt";
     public static final String SUCCESS = "SUCCESS";
 

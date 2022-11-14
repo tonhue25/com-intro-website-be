@@ -14,7 +14,7 @@ import com.altek.intro.dto.request.MenuRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.MenuResponseDTO;
 
-import com.altek.intro.entites.MenuEntity;
+import com.altek.intro.entities.MenuEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.MenuMapper;
 import com.altek.intro.repository.MenuRepository;

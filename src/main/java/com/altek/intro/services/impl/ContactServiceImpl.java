@@ -4,7 +4,7 @@ import com.altek.intro.dto.request.ContactRequestDTO;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.ContactResponseDTO;
 
-import com.altek.intro.entites.ContactEntity;
+import com.altek.intro.entities.ContactEntity;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.ContactMapper;
 import com.altek.intro.repository.ContactRepository;

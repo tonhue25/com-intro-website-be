@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface NewsService extends AbstractService{
 
-    BaseResponse getList(ListRequestDto requestDto);
-    NewsResponseDTO Create(NewsRequestDTO newsRequestDTO);
+    BaseResponse getList(ListRequestDto request);
+    NewsResponseDTO create(NewsRequestDTO request);
+    NewsResponseDTO delete(Long id);
 }

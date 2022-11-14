@@ -1,6 +1,7 @@
-package com.altek.intro.entites;
+package com.altek.intro.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -22,4 +23,10 @@ public class MenuEntity extends AbstractEntity implements Serializable {
 
     @Column(name = "LINK")
     private String link;
+
+    private List<PageContentEntity> pageContents;
+    @OneToMany(mappedBy = "menu")
+    public List<PageContentEntity> getPageContents() {
+        return pageContents;
+    }
 }

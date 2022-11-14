@@ -1,4 +1,4 @@
-package com.altek.intro.entites;
+package com.altek.intro.entities;
 
 import java.io.Serializable;
 
@@ -32,7 +32,10 @@ public class PageDetailEntity extends AbstractEntity implements Serializable {
     @Column(name = "IMAGE")
     private String image;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PAGE_CONTENT_ID")
     private PageContentEntity pageContent;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PAGE_CONTENT_ID", nullable = false)
+    public PageContentEntity getPageContent() {
+        return pageContent;
+    }
 }

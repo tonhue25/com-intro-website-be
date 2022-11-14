@@ -1,4 +1,4 @@
-package com.altek.intro.entites;
+package com.altek.intro.entities;
 
 import java.io.Serializable;
 
@@ -14,12 +14,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "ALT_DETAIL_NEWS")
-public class NewsDetailEntity extends AbstractEntity implements Serializable {
+@Table(name = "ALT_SLIDER")
+public class SliderEntity extends AbstractEntity implements Serializable {
+
+    @Column(name = "TITLE")
+    private String title;
+
+    @Column(name = "IMAGE")
+    private String image;
+
     @Column(name = "CONTENT")
     private String content;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "NEWS_ID")
-    private NewsEntity news;
 }
