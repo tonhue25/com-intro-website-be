@@ -1,11 +1,5 @@
 package com.altek.intro.mapper;
 
-import com.altek.intro.dto.request.PageDetailRequestDTO;
-import com.altek.intro.entities.PageContentEntity;
-import com.altek.intro.entities.PageDetailEntity;
-
-import java.util.List;
-
 /**
  * AbstractMapper
  *

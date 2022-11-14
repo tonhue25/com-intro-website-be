@@ -1,9 +1,7 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.dto.request.LeadershipRequestDTO;
-import com.altek.intro.dto.request.NewsDetailRequestDTO;
+import com.altek.intro.dto.request.NewsDetailRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.LeadershipResponseDTO;
 import com.altek.intro.services.NewsDetailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +24,7 @@ public class NewsDetailController {
     }
 
     @PostMapping
-    public ResponseEntity<NewsDetailResponseDTO> create(@RequestBody NewsDetailRequestDTO request){
+    public ResponseEntity<NewsDetailResponseDTO> create(@RequestBody NewsDetailRequestDto request){
         try {
             NewsDetailResponseDTO result = newsDetailService.create(request);
             return new ResponseEntity<NewsDetailResponseDTO>(result,HttpStatus.CREATED);

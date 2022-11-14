@@ -14,7 +14,7 @@ import com.altek.intro.dto.request.MenuRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.MenuResponseDTO;
 
-import com.altek.intro.entities.MenuEntity;
+import com.altek.intro.entities.Menu;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.MenuMapper;
 import com.altek.intro.repository.MenuRepository;
@@ -37,7 +37,7 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
     public BaseResponse getAll() {
         try {
             List<MenuResponseDTO> menuDTOs = new ArrayList<MenuResponseDTO>();
-            List<MenuEntity> menuEntities = menuRepository.findAll();
+            List<Menu> menuEntities = menuRepository.findAll();
             MenuResponseDTO dto = new MenuResponseDTO();
             if (CollectionUtils.isNotEmpty(menuEntities)) {
                 menuDTOs = menuEntities.stream().map(item -> (MenuResponseDTO) menuMapper.convertToDTO(dto, item))
@@ -52,14 +52,14 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
 
     @Override
     public BaseResponse create(MenuRequestDto request) {
-        MenuEntity entity = new MenuEntity();
+        Menu entity = new Menu();
         if (!DataUtil.isEmpty(request.getId())) {
-            Optional<MenuEntity> optional = menuRepository.findById(request.getId());
+            Optional<Menu> optional = menuRepository.findById(request.getId());
             if (optional.isPresent()) {
                 entity = optional.get();
             }
         }
-        entity = (MenuEntity) menuMapper.convertToEntity(request, entity);
+        entity = (Menu) menuMapper.convertToEntity(request, entity);
         entity = menuRepository.save(entity);
         MenuResponseDTO response = modelMapper.map(entity, MenuResponseDTO.class);
         return new BaseResponse(Constant.SUCCESS, "add.or.update.menu", response);
@@ -67,15 +67,19 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
 
     @Override
     public BaseResponse delete(Long id) {
-        Optional<MenuEntity> optional = menuRepository.findById(id);
+        Optional<Menu> optional = menuRepository.findById(id);
         if (!optional.isPresent()) {
             throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", id));
         }
-        MenuEntity entity = optional.get();
+        Menu entity = optional.get();
+        if(entity.getStatus().equals(Constant.DELETE)){
+            return new BaseResponse(Constant.SUCCESS, String.format("menu.already.delete.with.id:%s", id),
+                    String.format("status.of.menu:%s", entity.getStatus()));
+        }
         entity.setStatus(Constant.DELETE);
         entity = menuRepository.save(entity);
-        MenuResponseDTO response = modelMapper.map(entity, MenuResponseDTO.class);
-        return new BaseResponse(Constant.SUCCESS, String.format("delete.menu.with.id:%s", id), response);
+        return new BaseResponse(Constant.SUCCESS, String.format("delete.menu.with.id:%s", id),
+                String.format("status.of.menu:%s", entity.getStatus()));
     }
 
 }

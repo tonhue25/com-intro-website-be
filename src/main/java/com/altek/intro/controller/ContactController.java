@@ -14,12 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.altek.intro.dto.request.ContactRequestDTO;
+import com.altek.intro.dto.request.ContactRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.ContactResponseDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.ContactService;
-import com.altek.intro.utils.Constant;
 
 @RestController
 @RequestMapping("/contact")
@@ -49,7 +47,7 @@ public class ContactController {
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponse> create(@RequestBody ContactRequestDTO request) {
+    public ResponseEntity<BaseResponse> create(@RequestBody ContactRequestDto request) {
         return new ResponseEntity<BaseResponse>(contactService.create(request), HttpStatus.OK);
     }
 

@@ -8,16 +8,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.altek.intro.entities.RecruitmentEntity;
+import com.altek.intro.entities.Recruitment;
 
 @Repository
-public interface RecruitmentRepository extends AbstractRepository<RecruitmentEntity, Long> {
+public interface RecruitmentRepository extends AbstractRepository<Recruitment, Long> {
 
     @Query(value = "SELECT * FROM ALT_RECRUITMENT where STATUS = 1 ", nativeQuery = true)
-    List<RecruitmentEntity> findAll();
+    List<Recruitment> findAll();
 
-    @Query("select e from RecruitmentEntity e where  e.status = 1 and (:search is null or " +
+    @Query("select e from Recruitment e where  e.status = 1 and (:search is null or " +
             "  lower(e.jobTitle) like  lower( concat('%',:search, '%')))")
-    Page<RecruitmentEntity> getList(@Param("search") String search,
-                                    Pageable pageable);
+    Page<Recruitment> getList(@Param("search") String search,
+                              Pageable pageable);
 }

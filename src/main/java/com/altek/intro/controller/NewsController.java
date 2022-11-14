@@ -1,9 +1,8 @@
 package com.altek.intro.controller;
 
 import com.altek.intro.dto.request.ListRequestDto;
-import com.altek.intro.dto.request.NewsRequestDTO;
+import com.altek.intro.dto.request.NewsRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.LeadershipResponseDTO;
 import com.altek.intro.dto.response.NewsResponseDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.NewsService;
@@ -35,7 +34,7 @@ public class NewsController {
     }
 
     @PostMapping
-    public ResponseEntity<NewsResponseDTO> Create(@RequestBody NewsRequestDTO request) {
+    public ResponseEntity<NewsResponseDTO> Create(@RequestBody NewsRequestDto request) {
         try {
             NewsResponseDTO result = newsService.create(request);
             return new ResponseEntity<NewsResponseDTO>(result, HttpStatus.CREATED);

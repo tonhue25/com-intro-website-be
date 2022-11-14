@@ -1,13 +1,11 @@
 package com.altek.intro.services.impl;
 
 import com.altek.intro.dto.request.ListRequestDto;
-import com.altek.intro.dto.request.RecruitmentRequestDTO;
+import com.altek.intro.dto.request.RecruitmentRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.LeadershipResponseDTO;
 import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.dto.response.RecruitmentResponseDTO;
-import com.altek.intro.entities.LeadershipEntity;
-import com.altek.intro.entities.RecruitmentEntity;
+import com.altek.intro.entities.Recruitment;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.ListResponseMapper;
 import com.altek.intro.mapper.RecruitmentMapper;
@@ -42,13 +40,13 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
     private ModelMapper modelMapper;
 
     @Autowired
-    ListResponseMapper<RecruitmentResponseDTO, RecruitmentEntity> listResponseMapper;
+    ListResponseMapper<RecruitmentResponseDTO, Recruitment> listResponseMapper;
 
     @Override
     public List<RecruitmentResponseDTO> getAllRecruitment() {
         try {
             List<RecruitmentResponseDTO> recruitmentDTOS = new ArrayList<RecruitmentResponseDTO>();
-            List<RecruitmentEntity> recruitmentEntities = recruitmentRepository.findAll();
+            List<Recruitment> recruitmentEntities = recruitmentRepository.findAll();
             RecruitmentResponseDTO dto = new RecruitmentResponseDTO();
             if (CollectionUtils.isNotEmpty(recruitmentEntities)) {
                 recruitmentDTOS = recruitmentEntities.stream()
@@ -79,9 +77,9 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
             pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(),
                     Sort.by(sort, requestDto.getSortBy()));
         }
-        Page<RecruitmentEntity> pageEntity = recruitmentRepository.getList(requestDto.getSearch(),
+        Page<Recruitment> pageEntity = recruitmentRepository.getList(requestDto.getSearch(),
                 pageable);
-        List<RecruitmentEntity> listEntity = pageEntity.getContent();
+        List<Recruitment> listEntity = pageEntity.getContent();
         List<RecruitmentResponseDTO> listResponse = new ArrayList<>();
         RecruitmentResponseDTO dto = new RecruitmentResponseDTO();
         if (CollectionUtils.isNotEmpty(listEntity)) {
@@ -94,6 +92,7 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
 
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
+<<<<<<< HEAD
     public RecruitmentResponseDTO create(RecruitmentRequestDTO request) {
         RecruitmentEntity entity = new RecruitmentEntity();
         if(!DataUtil.isEmpty(request.getId())){
@@ -103,6 +102,12 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
             }
         }
         entity = (RecruitmentEntity) recruitmentMapper.convertToEntity(request, entity);
+=======
+    public RecruitmentResponseDTO create(RecruitmentRequestDto request) {
+        Recruitment entity = new Recruitment();
+        entity = (Recruitment) recruitmentMapper.convertToEntity(request, entity);
+        entity.setStatus(Constant.INSERT);
+>>>>>>> tonhue
         entity = recruitmentRepository.save(entity);
         RecruitmentResponseDTO response = modelMapper.map(entity, RecruitmentResponseDTO.class);
         return response;
@@ -111,11 +116,11 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
     public RecruitmentResponseDTO delete(Long id) {
-        Optional<RecruitmentEntity> optional = recruitmentRepository.findById(id);
+        Optional<Recruitment> optional = recruitmentRepository.findById(id);
         if (!optional.isPresent()) {
             throw new ResourceNotFoundException(String.format("Recruitment.not.found.with.id:%s", id));
         }
-        RecruitmentEntity entity = optional.get();
+        Recruitment entity = optional.get();
         entity.setStatus(Constant.DELETE);
         recruitmentRepository.save(entity);
         RecruitmentResponseDTO response = modelMapper.map(entity, RecruitmentResponseDTO.class);

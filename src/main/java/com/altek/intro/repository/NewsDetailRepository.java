@@ -1,10 +1,10 @@
 package com.altek.intro.repository;
 
-import com.altek.intro.entities.NewsDetailEntity;
-import com.altek.intro.entities.NewsEntity;
+import com.altek.intro.entities.NewsDetail;
+import com.altek.intro.entities.News;
 
 import java.util.Optional;
 
-public interface NewsDetailRepository extends AbstractRepository<NewsDetailEntity, Long>{
-    Optional<NewsDetailEntity> findByNews(NewsEntity newsEntity);
+public interface NewsDetailRepository extends AbstractRepository<NewsDetail, Long>{
+    Optional<NewsDetail> findByNews(News newsEntity);
 }

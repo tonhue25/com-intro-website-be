@@ -1,11 +1,11 @@
 package com.altek.intro.services.impl;
 
 import com.altek.intro.dto.request.ListRequestDto;
-import com.altek.intro.dto.request.NewsRequestDTO;
+import com.altek.intro.dto.request.NewsRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.dto.response.NewsResponseDTO;
-import com.altek.intro.entities.NewsEntity;
+import com.altek.intro.entities.News;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.ListResponseMapper;
 import com.altek.intro.mapper.NewsMapper;
@@ -41,7 +41,7 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
     private ModelMapper modelMapper;
 
     @Autowired
-    ListResponseMapper<NewsResponseDTO, NewsEntity> listResponseMapper;
+    ListResponseMapper<NewsResponseDTO, News> listResponseMapper;
 
     @Override
     public BaseResponse getList(ListRequestDto requestDto) {
@@ -58,9 +58,9 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
             sort = Sort.by(Sort.Direction.ASC, requestDto.getSortBy());
         }
         Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(), sort);
-        Page<NewsEntity> pageEntity = newsRepository.getList(requestDto.getSearch().toLowerCase(), pageable);
+        Page<News> pageEntity = newsRepository.getList(requestDto.getSearch().toLowerCase(), pageable);
 
-        List<NewsEntity> listEntity = pageEntity.getContent();
+        List<News> listEntity = pageEntity.getContent();
         List<NewsResponseDTO> listDTO = new ArrayList<>();
         NewsResponseDTO dto = new NewsResponseDTO();
         if (CollectionUtils.isNotEmpty(listEntity)) {
@@ -75,6 +75,7 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
     // update find=>update.
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
+<<<<<<< HEAD
     public NewsResponseDTO create(NewsRequestDTO request) {
         // ko find => create.
         NewsEntity entity = new NewsEntity();
@@ -85,6 +86,12 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
             }
         }
         entity = (NewsEntity) newsMapper.convertToEntity(request, entity);
+=======
+    public NewsResponseDTO create(NewsRequestDto request) {
+        News entity = new News();
+        entity = (News) newsMapper.convertToEntity(request, entity);
+        entity.setStatus(Constant.INSERT);
+>>>>>>> tonhue
         entity = newsRepository.save(entity);
         NewsResponseDTO response = modelMapper.map(entity, NewsResponseDTO.class);
         return response;
@@ -93,11 +100,11 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
     public NewsResponseDTO delete(Long id) {
-        Optional<NewsEntity> optional = newsRepository.findById(id);
+        Optional<News> optional = newsRepository.findById(id);
         if(!optional.isPresent()){
             throw new ResourceNotFoundException(String.format("News.not.found.with.id:%s",id));
         }
-        NewsEntity entity = optional.get();
+        News entity = optional.get();
         entity.setStatus(Constant.DELETE);
         newsRepository.save(entity);
         NewsResponseDTO response = modelMapper.map(entity, NewsResponseDTO.class);

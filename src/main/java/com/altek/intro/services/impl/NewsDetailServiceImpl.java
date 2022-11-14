@@ -1,13 +1,11 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.dto.request.NewsDetailRequestDTO;
+import com.altek.intro.dto.request.NewsDetailRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.LeadershipResponseDTO;
 import com.altek.intro.dto.response.NewsDetailResponseDTO;
 
-import com.altek.intro.entities.LeadershipEntity;
-import com.altek.intro.entities.NewsDetailEntity;
-import com.altek.intro.entities.NewsEntity;
+import com.altek.intro.entities.NewsDetail;
+import com.altek.intro.entities.News;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.NewsDetailMapper;
 import com.altek.intro.repository.NewsDetailRepository;
@@ -39,11 +37,11 @@ public class NewsDetailServiceImpl extends AbstractServiceImpl implements NewsDe
 
     @Override
     public BaseResponse getNewsDetailByNewsId(long id) {
-        Optional<NewsEntity> optional = newsRepository.findById(id);
+        Optional<News> optional = newsRepository.findById(id);
         if (!optional.isPresent()) {
             throw new ResourceNotFoundException(String.format("news.not.found.with.id:%s", id));
         }
-        Optional<NewsDetailEntity> optionalNewsDetail = newsDetailRepository.findByNews(optional.get());
+        Optional<NewsDetail> optionalNewsDetail = newsDetailRepository.findByNews(optional.get());
         if (!optionalNewsDetail.isPresent()) {
             throw new ResourceNotFoundException(String.format("news.not.have.news.detail.id:%s", id));
         }
@@ -53,6 +51,7 @@ public class NewsDetailServiceImpl extends AbstractServiceImpl implements NewsDe
 
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
+<<<<<<< HEAD
     public NewsDetailResponseDTO create(NewsDetailRequestDTO request) {
         NewsDetailEntity entity = new NewsDetailEntity();
         if(!DataUtil.isEmpty(request.getId())){
@@ -62,6 +61,12 @@ public class NewsDetailServiceImpl extends AbstractServiceImpl implements NewsDe
             }
         }
         entity = (NewsDetailEntity)  newsDetailMapper.convertToEntity(request, entity);
+=======
+    public NewsDetailResponseDTO create(NewsDetailRequestDto request) {
+        NewsDetail entity = new NewsDetail();
+        entity = (NewsDetail)  newsDetailMapper.convertToEntity(request, entity);
+        entity.setStatus(Constant.INSERT);
+>>>>>>> tonhue
         entity = newsDetailRepository.save(entity);
         NewsDetailResponseDTO response = modelMapper.map(entity, NewsDetailResponseDTO.class);
         return response;
@@ -70,11 +75,11 @@ public class NewsDetailServiceImpl extends AbstractServiceImpl implements NewsDe
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
     public NewsDetailResponseDTO delete(Long id) {
-        Optional<NewsDetailEntity> optional = newsDetailRepository.findById(id);
+        Optional<NewsDetail> optional = newsDetailRepository.findById(id);
         if (!optional.isPresent()) {
             throw new ResourceNotFoundException(String.format("Newsdetail.not.found.with.id:%s", id));
         }
-        NewsDetailEntity entity = optional.get();
+        NewsDetail entity = optional.get();
         entity.setStatus(Constant.DELETE);
         newsDetailRepository.save(entity);
         NewsDetailResponseDTO response = modelMapper.map(entity, NewsDetailResponseDTO.class);

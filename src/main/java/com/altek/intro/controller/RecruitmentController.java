@@ -1,7 +1,6 @@
 package com.altek.intro.controller;
 
 import com.altek.intro.dto.request.ListRequestDto;
-import com.altek.intro.dto.request.RecruitmentRequestDTO;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.RecruitmentResponseDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
