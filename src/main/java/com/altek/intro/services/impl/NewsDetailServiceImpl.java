@@ -14,6 +14,7 @@ import com.altek.intro.repository.NewsDetailRepository;
 import com.altek.intro.repository.NewsRepository;
 import com.altek.intro.services.NewsDetailService;
 import com.altek.intro.utils.Constant;
+import com.altek.intro.utils.DataUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,8 +55,13 @@ public class NewsDetailServiceImpl extends AbstractServiceImpl implements NewsDe
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
     public NewsDetailResponseDTO create(NewsDetailRequestDTO request) {
         NewsDetailEntity entity = new NewsDetailEntity();
+        if(!DataUtil.isEmpty(request.getId())){
+            Optional<NewsDetailEntity> optional = newsDetailRepository.findById(request.getId());
+            if(optional.isPresent()){
+                entity = optional.get();
+            }
+        }
         entity = (NewsDetailEntity)  newsDetailMapper.convertToEntity(request, entity);
-        entity.setStatus(Constant.INSERT);
         entity = newsDetailRepository.save(entity);
         NewsDetailResponseDTO response = modelMapper.map(entity, NewsDetailResponseDTO.class);
         return response;

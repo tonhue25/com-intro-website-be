@@ -76,9 +76,15 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
     public NewsResponseDTO create(NewsRequestDTO request) {
+        // ko find => create.
         NewsEntity entity = new NewsEntity();
+        if(!DataUtil.isEmpty(request.getId())){
+            Optional<NewsEntity> optional = newsRepository.findById(request.getId());
+            if(optional.isPresent()){
+                entity = optional.get();
+            }
+        }
         entity = (NewsEntity) newsMapper.convertToEntity(request, entity);
-        entity.setStatus(Constant.INSERT);
         entity = newsRepository.save(entity);
         NewsResponseDTO response = modelMapper.map(entity, NewsResponseDTO.class);
         return response;
@@ -97,5 +103,4 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
         NewsResponseDTO response = modelMapper.map(entity, NewsResponseDTO.class);
         return response;
     }
-
 }

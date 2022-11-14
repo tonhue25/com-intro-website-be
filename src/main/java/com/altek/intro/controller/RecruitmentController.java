@@ -1,6 +1,7 @@
 package com.altek.intro.controller;
 
 import com.altek.intro.dto.request.ListRequestDto;
+import com.altek.intro.dto.request.RecruitmentRequestDTO;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.RecruitmentResponseDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
@@ -36,30 +37,22 @@ public class RecruitmentController {
         }
     }
 
-////<<<<<<< HEAD
 //    @PostMapping
 //    public ResponseEntity<BaseResponse> list(@RequestBody ListRequestDto requestDto) {
 //        return new ResponseEntity(recruitmentService.getList(requestDto), HttpStatus.OK);
 //    }
-//
-////=======
-//>>>>>>> tonhue
-    @PostMapping
-    public ResponseEntity<BaseResponse> list(@RequestBody ListRequestDto requestDto) {
-        return new ResponseEntity(recruitmentService.getList(requestDto), HttpStatus.OK);
-    }
 
-//    @PostMapping
-//    public ResponseEntity<RecruitmentResponseDTO> create(@RequestBody RecruitmentRequestDTO request){
-//        try {
-//            RecruitmentResponseDTO result = recruitmentService.create(request);
-//            return new ResponseEntity<RecruitmentResponseDTO>(result,HttpStatus.CREATED);
-//        } catch (Exception e) {
-//            log.error(e.getMessage());
-//            e.printStackTrace();
-//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-//        }
-//    }
+    @PostMapping
+    public ResponseEntity<RecruitmentResponseDTO> create(@RequestBody RecruitmentRequestDTO request){
+        try {
+            RecruitmentResponseDTO result = recruitmentService.create(request);
+            return new ResponseEntity<RecruitmentResponseDTO>(result,HttpStatus.CREATED);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<RecruitmentResponseDTO> delete(@PathVariable("id") Long id){

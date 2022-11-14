@@ -96,8 +96,13 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
     public RecruitmentResponseDTO create(RecruitmentRequestDTO request) {
         RecruitmentEntity entity = new RecruitmentEntity();
+        if(!DataUtil.isEmpty(request.getId())){
+            Optional<RecruitmentEntity> optional = recruitmentRepository.findById(request.getId());
+            if(optional.isPresent()){
+                entity = optional.get();
+            }
+        }
         entity = (RecruitmentEntity) recruitmentMapper.convertToEntity(request, entity);
-        entity.setStatus(Constant.INSERT);
         entity = recruitmentRepository.save(entity);
         RecruitmentResponseDTO response = modelMapper.map(entity, RecruitmentResponseDTO.class);
         return response;

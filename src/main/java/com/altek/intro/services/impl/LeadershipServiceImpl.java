@@ -9,6 +9,7 @@ import com.altek.intro.mapper.LeadershipMapper;
 import com.altek.intro.repository.LeadershipRepository;
 import com.altek.intro.services.LeadershipService;
 import com.altek.intro.utils.Constant;
+import com.altek.intro.utils.DataUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,8 +55,13 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
     public LeadershipResponseDTO create(LeadershipRequestDTO request) {
         LeadershipEntity entity = new LeadershipEntity();
+        if(!DataUtil.isEmpty(request.getId())){
+            Optional<LeadershipEntity> optional = leadershipRepository.findById(request.getId());
+            if(optional.isPresent()){
+                entity = optional.get();
+            }
+        }
         entity = (LeadershipEntity) leadershipMapper.convertToEntity(request, entity);
-        entity.setStatus(Constant.INSERT);
         entity = leadershipRepository.save(entity);
         LeadershipResponseDTO response = modelMapper.map(entity, LeadershipResponseDTO.class);
         return response;
