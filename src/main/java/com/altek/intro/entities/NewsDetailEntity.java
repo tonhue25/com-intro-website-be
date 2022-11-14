@@ -1,6 +1,7 @@
 package com.altek.intro.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -16,10 +17,13 @@ import lombok.Setter;
 @Entity
 @Table(name = "ALT_DETAIL_NEWS")
 public class NewsDetailEntity extends AbstractEntity implements Serializable {
-    @Column(name = "CONTENT")
+    @Column(name = "CONTENT", length = 1000)
     private String content;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "NEWS_ID")
     private NewsEntity news;
+    @OneToOne
+    @JoinColumn(name = "NEWS_ID", nullable = false)
+    public NewsEntity getNews() {
+        return news;
+    }
 }

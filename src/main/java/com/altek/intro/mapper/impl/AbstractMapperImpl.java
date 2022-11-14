@@ -29,11 +29,4 @@ public class AbstractMapperImpl implements AbstractMapper {
         return result;
     }
 
-    @Override
-    public List<Object> mapList(List<Object> listEntity, Object dto){
-        ModelMapper modelMapper = new ModelMapper();
-        List<Object> listDTO = listEntity.stream().map(item -> modelMapper.map(item, dto.getClass()))
-				.collect(Collectors.toList());
-        return listDTO;
-    }
 }

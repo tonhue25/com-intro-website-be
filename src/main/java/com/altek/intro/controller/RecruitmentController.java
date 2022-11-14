@@ -1,17 +1,11 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.dto.request.LeadershipRequestDTO;
 import com.altek.intro.dto.request.ListRequestDto;
-import com.altek.intro.dto.request.RecruitmentRequestDTO;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.LeadershipResponseDTO;
-import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.dto.response.RecruitmentResponseDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.RecruitmentService;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,29 +36,34 @@ public class RecruitmentController {
         }
     }
 
+////<<<<<<< HEAD
+//    @PostMapping
+//    public ResponseEntity<BaseResponse> list(@RequestBody ListRequestDto requestDto) {
+//        return new ResponseEntity(recruitmentService.getList(requestDto), HttpStatus.OK);
+//    }
+//
+////=======
+//>>>>>>> tonhue
     @PostMapping
     public ResponseEntity<BaseResponse> list(@RequestBody ListRequestDto requestDto) {
         return new ResponseEntity(recruitmentService.getList(requestDto), HttpStatus.OK);
     }
 
-    @PostMapping
-    public ResponseEntity<RecruitmentResponseDTO> create(@RequestBody RecruitmentRequestDTO request){
-        try {
-            RecruitmentResponseDTO result = recruitmentService.create(request);
-            return new ResponseEntity<RecruitmentResponseDTO>(result,HttpStatus.CREATED);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
+//    @PostMapping
+//    public ResponseEntity<RecruitmentResponseDTO> create(@RequestBody RecruitmentRequestDTO request){
+//        try {
+//            RecruitmentResponseDTO result = recruitmentService.create(request);
+//            return new ResponseEntity<RecruitmentResponseDTO>(result,HttpStatus.CREATED);
+//        } catch (Exception e) {
+//            log.error(e.getMessage());
+//            e.printStackTrace();
+//            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+//        }
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<RecruitmentResponseDTO> delete(@PathVariable("id") Long id){
         RecruitmentResponseDTO result = recruitmentService.delete(id);
         return new ResponseEntity<RecruitmentResponseDTO>(result, HttpStatus.OK);
     }
-
-
-
 }

@@ -12,6 +12,5 @@ public interface AbstractMapper{
 
     Object convertToDTO(Object dto, Object entity);
     Object convertToEntity(Object dto, Object entity);
-    List<Object> mapList(List<Object> listEntity, Object dto);
 
 }

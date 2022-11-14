@@ -24,4 +24,9 @@ public class NewsEntity extends AbstractEntity implements Serializable {
     @Column(name = "SHORT_DESCRIPTION")
     private String shortDescription;
 
+    private NewsDetailEntity newsDetail;
+    @OneToOne(mappedBy = "news")
+    public NewsDetailEntity getNewsDetail() {
+        return newsDetail;
+    }
 }

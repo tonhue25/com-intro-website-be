@@ -30,10 +30,6 @@ public abstract class AbstractEntity implements Serializable {
         return id;
     }
 
-    public void setId(final Long id) {
-        this.id = id;
-    }
-
     @Column(name = "STATUS")
     private Integer status;
 

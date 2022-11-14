@@ -17,8 +17,7 @@ public interface RecruitmentRepository extends AbstractRepository<RecruitmentEnt
     List<RecruitmentEntity> findAll();
 
     @Query("select e from RecruitmentEntity e where  e.status = 1 and (:search is null or " +
-            " ( lower(e.jobTitle) like  lower( concat('%',:search, '%'))  or " +
-            "  lower(e.jobDescription) like lower( concat('%',:search, '%')))) ")
+            "  lower(e.jobTitle) like  lower( concat('%',:search, '%')))")
     Page<RecruitmentEntity> getList(@Param("search") String search,
                                     Pageable pageable);
 }

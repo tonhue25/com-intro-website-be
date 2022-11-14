@@ -1,6 +1,7 @@
 package com.altek.intro.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -28,8 +29,20 @@ public class CandidateEntity extends AbstractEntity implements Serializable {
     @Column(name = "CV")
     private String cv;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "RECRUITMENT_ID")
-    private RecruitmentEntity recruitment;
+//    private RecruitmentEntity recruitment;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    public RecruitmentEntity getRecruitment() {
+//        return recruitment;
+//    }
+
+    private List<RecruitmentEntity> recruitments;
+    @ManyToMany
+    @JoinTable(name = "RECRUITMENT_CANDIDATE",
+            joinColumns = @JoinColumn(name = "CANDIDATE_ID"),
+            inverseJoinColumns = @JoinColumn(name = "RECRUITMENT_ID")
+    )
+    public List<RecruitmentEntity> getRecruitments() {
+        return recruitments;
+    }
 
 }

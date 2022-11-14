@@ -82,14 +82,12 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
         Page<RecruitmentEntity> pageEntity = recruitmentRepository.getList(requestDto.getSearch(),
                 pageable);
         List<RecruitmentEntity> listEntity = pageEntity.getContent();
-        List<RecruitmentResponseDTO> listDTO = new ArrayList<>();
+        List<RecruitmentResponseDTO> listResponse = new ArrayList<>();
         RecruitmentResponseDTO dto = new RecruitmentResponseDTO();
-        if (!CollectionUtils.isNotEmpty(listEntity)) {
-            listDTO = listEntity.stream()
-                    .map(item -> (RecruitmentResponseDTO) recruitmentMapper.convertToDTO(dto, item))
-                    .collect(Collectors.toList());
+        if (CollectionUtils.isNotEmpty(listEntity)) {
+            listResponse = recruitmentMapper.mapList(listEntity);
         }
-        ListResponseDto<RecruitmentResponseDTO> response = listResponseMapper.setDataListResponse(listDTO,
+        ListResponseDto<RecruitmentResponseDTO> response = listResponseMapper.setDataListResponse(listResponse,
                 pageEntity, pageable);
         return new BaseResponse(Constant.SUCCESS, "get.list.recruitment", response);
     }

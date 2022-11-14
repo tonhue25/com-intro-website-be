@@ -74,4 +74,5 @@ public class NewsDetailServiceImpl extends AbstractServiceImpl implements NewsDe
         NewsDetailResponseDTO response = modelMapper.map(entity, NewsDetailResponseDTO.class);
         return response;
     }
+
 }

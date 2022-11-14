@@ -37,7 +37,16 @@ public class PageContentEntity extends AbstractEntity implements Serializable {
     @Column(name = "EVENT_HISTORY")
     private String eventName;
 
-    @OneToOne
-    @JoinColumn(name = "MENU_ID")
+    private PageDetailEntity pageDetail;
+    @OneToOne(mappedBy = "pageContent")
+    public PageDetailEntity getPageDetail() {
+        return pageDetail;
+    }
+
     private MenuEntity menu;
+    @ManyToOne(fetch = FetchType.LAZY)
+    public MenuEntity getMenu() {
+        return menu;
+    }
+
 }
