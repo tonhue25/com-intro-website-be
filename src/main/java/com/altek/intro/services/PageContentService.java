@@ -13,9 +13,9 @@ import com.altek.intro.dto.response.PageContentResponseDTO;
 @Service
 public interface PageContentService extends AbstractService {
 
-    List<PageContentResponseDTO> getAll();
+    BaseResponse getAll();
 
-    List<PageContentResponseDTO> listPageContentByMenuId(Long id);
+    BaseResponse listPageContentByMenuId(Long id);
 
     BaseResponse create(PageContentRequestDTO request);
 

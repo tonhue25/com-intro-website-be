@@ -21,7 +21,7 @@ public class PageDetailController {
     private PageDetailService pageDetailService;
 
     @GetMapping("/{id}")
-    public ResponseEntity<PageDetailResponseDTO> listPageContentByMenuId(@PathVariable long id) {
+    public ResponseEntity<BaseResponse> listPageContentByMenuId(@PathVariable long id) {
         return new ResponseEntity<>(pageDetailService.getByPageContentId(id), HttpStatus.OK);
     }
 

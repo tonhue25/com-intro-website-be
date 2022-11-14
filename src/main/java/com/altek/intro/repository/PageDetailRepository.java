@@ -10,4 +10,6 @@ import com.altek.intro.entities.PageDetailEntity;
 @Repository
 public interface PageDetailRepository extends AbstractRepository<PageDetailEntity, Long>{
     Optional<PageDetailEntity> findByPageContent(PageContentEntity pageContent);
+
+    boolean existsByPageContent(PageContentEntity pageContent);
 }

@@ -2,6 +2,8 @@ package com.altek.intro.services.impl;
 
 import java.util.Optional;
 
+import com.altek.intro.mapper.impl.PageDetailMapperImpl;
+import com.altek.intro.utils.DataUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,21 +34,18 @@ public class PageDetailServiceImpl extends AbstractServiceImpl implements PageDe
 
     @Autowired
     ModelMapper modelMapper;
-
-
     @Override
-    public PageDetailResponseDTO getByPageContentId(Long id) {
+    public BaseResponse getByPageContentId(Long id) {
         Optional<PageContentEntity> optional = pageContentRepository.findById(id);
         if (!optional.isPresent()) {
             throw new ResourceNotFoundException(String.format("page.content.not.found.with.id:%s", id));
         }
-        PageDetailResponseDTO pageDetailDTO = new PageDetailResponseDTO();
         Optional<PageDetailEntity> optionalPageDetail = pageDetailRepository.findByPageContent(optional.get());
         if (!optionalPageDetail.isPresent()) {
             throw new ResourceNotFoundException(String.format("page.content.no.have.page.detail.id:%s", id));
         }
-        PageDetailResponseDTO dto = (PageDetailResponseDTO) pageDetailMapper.convertToDTO(pageDetailDTO, optionalPageDetail.get());
-        return dto;
+        PageDetailResponseDTO response = modelMapper.map(optionalPageDetail.get(),PageDetailResponseDTO.class);
+        return new BaseResponse(Constant.SUCCESS, "get.page.detail.by.page.content.id", response);
     }
 
     @Override
@@ -56,8 +55,18 @@ public class PageDetailServiceImpl extends AbstractServiceImpl implements PageDe
             throw new ResourceNotFoundException(
                     String.format("page.content.not.found.with.id:%s", request.getPageContentId()));
         }
+        if(pageDetailRepository.existsByPageContent(optional.get())){
+            throw new ResourceNotFoundException(
+                    String.format("page.content.already.exists.with.id:%s", request.getPageContentId()));
+        }
         PageDetailEntity entity = new PageDetailEntity();
-        entity = (PageDetailEntity) pageDetailMapper.convertToEntity(request, entity);
+        if(!DataUtil.isEmpty(request.getId())){
+            Optional<PageDetailEntity> optionalPageDetail = pageDetailRepository.findById(request.getId());
+            if (optionalPageDetail.isPresent()) {
+                entity = optionalPageDetail.get();
+            }
+        }
+        entity = pageDetailMapper.convertToEntity(entity, request,optional.get());
         entity = pageDetailRepository.save(entity);
         PageDetailResponseDTO response = modelMapper.map(entity, PageDetailResponseDTO.class);
         return new BaseResponse(Constant.SUCCESS, "add.or.update.page.detail", response);

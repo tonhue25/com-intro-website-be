@@ -1,15 +1,19 @@
 package com.altek.intro.dto.request;
 
-import lombok.Data;
+import lombok.*;
+import org.springframework.stereotype.Component;
 
-@Data
+
+@Getter@Setter
+@NoArgsConstructor@AllArgsConstructor
 public class PageDetailRequestDTO {
 
+    private Long id;
     private String title;
     private String shortDescription;
     private  String content;
     private  String thumbnail;
     private  String image;
     private Long pageContentId;
-
+    private Integer status;
 }

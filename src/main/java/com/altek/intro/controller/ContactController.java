@@ -1,7 +1,7 @@
 package com.altek.intro.controller;
 
-import java.util.List;
 
+import com.altek.intro.dto.request.ListRequestDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,11 +29,11 @@ public class ContactController {
     private ContactService contactService;
 
     @GetMapping
-    public ResponseEntity<ContactResponseDTO> listAll() {
+    public ResponseEntity<BaseResponse> listAll() {
         try {
-            List<ContactResponseDTO> response = contactService.getAllContact();
+            BaseResponse response = contactService.getAllContact();
             return new ResponseEntity(response, HttpStatus.OK);
-        }catch (ResourceNotFoundException e) {
+        } catch (ResourceNotFoundException e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -43,24 +43,18 @@ public class ContactController {
         }
     }
 
+    @PostMapping("/list")
+    public ResponseEntity<BaseResponse> getListContact(@RequestBody ListRequestDto dto) {
+        return new ResponseEntity(contactService.getAllContact(dto), HttpStatus.OK);
+    }
+
     @PostMapping
     public ResponseEntity<BaseResponse> create(@RequestBody ContactRequestDTO request) {
-        try {
-            return new ResponseEntity<BaseResponse>(contactService.create(request), HttpStatus.OK);
-        } catch (Exception ex) {
-            BaseResponse result = new BaseResponse(Constant.FAIL,
-                    ex.getMessage());
-            return new ResponseEntity<BaseResponse>(result, HttpStatus.OK);
-        }
+        return new ResponseEntity<BaseResponse>(contactService.create(request), HttpStatus.OK);
     }
 
     @DeleteMapping
     public ResponseEntity<BaseResponse> delete(@RequestParam(value = "id", required = true) Long id) {
-        try {
-            return new ResponseEntity<BaseResponse>(contactService.delete(id), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<BaseResponse>(new BaseResponse(Constant.FAIL,
-                    ex.getMessage()), HttpStatus.OK);
-        }
+        return new ResponseEntity<BaseResponse>(contactService.delete(id), HttpStatus.OK);
     }
 }

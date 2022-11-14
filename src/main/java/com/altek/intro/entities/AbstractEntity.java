@@ -33,6 +33,10 @@ public abstract class AbstractEntity implements Serializable {
     @Column(name = "STATUS")
     private Integer status;
 
+    public Integer getStatus() {
+        return status;
+    }
+
     @Column(name = "CREATED_BY", nullable = true)
     @CreatedBy
     private String createdBy;
