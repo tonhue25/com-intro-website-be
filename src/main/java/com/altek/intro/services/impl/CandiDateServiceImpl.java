@@ -5,6 +5,7 @@ import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.CandidateResponseDTO;
 import com.altek.intro.dto.response.LeadershipResponseDTO;
 import com.altek.intro.entities.Candidate;
+import com.altek.intro.entities.Recruitment;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.CandiDateMapper;
 import com.altek.intro.repository.CandiDateRepository;

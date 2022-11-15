@@ -2,9 +2,7 @@ package com.altek.intro.entities;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,7 +30,6 @@ public class Recruitment extends AbstractEntity implements Serializable {
 
     @Column(name = "LOCATION")
     private String location;
-
     private List<Candidate> candidates;
     @ManyToMany(mappedBy = "recruitments")
     public List<Candidate> getCandidates() {

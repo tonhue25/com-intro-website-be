@@ -3,7 +3,6 @@ package com.altek.intro.services.impl;
 import com.altek.intro.dto.request.NewsDetailRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.NewsDetailResponseDTO;
-
 import com.altek.intro.entities.NewsDetail;
 import com.altek.intro.entities.News;
 import com.altek.intro.exceptions.ResourceNotFoundException;
@@ -60,6 +59,7 @@ public class NewsDetailServiceImpl extends AbstractServiceImpl implements NewsDe
             }
         }
         entity = (NewsDetail) newsDetailMapper.convertToEntity(request, entity);
+        entity.setStatus(Constant.INSERT);
         entity = newsDetailRepository.save(entity);
         NewsDetailResponseDTO response = modelMapper.map(entity, NewsDetailResponseDTO.class);
         return response;

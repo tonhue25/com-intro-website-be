@@ -87,6 +87,7 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
             }
         }
         entity = (News) newsMapper.convertToEntity(request, entity);
+        entity.setStatus(Constant.INSERT);
         entity = newsRepository.save(entity);
         NewsResponseDTO response = modelMapper.map(entity, NewsResponseDTO.class);
         return response;

@@ -52,5 +52,4 @@ public class LeadershipController {
         LeadershipResponseDTO result = leadershipService.delete(id);
         return new ResponseEntity<LeadershipResponseDTO>(result, HttpStatus.OK);
     }
-
 }

@@ -4,11 +4,14 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.altek.intro.entities.Recruitment;
+
+import javax.transaction.Transactional;
 
 @Repository
 public interface RecruitmentRepository extends AbstractRepository<Recruitment, Long> {
@@ -20,4 +23,9 @@ public interface RecruitmentRepository extends AbstractRepository<Recruitment, L
             "  lower(e.jobTitle) like  lower( concat('%',:search, '%')))")
     Page<Recruitment> getList(@Param("search") String search,
                               Pageable pageable);
+
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO RECRUITMENT_CANDIDATE (RECRUITMENT_ID,CANDIDATE_ID) VALUES (?1, ?2)", nativeQuery = true)
+    void saveRECRUITMENT_CANDIDATE(Long idRecruitment,Long idCandidate);
 }

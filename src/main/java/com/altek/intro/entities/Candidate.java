@@ -24,7 +24,6 @@ public class Candidate extends AbstractEntity implements Serializable {
 
     @Column(name = "CV")
     private String cv;
-
     private List<Recruitment> recruitments;
     @ManyToMany
     @JoinTable(name = "RECRUITMENT_CANDIDATE",
