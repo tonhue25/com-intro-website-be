@@ -1,5 +1,7 @@
 package com.altek.intro.controller;
 
+import com.altek.intro.dto.request.CandidateRequestDto;
+import com.altek.intro.dto.request.LeadershipRequestDto;
 import com.altek.intro.dto.response.CandidateResponseDTO;
 import com.altek.intro.dto.response.LeadershipResponseDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
@@ -10,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -34,6 +38,18 @@ public class CadiDateController {
             log.error(e.getMessage());
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<CandidateResponseDTO> create(@RequestBody CandidateRequestDto request){
+        try {
+            CandidateResponseDTO result = candiDateService.create(request);
+            return new ResponseEntity<CandidateResponseDTO>(result,HttpStatus.CREATED);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
