@@ -3,7 +3,7 @@ package com.altek.intro.controller;
 import java.util.List;
 
 import com.altek.intro.dto.request.LeadershipRequestDto;
-import com.altek.intro.dto.response.LeadershipResponseDTO;
+import com.altek.intro.dto.response.LeadershipResponseDto;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.LeadershipService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,9 +22,9 @@ public class LeadershipController {
     private LeadershipService leadershipService;
 
     @GetMapping
-    public ResponseEntity<LeadershipResponseDTO> listAll() {
+    public ResponseEntity<LeadershipResponseDto> listAll() {
         try {
-            List<LeadershipResponseDTO> response = leadershipService.getAllLeadership();
+            List<LeadershipResponseDto> response = leadershipService.getAllLeadership();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             log.error(e.getMessage());
@@ -37,10 +37,10 @@ public class LeadershipController {
     }
 
     @PostMapping
-    public ResponseEntity<LeadershipResponseDTO> create(@RequestBody LeadershipRequestDto request){
+    public ResponseEntity<LeadershipResponseDto> create(@RequestBody LeadershipRequestDto request){
         try {
-            LeadershipResponseDTO result = leadershipService.create(request);
-            return new ResponseEntity<LeadershipResponseDTO>(result,HttpStatus.CREATED);
+            LeadershipResponseDto result = leadershipService.create(request);
+            return new ResponseEntity<LeadershipResponseDto>(result,HttpStatus.CREATED);
         } catch (Exception e) {
             log.error(e.getMessage());
             e.printStackTrace();
@@ -49,9 +49,9 @@ public class LeadershipController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<LeadershipResponseDTO> delete(@PathVariable("id") Long id){
-        LeadershipResponseDTO result = leadershipService.delete(id);
-        return new ResponseEntity<LeadershipResponseDTO>(result, HttpStatus.OK);
+    public ResponseEntity<LeadershipResponseDto> delete(@PathVariable("id") Long id){
+        LeadershipResponseDto result = leadershipService.delete(id);
+        return new ResponseEntity<LeadershipResponseDto>(result, HttpStatus.OK);
     }
 
 }

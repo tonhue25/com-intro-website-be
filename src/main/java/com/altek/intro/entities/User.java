@@ -21,12 +21,18 @@ public class User extends AbstractEntity implements Serializable {
     private String password;
     private String email;
 
-    private List<Role> roles;
-    @ManyToMany
-    @JoinTable(	name = "USER_ROLE",
-            joinColumns = @JoinColumn(name = "USER_ID"),
-            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
-    public List<Role> getRoles() {
-        return roles;
+//    private List<Role> roles;
+//    @ManyToMany
+//    @JoinTable(	name = "ALT_USER_ROLE",
+//            joinColumns = @JoinColumn(name = "USER_ID"),
+//            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
+//    public List<Role> getRoles() {
+//        return roles;
+//    }
+
+    List<UserRole> userRoles;
+    @OneToMany(mappedBy = "user")
+    public List<UserRole> getUserRoles() {
+        return userRoles;
     }
 }

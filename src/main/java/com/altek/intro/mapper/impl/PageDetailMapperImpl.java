@@ -17,7 +17,7 @@ public class PageDetailMapperImpl extends AbstractMapperImpl implements PageDeta
         entity.setContent(dto.getContent());
         entity.setThumbnail(dto.getContent());
         entity.setImage(dto.getImage());
-        entity.setPageContent(pageContent);
+        entity.setPage(pageContent);
         return entity;
     }
 }

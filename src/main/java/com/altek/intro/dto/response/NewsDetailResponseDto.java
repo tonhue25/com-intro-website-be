@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class NewsDetailResponseDTO extends AbstractResponseDTO{
+public class NewsDetailResponseDto extends AbstractResponseDto {
 
     private String content;
     private Long newsId;

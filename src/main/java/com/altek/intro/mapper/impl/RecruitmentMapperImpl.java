@@ -1,6 +1,6 @@
 package com.altek.intro.mapper.impl;
 
-import com.altek.intro.dto.response.RecruitmentResponseDTO;
+import com.altek.intro.dto.response.RecruitmentResponseDto;
 import com.altek.intro.entities.Recruitment;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +17,8 @@ public class RecruitmentMapperImpl extends AbstractMapperImpl implements Recruit
     @Autowired
     private ModelMapper modelMapper;
 
-    public List<RecruitmentResponseDTO> mapList(List<Recruitment> list) {
-        List<RecruitmentResponseDTO> response = list.stream().map(item -> modelMapper.map(item, RecruitmentResponseDTO.class))
+    public List<RecruitmentResponseDto> mapList(List<Recruitment> list) {
+        List<RecruitmentResponseDto> response = list.stream().map(item -> modelMapper.map(item, RecruitmentResponseDto.class))
 				.collect(Collectors.toList());
         return response;
     }

@@ -14,14 +14,12 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/pageDetail")
 @Slf4j
 public class PageDetailController {
-
-
     @Autowired
     private PageDetailService pageDetailService;
 
-    @GetMapping("/{id}")
-    public ResponseEntity<BaseResponse> listPageContentByMenuId(@PathVariable long id) {
-        return new ResponseEntity<>(pageDetailService.getByPageContentId(id), HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity<BaseResponse> getPage(@RequestParam("page") Long page) {
+        return new ResponseEntity<>(pageDetailService.getByPage(page), HttpStatus.OK);
     }
 
     @PostMapping

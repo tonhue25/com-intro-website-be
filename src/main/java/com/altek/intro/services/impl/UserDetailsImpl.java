@@ -32,19 +32,10 @@ public class UserDetailsImpl implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
     public static UserDetailsImpl build(User user) {
-        List<GrantedAuthority> authorities = user.getRoles().stream().map(role ->
-                new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
-//        return new UserDetailsImpl(user.getId(), user.getUsername(), user.getEmail(), authorities);
-
+        List<GrantedAuthority> authorities = user.getUserRoles().stream().map(role ->
+                new SimpleGrantedAuthority(role.getRole().getName())).collect(Collectors.toList());
         return new UserDetailsImpl(user.getId(), user.getUsername(), user.getEmail(), user.getPassword(), authorities);
     }
-
-//    public UserDetailsImpl(Long id, String username, String email, Collection<? extends GrantedAuthority> authorities) {
-//        this.id = id;
-//        this.username = username;
-//        this.email = email;
-//        this.authorities = authorities;
-//    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

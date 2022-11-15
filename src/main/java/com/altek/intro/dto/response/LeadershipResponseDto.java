@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LeadershipResponseDTO extends AbstractResponseDTO{
+public class LeadershipResponseDto extends AbstractResponseDto {
      String image;
      String name;
      String position;

@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingRequestValueException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -24,9 +26,9 @@ public class GlobalControllerExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({IllegalArgumentException.class})
+    @ExceptionHandler({IllegalArgumentException.class, MissingServletRequestParameterException.class})
     public ResponseEntity<Object> handleIllegalArgumentException(HttpServletRequest request,
-                                                                 IllegalArgumentException ex) {
+                                                                 Exception ex) {
         ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST, request, ex);
         return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
     }
@@ -39,9 +41,16 @@ public class GlobalControllerExceptionHandler {
     }
 
     @ExceptionHandler({BadCredentialsException.class})
-    public ResponseEntity<Object> handleJpaSystemException(HttpServletRequest request,
+    public ResponseEntity<Object> handleBadCredentialsException(HttpServletRequest request,
                                                            BadCredentialsException ex) {
         ErrorResponse error = new ErrorResponse(HttpStatus.UNAUTHORIZED, request, ex);
         return new ResponseEntity<Object>(error, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler({Exception.class})
+    public ResponseEntity<Object> handleNullPointerException(HttpServletRequest request,
+                                                             Exception ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, request, ex);
+        return new ResponseEntity<Object>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

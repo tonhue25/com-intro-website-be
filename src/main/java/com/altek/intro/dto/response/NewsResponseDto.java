@@ -5,12 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-public class MenuResponseDTO extends AbstractResponseDTO{
-    private String label;
-    private String link;
+public class NewsResponseDto extends AbstractResponseDto {
+
+    private String title;
+    private String thumbnail;
+    private String shortDescription;
 
 }

@@ -4,7 +4,7 @@ import com.altek.intro.dto.request.ListRequestDto;
 import com.altek.intro.dto.request.PageContentRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.ListResponseDto;
-import com.altek.intro.dto.response.PageContentResponseDTO;
+import com.altek.intro.dto.response.PageResponseDto;
 import com.altek.intro.entities.Menu;
 import com.altek.intro.entities.Page;
 import com.altek.intro.exceptions.ResourceNotFoundException;
@@ -44,16 +44,16 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
     private PageMapper pageContentMapper;
 
     @Autowired
-    ListResponseMapper<PageContentResponseDTO, Page> listResponseMapper;
+    ListResponseMapper<PageResponseDto, Page> listResponseMapper;
 
     @Override
     public BaseResponse getAll() {
         try {
-            List<PageContentResponseDTO> listDto = new ArrayList<>();
+            List<PageResponseDto> listDto = new ArrayList<>();
             List<Page> listEntity = pageContentRepository.findAll();
-            PageContentResponseDTO dto = new PageContentResponseDTO();
+            PageResponseDto dto = new PageResponseDto();
             if (CollectionUtils.isNotEmpty(listEntity)) {
-                listDto = listEntity.stream().map(item -> (PageContentResponseDTO) pageContentMapper.convertToDTO(dto, item)).collect(Collectors.toList());
+                listDto = listEntity.stream().map(item -> (PageResponseDto) pageContentMapper.convertToDTO(dto, item)).collect(Collectors.toList());
             }
             return new BaseResponse(Constant.SUCCESS, "get.all.page", listDto);
         } catch (Exception e) {
@@ -68,11 +68,11 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
         if (!optional.isPresent()) {
             throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", id));
         }
-        List<PageContentResponseDTO> listDTO = new ArrayList<>();
-        PageContentResponseDTO dto = new PageContentResponseDTO();
+        List<PageResponseDto> listDTO = new ArrayList<>();
+        PageResponseDto dto = new PageResponseDto();
         List<Page> listEntity = pageContentRepository.findByMenuAndStatus(optional.get(), 1);
         if (CollectionUtils.isNotEmpty(listEntity)) {
-            listDTO = listEntity.stream().map(item -> (PageContentResponseDTO) pageContentMapper.convertToDTO(dto, item)).collect(Collectors.toList());
+            listDTO = listEntity.stream().map(item -> (PageResponseDto) pageContentMapper.convertToDTO(dto, item)).collect(Collectors.toList());
         }
         return new BaseResponse(Constant.SUCCESS, "get.list.page.by.menuId", listDTO);
     }
@@ -97,7 +97,7 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
         entity = (Page) pageContentMapper.convertToEntity(request, entity);
         entity.setMenu(menuEntity);
         entity = pageContentRepository.save(entity);
-        PageContentResponseDTO response = modelMapper.map(entity, PageContentResponseDTO.class);
+        PageResponseDto response = modelMapper.map(entity, PageResponseDto.class);
         return new BaseResponse(Constant.SUCCESS, "add.or.update.page", response);
     }
 
@@ -124,7 +124,7 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
             throw new IllegalArgumentException("page.is.invalid");
         }
         if (DataUtil.isEmpty(requestDto.getSize())) {
-            throw new IllegalArgumentException("page.is.invalid");
+            throw new IllegalArgumentException("size.is.invalid");
         }
         if (DataUtil.isEmpty(requestDto.getId())) {
             throw new IllegalArgumentException("menu.id.is.invalid");
@@ -144,12 +144,12 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
         }
         org.springframework.data.domain.Page<Page> pageEntity = pageContentRepository.getList(requestDto.getSearch(), menu, pageable);
         List<Page> listEntity = pageEntity.getContent();
-        List<PageContentResponseDTO> listDTO = new ArrayList<>();
-        PageContentResponseDTO dto = new PageContentResponseDTO();
+        List<PageResponseDto> listDTO = new ArrayList<>();
+        PageResponseDto dto = new PageResponseDto();
         if (CollectionUtils.isNotEmpty(listEntity)) {
-            listDTO = listEntity.stream().map(item -> (PageContentResponseDTO) pageContentMapper.convertToDTO(dto, item)).collect(Collectors.toList());
+            listDTO = listEntity.stream().map(item -> (PageResponseDto) pageContentMapper.convertToDTO(dto, item)).collect(Collectors.toList());
         }
-        ListResponseDto<PageContentResponseDTO> response = listResponseMapper.setDataListResponse(listDTO, pageEntity, pageable);
+        ListResponseDto<PageResponseDto> response = listResponseMapper.setDataListResponse(listDTO, pageEntity, pageable);
         return new BaseResponse(Constant.SUCCESS, "get.list.page", response);
     }
 

@@ -1,6 +1,6 @@
 package com.altek.intro.services;
 
-import com.altek.intro.dto.response.AbstractResponseDTO;
+import com.altek.intro.dto.response.AbstractResponseDto;
 import com.altek.intro.entities.AbstractEntity;
 import org.springframework.data.domain.Pageable;
 
@@ -10,7 +10,7 @@ import org.springframework.data.domain.Pageable;
  * @author NGUYEN HOANG VU
  * @return
  */
-public interface AbstractService<D extends AbstractResponseDTO, E extends AbstractEntity> {
+public interface AbstractService<D extends AbstractResponseDto, E extends AbstractEntity> {
 
 
     /**

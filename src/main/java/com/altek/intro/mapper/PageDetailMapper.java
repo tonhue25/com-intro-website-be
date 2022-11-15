@@ -7,7 +7,5 @@ import org.springframework.stereotype.Component;
 
 @Component
 public interface PageDetailMapper extends  AbstractMapper{
-//    public PageDetailEntity convertToEntity(PageDetailRequestDTO dto, PageContentEntity pageContent);
-
-    public PageDetail convertToEntity(PageDetail entity, PageDetailRequestDto dto, Page pageContent);
+    PageDetail convertToEntity(PageDetail entity, PageDetailRequestDto dto, Page pageContent);
 }

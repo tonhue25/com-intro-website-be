@@ -14,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "ALT_DETAIL_NEWS")
+@Table(name = "ALT_NEWS_DETAIL")
 public class NewsDetail extends AbstractEntity implements Serializable {
     @Column(name = "CONTENT", length = 1000)
     private String content;
