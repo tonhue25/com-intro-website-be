@@ -53,22 +53,16 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
 
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
-<<<<<<< HEAD
-    public LeadershipResponseDTO create(LeadershipRequestDTO request) {
-        LeadershipEntity entity = new LeadershipEntity();
+    public LeadershipResponseDTO create(LeadershipRequestDto request) {
+        Leadership entity = new Leadership();
         if(!DataUtil.isEmpty(request.getId())){
-            Optional<LeadershipEntity> optional = leadershipRepository.findById(request.getId());
+            Optional<Leadership> optional = leadershipRepository.findById(request.getId());
             if(optional.isPresent()){
                 entity = optional.get();
             }
         }
-        entity = (LeadershipEntity) leadershipMapper.convertToEntity(request, entity);
-=======
-    public LeadershipResponseDTO create(LeadershipRequestDto request) {
-        Leadership entity = new Leadership();
         entity = (Leadership) leadershipMapper.convertToEntity(request, entity);
         entity.setStatus(Constant.INSERT);
->>>>>>> tonhue
         entity = leadershipRepository.save(entity);
         LeadershipResponseDTO response = modelMapper.map(entity, LeadershipResponseDTO.class);
         return response;

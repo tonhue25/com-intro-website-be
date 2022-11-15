@@ -1,17 +1,16 @@
 package com.altek.intro.dto.request;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-<<<<<<< HEAD:src/main/java/com/altek/intro/dto/request/RecruitmentRequestDTO.java
-public class RecruitmentRequestDTO {
-    private Long id;
-=======
+@AllArgsConstructor
+@NoArgsConstructor
 public class RecruitmentRequestDto {
->>>>>>> tonhue:src/main/java/com/altek/intro/dto/request/RecruitmentRequestDto.java
+    private Long id;
     private String jobTitle;
     private String jobDescription;
     private String image;
     private String file;
-
 }

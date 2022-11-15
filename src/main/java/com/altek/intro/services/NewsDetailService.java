@@ -1,5 +1,4 @@
 package com.altek.intro.services;
-
 import com.altek.intro.dto.request.NewsDetailRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.NewsDetailResponseDTO;

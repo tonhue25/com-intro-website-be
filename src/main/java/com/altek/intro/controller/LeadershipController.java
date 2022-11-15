@@ -1,7 +1,6 @@
 package com.altek.intro.controller;
 
 import java.util.List;
-
 import com.altek.intro.dto.request.LeadershipRequestDto;
 import com.altek.intro.dto.response.LeadershipResponseDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;

@@ -1,6 +1,7 @@
 package com.altek.intro.controller;
 
 import com.altek.intro.dto.request.ListRequestDto;
+import com.altek.intro.dto.request.RecruitmentRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.RecruitmentResponseDTO;
 import com.altek.intro.exceptions.ResourceNotFoundException;
@@ -42,7 +43,7 @@ public class RecruitmentController {
 //    }
 
     @PostMapping
-    public ResponseEntity<RecruitmentResponseDTO> create(@RequestBody RecruitmentRequestDTO request){
+    public ResponseEntity<RecruitmentResponseDTO> create(@RequestBody RecruitmentRequestDto request){
         try {
             RecruitmentResponseDTO result = recruitmentService.create(request);
             return new ResponseEntity<RecruitmentResponseDTO>(result,HttpStatus.CREATED);

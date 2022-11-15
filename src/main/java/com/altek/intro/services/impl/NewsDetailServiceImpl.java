@@ -51,22 +51,15 @@ public class NewsDetailServiceImpl extends AbstractServiceImpl implements NewsDe
 
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
-<<<<<<< HEAD
-    public NewsDetailResponseDTO create(NewsDetailRequestDTO request) {
-        NewsDetailEntity entity = new NewsDetailEntity();
-        if(!DataUtil.isEmpty(request.getId())){
-            Optional<NewsDetailEntity> optional = newsDetailRepository.findById(request.getId());
-            if(optional.isPresent()){
+    public NewsDetailResponseDTO create(NewsDetailRequestDto request) {
+        NewsDetail entity = new NewsDetail();
+        if (!DataUtil.isEmpty(request.getId())) {
+            Optional<NewsDetail> optional = newsDetailRepository.findById(request.getId());
+            if (optional.isPresent()) {
                 entity = optional.get();
             }
         }
-        entity = (NewsDetailEntity)  newsDetailMapper.convertToEntity(request, entity);
-=======
-    public NewsDetailResponseDTO create(NewsDetailRequestDto request) {
-        NewsDetail entity = new NewsDetail();
-        entity = (NewsDetail)  newsDetailMapper.convertToEntity(request, entity);
-        entity.setStatus(Constant.INSERT);
->>>>>>> tonhue
+        entity = (NewsDetail) newsDetailMapper.convertToEntity(request, entity);
         entity = newsDetailRepository.save(entity);
         NewsDetailResponseDTO response = modelMapper.map(entity, NewsDetailResponseDTO.class);
         return response;
@@ -86,3 +79,4 @@ public class NewsDetailServiceImpl extends AbstractServiceImpl implements NewsDe
         return response;
     }
 }
+

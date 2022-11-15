@@ -7,12 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-<<<<<<< HEAD:src/main/java/com/altek/intro/dto/request/NewsRequestDTO.java
-public class NewsRequestDTO {
-    private Long id;
-=======
 public class NewsRequestDto {
->>>>>>> tonhue:src/main/java/com/altek/intro/dto/request/NewsRequestDto.java
+    private Long id;
     private String title;
     private String thumbnail;
     private String shortDescription;

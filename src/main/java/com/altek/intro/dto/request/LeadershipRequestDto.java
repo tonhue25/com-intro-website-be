@@ -8,12 +8,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-<<<<<<< HEAD:src/main/java/com/altek/intro/dto/request/LeadershipRequestDTO.java
-public class LeadershipRequestDTO {
-     Long id;
-=======
 public class LeadershipRequestDto {
->>>>>>> tonhue:src/main/java/com/altek/intro/dto/request/LeadershipRequestDto.java
+     Long id;
      String image;
      String name;
      String position;

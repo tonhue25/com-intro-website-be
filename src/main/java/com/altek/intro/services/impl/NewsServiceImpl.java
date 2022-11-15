@@ -3,8 +3,10 @@ package com.altek.intro.services.impl;
 import com.altek.intro.dto.request.ListRequestDto;
 import com.altek.intro.dto.request.NewsRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
+import com.altek.intro.dto.response.LeadershipResponseDTO;
 import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.dto.response.NewsResponseDTO;
+import com.altek.intro.entities.Leadership;
 import com.altek.intro.entities.News;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.ListResponseMapper;
@@ -75,23 +77,16 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
     // update find=>update.
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
-<<<<<<< HEAD
-    public NewsResponseDTO create(NewsRequestDTO request) {
+    public NewsResponseDTO create(NewsRequestDto request) {
         // ko find => create.
-        NewsEntity entity = new NewsEntity();
+        News entity = new News();
         if(!DataUtil.isEmpty(request.getId())){
-            Optional<NewsEntity> optional = newsRepository.findById(request.getId());
+            Optional<News> optional = newsRepository.findById(request.getId());
             if(optional.isPresent()){
                 entity = optional.get();
             }
         }
-        entity = (NewsEntity) newsMapper.convertToEntity(request, entity);
-=======
-    public NewsResponseDTO create(NewsRequestDto request) {
-        News entity = new News();
         entity = (News) newsMapper.convertToEntity(request, entity);
-        entity.setStatus(Constant.INSERT);
->>>>>>> tonhue
         entity = newsRepository.save(entity);
         NewsResponseDTO response = modelMapper.map(entity, NewsResponseDTO.class);
         return response;

@@ -92,22 +92,16 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
 
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
-<<<<<<< HEAD
-    public RecruitmentResponseDTO create(RecruitmentRequestDTO request) {
-        RecruitmentEntity entity = new RecruitmentEntity();
+    public RecruitmentResponseDTO create(RecruitmentRequestDto request) {
+        Recruitment entity = new Recruitment();
         if(!DataUtil.isEmpty(request.getId())){
-            Optional<RecruitmentEntity> optional = recruitmentRepository.findById(request.getId());
+            Optional<Recruitment> optional = recruitmentRepository.findById(request.getId());
             if(optional.isPresent()){
                 entity = optional.get();
             }
         }
-        entity = (RecruitmentEntity) recruitmentMapper.convertToEntity(request, entity);
-=======
-    public RecruitmentResponseDTO create(RecruitmentRequestDto request) {
-        Recruitment entity = new Recruitment();
         entity = (Recruitment) recruitmentMapper.convertToEntity(request, entity);
         entity.setStatus(Constant.INSERT);
->>>>>>> tonhue
         entity = recruitmentRepository.save(entity);
         RecruitmentResponseDTO response = modelMapper.map(entity, RecruitmentResponseDTO.class);
         return response;
