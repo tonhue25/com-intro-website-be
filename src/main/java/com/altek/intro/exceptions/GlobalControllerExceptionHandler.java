@@ -3,6 +3,8 @@ package com.altek.intro.exceptions;
 
 import com.altek.intro.dto.response.ErrorResponse;
 import org.hibernate.HibernateException;
+import org.postgresql.util.PSQLException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaSystemException;
@@ -43,5 +45,12 @@ public class GlobalControllerExceptionHandler {
                                                            BadCredentialsException ex) {
         ErrorResponse error = new ErrorResponse(HttpStatus.UNAUTHORIZED, request, ex);
         return new ResponseEntity<Object>(error, HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler({Exception.class})
+    public ResponseEntity<Object> handleNullPointerException(HttpServletRequest request,
+                                                             Exception ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR, request, ex);
+        return new ResponseEntity<Object>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

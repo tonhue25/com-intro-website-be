@@ -24,8 +24,4 @@ public interface RecruitmentRepository extends AbstractRepository<Recruitment, L
     Page<Recruitment> getList(@Param("search") String search,
                               Pageable pageable);
 
-    @Modifying
-    @Transactional
-    @Query(value = "INSERT INTO RECRUITMENT_CANDIDATE (RECRUITMENT_ID,CANDIDATE_ID) VALUES (?1, ?2)", nativeQuery = true)
-    void saveRECRUITMENT_CANDIDATE(Long idRecruitment,Long idCandidate);
 }

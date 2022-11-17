@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,4 +30,12 @@ public class News extends AbstractEntity implements Serializable {
     public NewsDetail getNewsDetail() {
         return newsDetail;
     }
+//
+//    private NewsDetail newsDetail;
+//    @OneToOne(cascade = CascadeType.ALL)
+//    @JoinColumn(name = "newsdetail_id", referencedColumnName = "id")
+//    @JsonManagedReference
+//    public NewsDetail getNewsDetail() {
+//        return newsDetail;
+//    }
 }

@@ -21,7 +21,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +102,6 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
         entity = (Recruitment) recruitmentMapper.convertToEntity(request, entity);
         entity.setStatus(Constant.INSERT);
         entity = recruitmentRepository.save(entity);
-        recruitmentRepository.saveRECRUITMENT_CANDIDATE(entity.getId(), Long.valueOf(1));
         RecruitmentResponseDTO response = modelMapper.map(entity, RecruitmentResponseDTO.class);
         return response;
     }

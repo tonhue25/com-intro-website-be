@@ -61,7 +61,6 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
         }
         Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(), sort);
         Page<News> pageEntity = newsRepository.getList(requestDto.getSearch().toLowerCase(), pageable);
-
         List<News> listEntity = pageEntity.getContent();
         List<NewsResponseDTO> listDTO = new ArrayList<>();
         NewsResponseDTO dto = new NewsResponseDTO();
@@ -78,7 +77,6 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
     public NewsResponseDTO create(NewsRequestDto request) {
-        // ko find => create.
         News entity = new News();
         if(!DataUtil.isEmpty(request.getId())){
             Optional<News> optional = newsRepository.findById(request.getId());

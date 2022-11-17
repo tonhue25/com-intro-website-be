@@ -33,7 +33,6 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
     @Autowired
     private ModelMapper modelMapper;
 
-
     @Override
     public List<LeadershipResponseDTO> getAllLeadership() {
         try {
