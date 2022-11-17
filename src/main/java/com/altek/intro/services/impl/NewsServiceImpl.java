@@ -51,22 +51,25 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
         if (DataUtil.isEmpty(requestDto.getSize())) {
             throw new IllegalArgumentException("size.is.invalid");
         }
-        Sort sort;
-        if (requestDto.getSortType().equals("DESC")) {
-            sort = Sort.by(Sort.Direction.DESC, requestDto.getSortBy());
-        } else {
-            sort = Sort.by(Sort.Direction.ASC, requestDto.getSortBy());
+        Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize());
+        if (!DataUtil.isEmpty(requestDto.getSortBy()) && !DataUtil.isEmpty(requestDto.getSortType())) {
+            Sort.Direction sort = Sort.Direction.ASC;
+            if (requestDto.getSortType().equals("DESC")) {
+                sort = Sort.Direction.DESC;
+            }
+            pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(),
+                    Sort.by(sort, requestDto.getSortBy()));
         }
-        Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(), sort);
-        Page<News> pageEntity = newsRepository.getList(requestDto.getSearch().toLowerCase(), pageable);
-
+        Page<News> pageEntity = newsRepository.getList(requestDto.getSearch(),
+                pageable);
         List<News> listEntity = pageEntity.getContent();
-        List<NewsResponseDto> listDTO = new ArrayList<>();
+        List<NewsResponseDto> listResponse = new ArrayList<>();
         NewsResponseDto dto = new NewsResponseDto();
         if (CollectionUtils.isNotEmpty(listEntity)) {
-            listDTO = listEntity.stream().map(item -> (NewsResponseDto) newsMapper.convertToDTO(dto, item)).collect(Collectors.toList());
+            listResponse = listEntity.stream().map(item -> (NewsResponseDto) newsMapper.convertToDTO(dto, item)).collect(Collectors.toList());
         }
-        ListResponseDto<NewsResponseDto> response = listResponseMapper.setDataListResponse(listDTO, pageEntity, pageable);
+        ListResponseDto<NewsResponseDto> response = listResponseMapper.setDataListResponse(listResponse,
+                pageEntity, pageable);
         return new BaseResponse(Constant.SUCCESS, "get.list.news", response);
     }
 

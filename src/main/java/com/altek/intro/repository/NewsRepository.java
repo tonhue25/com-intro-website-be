@@ -11,8 +11,8 @@ import java.util.Optional;
 
 public interface NewsRepository extends AbstractRepository<News, Long> {
     @Query("select e from News e where  e.status = 1 and " +
-            "   ( lower(e.title) like lower(concat('%', :search, '%'))  or " +
-            "   lower(e.shortDescription) like lower(concat('%', :search, '%')) )")
+            "   ( lower(e.title) like lower(concat(:search, '%'))  or " +
+            "   lower(e.shortDescription) like lower(concat(:search, '%')) )")
     Page<News> getList(@Param("search") String search,
                        Pageable pageable);
 

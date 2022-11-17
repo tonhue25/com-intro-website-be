@@ -16,8 +16,10 @@ public interface RecruitmentRepository extends AbstractRepository<Recruitment, L
     @Query(value = "SELECT * FROM ALT_RECRUITMENT where STATUS = 1 ", nativeQuery = true)
     List<Recruitment> findAll();
 
-    @Query("select e from Recruitment e where  e.status = 1 and (:search is null or " +
-            "  lower(e.jobTitle) like  lower( concat('%',:search, '%')))")
+    @Query(value ="select * from ALT_RECRUITMENT where  STATUS = 1 and (:search is null or " +
+            "  lower(JOB_TITLE) like lower( concat(:search, '%')) )", nativeQuery = true)
     Page<Recruitment> getList(@Param("search") String search,
                               Pageable pageable);
 }
+
+

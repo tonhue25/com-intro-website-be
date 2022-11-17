@@ -29,4 +29,5 @@ public class Menu extends AbstractEntity implements Serializable {
     public List<Page> getPageContents() {
         return pageContents;
     }
+
 }
