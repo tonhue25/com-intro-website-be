@@ -1,7 +1,7 @@
 package com.altek.intro.controller;
 
 import com.altek.intro.dto.request.ListRequestDto;
-import com.altek.intro.dto.request.PageContentRequestDto;
+import com.altek.intro.dto.request.PageRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.PageService;
@@ -13,7 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/page")
+@RequestMapping("/pages")
 @Slf4j
 public class PageController {
 
@@ -40,7 +40,7 @@ public class PageController {
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponse> create(@RequestBody PageContentRequestDto request) {
+    public ResponseEntity<BaseResponse> create(@RequestBody PageRequestDto request) {
         try {
             return new ResponseEntity<BaseResponse>(pageContentService.create(request), HttpStatus.OK);
         } catch (Exception ex) {

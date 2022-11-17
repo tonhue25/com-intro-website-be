@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/pageDetail")
+@RequestMapping("/pageDetails")
 @Slf4j
 public class PageDetailController {
     @Autowired

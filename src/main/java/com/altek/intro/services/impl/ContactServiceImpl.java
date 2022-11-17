@@ -82,7 +82,7 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
             return new BaseResponse(Constant.SUCCESS, String.format("contact.already.delete.with.id:%s", id));
         }
         entity.setStatus(Constant.DELETE);
-        entity = contactRepository.save(entity);
+        contactRepository.save(entity);
         return new BaseResponse(Constant.SUCCESS, String.format("delete.contact.with.id:%s.success", id));
     }
 

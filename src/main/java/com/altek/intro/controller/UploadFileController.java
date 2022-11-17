@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/upload-file")
+@RequestMapping("/upload-files")
 public class UploadFileController {
 
     @Autowired

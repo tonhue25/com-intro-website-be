@@ -21,7 +21,7 @@ public class NewsDetail extends AbstractEntity implements Serializable {
 
     private News news;
     @OneToOne
-    @JoinColumn(name = "NEWS_ID", nullable = false)
+    @JoinColumn(name = "NEWS_ID", nullable = false, unique = true)
     public News getNews() {
         return news;
     }

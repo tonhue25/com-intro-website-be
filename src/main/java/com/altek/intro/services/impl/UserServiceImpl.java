@@ -65,14 +65,15 @@ public class UserServiceImpl implements UserService {
         if (!DataUtil.isEmpty(request.getPassword())) {
             request.setPassword(passwordEncoder.encode(request.getPassword()));
         }
-        if (!DataUtil.isEmpty(request.getId())) {
+//        if (!DataUtil.isEmpty(request.getId())) {
             Optional<User> optional = userRepository.findById(request.getId());
             if (optional.isPresent()) {
                 user = optional.get();
-                list = optional.get().getUserRoles();
+//                list = optional.get().getUserRoles();
             }
-        }
+//        }
         user = modelMapper.map(request, User.class);
+        user.setId(1L);
         user = userRepository.save(user);
         list = userRoleMapper.checkList(listRole, user);
         UserResponseDto response = modelMapper.map(user, UserResponseDto.class);

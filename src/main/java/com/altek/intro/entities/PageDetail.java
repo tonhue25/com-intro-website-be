@@ -34,7 +34,7 @@ public class PageDetail extends AbstractEntity implements Serializable {
 
     private Page page;
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PAGE_ID", nullable = false)
+    @JoinColumn(name = "PAGE_ID", nullable = false, unique = true)
     public Page getPage() {
         return page;
     }

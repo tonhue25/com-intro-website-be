@@ -18,7 +18,7 @@ import lombok.Setter;
 public class Contact extends AbstractEntity implements Serializable {
 
     @Column(name = "FULL_NAME")
-    private String name;
+    private String fullName;
 
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;

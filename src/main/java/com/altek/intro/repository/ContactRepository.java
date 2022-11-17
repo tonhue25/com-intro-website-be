@@ -17,7 +17,7 @@ public interface ContactRepository extends AbstractRepository<Contact, Long> {
     List<Contact> findAll();
 
     @Query("select e from Contact e where  e.status = 1 and (:search is null or ( " +
-            "  lower(e.name) like  lower( concat('%',:search, '%')) or" +
+            "  lower(e.fullName) like  lower( concat('%',:search, '%')) or" +
             "  lower(e.phoneNumber) like  lower( concat('%',:search, '%')) or" +
             "  lower(e.email) like  lower( concat('%',:search, '%')) " +
             " ))")

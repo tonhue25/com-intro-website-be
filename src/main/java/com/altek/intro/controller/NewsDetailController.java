@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.altek.intro.dto.response.NewsDetailResponseDto;
 @RestController
-@RequestMapping("/newsDetail")
+@RequestMapping("/newsDetails")
 @Slf4j
 public class NewsDetailController {
 

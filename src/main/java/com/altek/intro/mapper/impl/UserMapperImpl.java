@@ -19,6 +19,7 @@ public class UserMapperImpl extends AbstractMapperImpl implements UserMapper {
 
     @Override
     public User convertToEntity(User entity, UserRequestDto dto, List<UserRole> list) {
+        entity.setId(dto.getId());
         entity.setUsername(dto.getUsername());
         entity.setEmail(dto.getEmail());
         entity.setStatus(dto.getStatus());

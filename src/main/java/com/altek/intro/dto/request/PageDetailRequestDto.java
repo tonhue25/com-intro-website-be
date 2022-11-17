@@ -13,6 +13,6 @@ public class PageDetailRequestDto {
     private  String content;
     private  String thumbnail;
     private  String image;
-    private Long pageContentId;
+    private Long pageId;
     private Integer status;
 }

@@ -1,7 +1,7 @@
 package com.altek.intro.services.impl;
 
 import com.altek.intro.dto.request.ListRequestDto;
-import com.altek.intro.dto.request.PageContentRequestDto;
+import com.altek.intro.dto.request.PageRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.dto.response.PageResponseDto;
@@ -78,7 +78,7 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
     }
 
     @Override
-    public BaseResponse create(PageContentRequestDto request) {
+    public BaseResponse create(PageRequestDto request) {
         Optional<Menu> optionalMenu = menuRepository.findById(request.getMenuId());
         if (!optionalMenu.isPresent()) {
             throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", request.getMenuId()));

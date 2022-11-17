@@ -50,21 +50,16 @@ public class PageDetailServiceImpl extends AbstractServiceImpl implements PageDe
 
     @Override
     public BaseResponse create(PageDetailRequestDto request) {
-        Optional<Page> optional = pageContentRepository.findById(request.getPageContentId());
+        Optional<Page> optional = pageContentRepository.findById(request.getPageId());
         if (!optional.isPresent()) {
             throw new ResourceNotFoundException(
-                    String.format("page.content.not.found.with.id:%s", request.getPageContentId()));
+                    String.format("page.content.not.found.with.id:%s", request.getPageId()));
         }
         PageDetail entity = new PageDetail();
         if (!DataUtil.isEmpty(request.getId())) {
             Optional<PageDetail> optionalPageDetail = pageDetailRepository.findById(request.getId());
             if (optionalPageDetail.isPresent()) {
                 entity = optionalPageDetail.get();
-            }
-        } else {
-            if (pageDetailRepository.existsByPage(optional.get())) {
-                throw new ResourceNotFoundException(
-                        String.format("page.content.already.exists.with.id:%s", request.getPageContentId()));
             }
         }
         entity = pageDetailMapper.convertToEntity(entity, request, optional.get());

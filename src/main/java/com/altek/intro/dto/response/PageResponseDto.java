@@ -18,5 +18,5 @@ public class PageResponseDto extends AbstractResponseDto {
     private String timeLine;
     private String eventName;
     private Long menuId;
-
+    private String url;
 }

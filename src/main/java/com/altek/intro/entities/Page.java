@@ -31,10 +31,10 @@ public class Page extends AbstractEntity implements Serializable {
     @Column(name = "IMAGE")
     private String image;
 
-    @Column(name = "TIMELINE_HISTORY")
+    @Column(name = "TIMELINE")
     private String timeLine;
 
-    @Column(name = "EVENT_HISTORY")
+    @Column(name = "EVENT_NAME")
     private String eventName;
 
     private PageDetail pageDetail;
@@ -53,4 +53,9 @@ public class Page extends AbstractEntity implements Serializable {
         return menu;
     }
 
+    @Column(name = "LINK")
+    private String link;
+
+    @Column(name = "ICON")
+    private String icon;
 }

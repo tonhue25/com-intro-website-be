@@ -13,4 +13,8 @@ public class LeadershipRequestDto {
      String name;
      String position;
      String information;
+
+     private String facebook;
+
+     private String linkedin;
 }

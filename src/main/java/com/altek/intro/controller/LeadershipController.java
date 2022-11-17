@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/leadership")
+@RequestMapping("/leaderships")
 @Slf4j
 public class LeadershipController {
 

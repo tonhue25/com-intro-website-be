@@ -19,4 +19,5 @@ public class LoginController {
     public ResponseEntity<?> login(@RequestBody LoginRequestDto request) {
         return ResponseEntity.ok(loginService.login(request));
     }
+
 }
