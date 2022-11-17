@@ -20,7 +20,7 @@ import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.ContactService;
 
 @RestController
-@RequestMapping("/contact")
+@RequestMapping("/contacts")
 @Slf4j
 public class ContactController {
     @Autowired

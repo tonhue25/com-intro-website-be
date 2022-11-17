@@ -1,17 +1,16 @@
 package com.altek.intro.services;
 
 import com.altek.intro.dto.request.CandidateRequestDto;
-import com.altek.intro.dto.response.CandidateResponseDTO;
-import com.altek.intro.repository.CandiDateRepository;
+import com.altek.intro.dto.response.CandidateResponseDto;
 
 import java.util.List;
 
 public interface CandiDateService extends AbstractService {
 
-    List<CandidateResponseDTO> getAll();
+    List<CandidateResponseDto> getAll();
 
-    CandidateResponseDTO create(CandidateRequestDto request);
+    CandidateResponseDto create(CandidateRequestDto request);
 
-    CandidateResponseDTO delete(Long id);
+    CandidateResponseDto delete(Long id);
 
 }

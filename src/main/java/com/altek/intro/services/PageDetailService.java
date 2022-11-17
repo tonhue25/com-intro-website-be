@@ -5,7 +5,7 @@ import com.altek.intro.dto.response.BaseResponse;
 
 public interface PageDetailService extends AbstractService{
 
-    BaseResponse getByPageContentId(Long id);
+    BaseResponse getByPage(Long id);
 
     BaseResponse create(PageDetailRequestDto request);
 

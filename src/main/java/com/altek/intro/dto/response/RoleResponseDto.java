@@ -9,11 +9,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RecruitmentResponseDTO extends AbstractResponseDTO{
-
-    private String jobTitle;
-    private String jobDescription;
-    private String image;
-    private String file;
-
+public class RoleResponseDto extends  AbstractResponseDto{
+    private String name;
 }

@@ -35,29 +35,25 @@ public class PageDetailServiceImpl extends AbstractServiceImpl implements PageDe
     ModelMapper modelMapper;
 
     @Override
-    public BaseResponse getByPageContentId(Long id) {
+    public BaseResponse getByPage(Long id) {
         Optional<Page> optional = pageContentRepository.findById(id);
         if (!optional.isPresent()) {
-            throw new ResourceNotFoundException(String.format("page.content.not.found.with.id:%s", id));
+            throw new ResourceNotFoundException(String.format("page.not.found.with.id:%s", id));
         }
-        Optional<PageDetail> optionalPageDetail = pageDetailRepository.findByPageContent(optional.get());
+        Optional<PageDetail> optionalPageDetail = pageDetailRepository.findByPage(optional.get());
         if (!optionalPageDetail.isPresent()) {
-            throw new ResourceNotFoundException(String.format("page.content.no.have.page.detail.id:%s", id));
+            throw new ResourceNotFoundException(String.format("page.no.have.page.detail.id:%s", id));
         }
         PageDetailResponseDTO response = modelMapper.map(optionalPageDetail.get(), PageDetailResponseDTO.class);
-        return new BaseResponse(Constant.SUCCESS, "get.page.detail.by.page.content.id", response);
+        return new BaseResponse(Constant.SUCCESS, "get.page.detail.by.page.id", response);
     }
 
     @Override
     public BaseResponse create(PageDetailRequestDto request) {
-        Optional<Page> optional = pageContentRepository.findById(request.getPageContentId());
+        Optional<Page> optional = pageContentRepository.findById(request.getPageId());
         if (!optional.isPresent()) {
             throw new ResourceNotFoundException(
-                    String.format("page.content.not.found.with.id:%s", request.getPageContentId()));
-        }
-        if (pageDetailRepository.existsByPageContent(optional.get())) {
-            throw new ResourceNotFoundException(
-                    String.format("page.content.already.exists.with.id:%s", request.getPageContentId()));
+                    String.format("page.content.not.found.with.id:%s", request.getPageId()));
         }
         PageDetail entity = new PageDetail();
         if (!DataUtil.isEmpty(request.getId())) {

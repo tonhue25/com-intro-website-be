@@ -1,6 +1,5 @@
 package com.altek.intro.mapper.impl;
-
-import com.altek.intro.dto.response.CandidateResponseDTO;
+import com.altek.intro.dto.response.CandidateResponseDto;
 import com.altek.intro.entities.Candidate;
 import com.altek.intro.mapper.CandiDateMapper;
 import org.modelmapper.ModelMapper;
@@ -17,8 +16,8 @@ public class CandiDateMapperImpl extends AbstractMapperImpl implements CandiDate
     private ModelMapper modelMapper;
 
     @Override
-    public List<CandidateResponseDTO> mapList(List<Candidate> list) {
-        List<CandidateResponseDTO> response = list.stream().map(item -> modelMapper.map(item, CandidateResponseDTO.class))
+    public List<CandidateResponseDto> mapList(List<Candidate> list) {
+        List<CandidateResponseDto> response = list.stream().map(item -> modelMapper.map(item, CandidateResponseDto.class))
                 .collect(Collectors.toList());
         return response;
     }

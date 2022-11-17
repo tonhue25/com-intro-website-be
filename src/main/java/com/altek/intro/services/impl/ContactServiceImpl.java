@@ -3,7 +3,7 @@ package com.altek.intro.services.impl;
 import com.altek.intro.dto.request.ContactRequestDto;
 import com.altek.intro.dto.request.ListRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.ContactResponseDTO;
+import com.altek.intro.dto.response.ContactResponseDto;
 
 import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.entities.Contact;
@@ -43,11 +43,11 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
     @Override
     public BaseResponse getAllContact() {
         try {
-            List<ContactResponseDTO> responseDTOList = new ArrayList<>();
+            List<ContactResponseDto> responseDTOList = new ArrayList<>();
             List<Contact> contactEntities = contactRepository.findAll();
-            ContactResponseDTO dto = new ContactResponseDTO();
+            ContactResponseDto dto = new ContactResponseDto();
             if (CollectionUtils.isNotEmpty(contactEntities)) {
-                responseDTOList = contactEntities.stream().map(item -> (ContactResponseDTO) contactMapper.convertToDTO(dto, item)).collect(Collectors.toList());
+                responseDTOList = contactEntities.stream().map(item -> (ContactResponseDto) contactMapper.convertToDTO(dto, item)).collect(Collectors.toList());
             }
             return new BaseResponse(Constant.SUCCESS, "get.list.contact", responseDTOList);
         } catch (Exception e) {
@@ -67,7 +67,7 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
         }
         entity = (Contact) contactMapper.convertToEntity(request, entity);
         entity = contactRepository.save(entity);
-        ContactResponseDTO response = modelMapper.map(entity, ContactResponseDTO.class);
+        ContactResponseDto response = modelMapper.map(entity, ContactResponseDto.class);
         return new BaseResponse(Constant.SUCCESS, "add.or.update.contact.success", response);
     }
 
@@ -82,12 +82,12 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
             return new BaseResponse(Constant.SUCCESS, String.format("contact.already.delete.with.id:%s", id));
         }
         entity.setStatus(Constant.DELETE);
-        entity = contactRepository.save(entity);
+        contactRepository.save(entity);
         return new BaseResponse(Constant.SUCCESS, String.format("delete.contact.with.id:%s.success", id));
     }
 
     @Autowired
-    ListResponseMapper<ContactResponseDTO, Contact> listResponseMapper;
+    ListResponseMapper<ContactResponseDto, Contact> listResponseMapper;
 
     @Override
     public BaseResponse getAllContact(ListRequestDto requestDto) {
@@ -107,11 +107,11 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
         }
         Page<Contact> pageEntity = contactRepository.getList(requestDto.getSearch(), pageable);
         List<Contact> listEntity = pageEntity.getContent();
-        List<ContactResponseDTO> listResponse = new ArrayList<>();
+        List<ContactResponseDto> listResponse = new ArrayList<>();
         if (CollectionUtils.isNotEmpty(listEntity)) {
             listResponse = contactMapper.mapList(listEntity);
         }
-        ListResponseDto<ContactResponseDTO> response = listResponseMapper.setDataListResponse(listResponse, pageEntity, pageable);
+        ListResponseDto<ContactResponseDto> response = listResponseMapper.setDataListResponse(listResponse, pageEntity, pageable);
         return new BaseResponse(Constant.SUCCESS, "get.list.contact", response);
     }
 }

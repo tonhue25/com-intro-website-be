@@ -9,13 +9,13 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageDetailResponseDTO extends AbstractResponseDTO{
+public class PageDetailResponseDTO extends AbstractResponseDto {
 
     private String title;
     private String shortDescription;
     private  String content;
     private  String thumbnail;
     private  String image;
-    private Long pageContentId;
+    private Long pageId;
 
 }

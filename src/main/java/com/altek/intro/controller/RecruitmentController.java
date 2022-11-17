@@ -1,9 +1,7 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.dto.request.ListRequestDto;
 import com.altek.intro.dto.request.RecruitmentRequestDto;
-import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.RecruitmentResponseDTO;
+import com.altek.intro.dto.response.RecruitmentResponseDto;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.RecruitmentService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/recruitment")
+@RequestMapping("/recruitments")
 @Slf4j
 public class RecruitmentController {
 
@@ -23,9 +21,9 @@ public class RecruitmentController {
     private RecruitmentService recruitmentService;
 
     @GetMapping
-    public ResponseEntity<RecruitmentResponseDTO> listAll() {
+    public ResponseEntity<RecruitmentResponseDto> listAll() {
         try {
-            List<RecruitmentResponseDTO> response = recruitmentService.getAllRecruitment();
+            List<RecruitmentResponseDto> response = recruitmentService.getAllRecruitment();
             return new ResponseEntity(response, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             log.error(e.getMessage());
@@ -43,10 +41,10 @@ public class RecruitmentController {
 //    }
 
     @PostMapping
-    public ResponseEntity<RecruitmentResponseDTO> create(@RequestBody RecruitmentRequestDto request){
+    public ResponseEntity<RecruitmentResponseDto> create(@RequestBody RecruitmentRequestDto request){
         try {
-            RecruitmentResponseDTO result = recruitmentService.create(request);
-            return new ResponseEntity<RecruitmentResponseDTO>(result,HttpStatus.CREATED);
+            RecruitmentResponseDto result = recruitmentService.create(request);
+            return new ResponseEntity<RecruitmentResponseDto>(result,HttpStatus.CREATED);
         } catch (Exception e) {
             log.error(e.getMessage());
             e.printStackTrace();
@@ -55,8 +53,8 @@ public class RecruitmentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<RecruitmentResponseDTO> delete(@PathVariable("id") Long id){
-        RecruitmentResponseDTO result = recruitmentService.delete(id);
-        return new ResponseEntity<RecruitmentResponseDTO>(result, HttpStatus.OK);
+    public ResponseEntity<RecruitmentResponseDto> delete(@PathVariable("id") Long id){
+        RecruitmentResponseDto result = recruitmentService.delete(id);
+        return new ResponseEntity<RecruitmentResponseDto>(result, HttpStatus.OK);
     }
 }

@@ -5,10 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
@@ -21,12 +22,9 @@ public class User extends AbstractEntity implements Serializable {
     private String password;
     private String email;
 
-    private List<Role> roles;
-    @ManyToMany
-    @JoinTable(	name = "USER_ROLE",
-            joinColumns = @JoinColumn(name = "USER_ID"),
-            inverseJoinColumns = @JoinColumn(name = "ROLE_ID"))
-    public List<Role> getRoles() {
-        return roles;
+    List<UserRole> userRoles;
+    @OneToMany(mappedBy = "user")
+    public List<UserRole> getUserRoles() {
+        return userRoles;
     }
 }

@@ -9,9 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.altek.intro.dto.response.NewsDetailResponseDTO;
+import com.altek.intro.dto.response.NewsDetailResponseDto;
 @RestController
-@RequestMapping("/newsDetail")
+@RequestMapping("/newsDetails")
 @Slf4j
 public class NewsDetailController {
 
@@ -24,10 +24,10 @@ public class NewsDetailController {
     }
 
     @PostMapping
-    public ResponseEntity<NewsDetailResponseDTO> create(@RequestBody NewsDetailRequestDto request){
+    public ResponseEntity<NewsDetailResponseDto> create(@RequestBody NewsDetailRequestDto request){
         try {
-            NewsDetailResponseDTO result = newsDetailService.create(request);
-            return new ResponseEntity<NewsDetailResponseDTO>(result,HttpStatus.CREATED);
+            NewsDetailResponseDto result = newsDetailService.create(request);
+            return new ResponseEntity<NewsDetailResponseDto>(result,HttpStatus.CREATED);
         } catch (Exception e) {
             log.error(e.getMessage());
             e.printStackTrace();
@@ -36,9 +36,9 @@ public class NewsDetailController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<NewsDetailResponseDTO> delete(@PathVariable("id") Long id){
-        NewsDetailResponseDTO result = newsDetailService.delete(id);
-        return new ResponseEntity<NewsDetailResponseDTO>(result, HttpStatus.OK);
+    public ResponseEntity<NewsDetailResponseDto> delete(@PathVariable("id") Long id){
+        NewsDetailResponseDto result = newsDetailService.delete(id);
+        return new ResponseEntity<NewsDetailResponseDto>(result, HttpStatus.OK);
     }
 
 }

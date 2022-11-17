@@ -1,6 +1,6 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.dto.response.AbstractResponseDTO;
+import com.altek.intro.dto.response.AbstractResponseDto;
 import com.altek.intro.entities.AbstractEntity;
 import com.altek.intro.services.AbstractService;
 import org.springframework.data.domain.PageRequest;
@@ -14,7 +14,7 @@ import org.springframework.data.domain.Sort;
  * @return
  */
 
-public class AbstractServiceImpl<D extends AbstractResponseDTO, E extends AbstractEntity> implements AbstractService<D, E> {
+public class AbstractServiceImpl<D extends AbstractResponseDto, E extends AbstractEntity> implements AbstractService<D, E> {
 
 
     /**

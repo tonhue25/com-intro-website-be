@@ -2,8 +2,7 @@ package com.altek.intro.services.impl;
 
 import com.altek.intro.dto.request.CandidateRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.CandidateResponseDTO;
-import com.altek.intro.dto.response.LeadershipResponseDTO;
+import com.altek.intro.dto.response.CandidateResponseDto;
 import com.altek.intro.entities.Candidate;
 import com.altek.intro.entities.Recruitment;
 import com.altek.intro.exceptions.ResourceNotFoundException;
@@ -37,13 +36,13 @@ public class CandiDateServiceImpl extends AbstractServiceImpl implements CandiDa
     private ModelMapper modelMapper;
 
     @Override
-    public List<CandidateResponseDTO> getAll() {
+    public List<CandidateResponseDto> getAll() {
         try {
-            List<CandidateResponseDTO> responseDtoList = new ArrayList<>();
+            List<CandidateResponseDto> responseDtoList = new ArrayList<>();
             List<Candidate> cadidateEntity = candiDateRepository.findAll();
-            CandidateResponseDTO dto = new CandidateResponseDTO();
+            CandidateResponseDto dto = new CandidateResponseDto();
             if (CollectionUtils.isNotEmpty(cadidateEntity)) {
-                responseDtoList = cadidateEntity.stream().map(item -> (CandidateResponseDTO) candiDateMapper.convertToDTO(dto, item)).collect(Collectors.toList());
+                responseDtoList = cadidateEntity.stream().map(item -> (CandidateResponseDto) candiDateMapper.convertToDTO(dto, item)).collect(Collectors.toList());
             }
             return responseDtoList;
         } catch (Exception e) {
@@ -54,7 +53,7 @@ public class CandiDateServiceImpl extends AbstractServiceImpl implements CandiDa
 
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
-    public CandidateResponseDTO create(CandidateRequestDto request) {
+    public CandidateResponseDto create(CandidateRequestDto request) {
         Candidate entity = new Candidate();
         if (!DataUtil.isEmpty(request.getId())) {
             Optional<Candidate> optional = candiDateRepository.findById(request.getId());
@@ -65,12 +64,12 @@ public class CandiDateServiceImpl extends AbstractServiceImpl implements CandiDa
         entity = (Candidate) candiDateMapper.convertToEntity(request, entity);
         entity.setStatus(Constant.INSERT);
         entity = candiDateRepository.save(entity);
-        CandidateResponseDTO response = modelMapper.map(entity, CandidateResponseDTO.class);
+        CandidateResponseDto response = modelMapper.map(entity, CandidateResponseDto.class);
         return response;
     }
 
     @Override
-    public CandidateResponseDTO delete(Long id) {
+    public CandidateResponseDto delete(Long id) {
         return null;
     }
 }

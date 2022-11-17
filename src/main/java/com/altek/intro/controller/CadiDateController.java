@@ -1,9 +1,7 @@
 package com.altek.intro.controller;
 
 import com.altek.intro.dto.request.CandidateRequestDto;
-import com.altek.intro.dto.request.LeadershipRequestDto;
-import com.altek.intro.dto.response.CandidateResponseDTO;
-import com.altek.intro.dto.response.LeadershipResponseDTO;
+import com.altek.intro.dto.response.CandidateResponseDto;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.CandiDateService;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +25,9 @@ public class CadiDateController {
     private CandiDateService candiDateService;
 
     @GetMapping
-    public ResponseEntity<CandidateResponseDTO> listAll() {
+    public ResponseEntity<CandidateResponseDto> listAll() {
         try {
-            List<CandidateResponseDTO> response = candiDateService.getAll();
+            List<CandidateResponseDto> response = candiDateService.getAll();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             log.error(e.getMessage());
@@ -42,10 +40,10 @@ public class CadiDateController {
     }
 
     @PostMapping
-    public ResponseEntity<CandidateResponseDTO> create(@RequestBody CandidateRequestDto request){
+    public ResponseEntity<CandidateResponseDto> create(@RequestBody CandidateRequestDto request){
         try {
-            CandidateResponseDTO result = candiDateService.create(request);
-            return new ResponseEntity<CandidateResponseDTO>(result,HttpStatus.CREATED);
+            CandidateResponseDto result = candiDateService.create(request);
+            return new ResponseEntity<CandidateResponseDto>(result,HttpStatus.CREATED);
         } catch (Exception e) {
             log.error(e.getMessage());
             e.printStackTrace();

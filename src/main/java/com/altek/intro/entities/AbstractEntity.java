@@ -24,10 +24,14 @@ public abstract class AbstractEntity implements Serializable {
 
     private Long id;
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "ID")
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Column(name = "STATUS")
@@ -37,9 +41,13 @@ public abstract class AbstractEntity implements Serializable {
         return status;
     }
 
+    private String createdBy;
+
     @Column(name = "CREATED_BY", nullable = true)
     @CreatedBy
-    private String createdBy;
+    public String getCreatedBy() {
+        return createdBy;
+    }
 
     private Date createdTime;
     @Column(name = "CREATED_TIME", nullable = false, updatable = false)
@@ -48,9 +56,13 @@ public abstract class AbstractEntity implements Serializable {
         return createdTime;
     }
 
+    private String lastUpdatedBy;
+
     @Column(name = "LAST_UPDATED_BY")
     @LastModifiedBy
-    private String lastUpdatedBy;
+    public String getLastUpdatedBy() {
+        return lastUpdatedBy;
+    }
 
     @Column(name = "LAST_UPDATED_TIME")
     @LastModifiedDate

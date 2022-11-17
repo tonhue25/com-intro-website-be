@@ -4,18 +4,18 @@ package com.altek.intro.services;
 import com.altek.intro.dto.request.ListRequestDto;
 import com.altek.intro.dto.request.RecruitmentRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.RecruitmentResponseDTO;
+import com.altek.intro.dto.response.RecruitmentResponseDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 public interface RecruitmentService extends AbstractService{
-    List<RecruitmentResponseDTO> getAllRecruitment();
+    List<RecruitmentResponseDto> getAllRecruitment();
 
     BaseResponse getList(ListRequestDto requestDto);
 
-    RecruitmentResponseDTO create(RecruitmentRequestDto request);
+    RecruitmentResponseDto create(RecruitmentRequestDto request);
 
-    RecruitmentResponseDTO delete(Long id);
+    RecruitmentResponseDto delete(Long id);
 
 }

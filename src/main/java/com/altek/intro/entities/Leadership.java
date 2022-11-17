@@ -21,7 +21,7 @@ public class Leadership extends AbstractEntity implements Serializable {
     private String image;
 
     @Column(name = "FULL_NAME")
-    private String name;
+    private String fullName;
 
     @Column(name = "POSITION")
     private String position;
@@ -29,4 +29,9 @@ public class Leadership extends AbstractEntity implements Serializable {
     @Column(name = "INFORMATION")
     private String information;
 
+    @Column(name = "FACEBOOK")
+    private String facebook;
+
+    @Column(name = "LINKED_IN")
+    private String linkedIn;
 }

@@ -21,4 +21,8 @@ public class Constant {
 
     public static final String FAIL = "FAIL";
 
+    public static final String my_cloud_name = "tonhue250322";
+    public static final String my_api_key = "148136783149491";
+    public static final String my_api_secret = "2HrHD9U-WsBDf6-YB2bV-H-3NGA";
+
 }

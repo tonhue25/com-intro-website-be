@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CandidateResponseDTO extends AbstractResponseDTO{
+public class CandidateResponseDto extends AbstractResponseDto {
 
     private String fullName;
     private String email;

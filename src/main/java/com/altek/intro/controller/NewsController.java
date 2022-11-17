@@ -3,7 +3,7 @@ package com.altek.intro.controller;
 import com.altek.intro.dto.request.ListRequestDto;
 import com.altek.intro.dto.request.NewsRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.NewsResponseDTO;
+import com.altek.intro.dto.response.NewsResponseDto;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.NewsService;
 import lombok.extern.slf4j.Slf4j;
@@ -34,10 +34,10 @@ public class NewsController {
     }
 
     @PostMapping
-    public ResponseEntity<NewsResponseDTO> Create(@RequestBody NewsRequestDto request) {
+    public ResponseEntity<NewsResponseDto> Create(@RequestBody NewsRequestDto request) {
         try {
-            NewsResponseDTO result = newsService.create(request);
-            return new ResponseEntity<NewsResponseDTO>(result, HttpStatus.CREATED);
+            NewsResponseDto result = newsService.create(request);
+            return new ResponseEntity<NewsResponseDto>(result, HttpStatus.CREATED);
         } catch (Exception e) {
             log.error(e.getMessage());
             e.printStackTrace();
@@ -46,8 +46,8 @@ public class NewsController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<NewsResponseDTO> delete(@PathVariable("id") Long id){
-        NewsResponseDTO result = newsService.delete(id);
-        return new ResponseEntity<NewsResponseDTO>(result, HttpStatus.OK);
+    public ResponseEntity<NewsResponseDto> delete(@PathVariable("id") Long id){
+        NewsResponseDto result = newsService.delete(id);
+        return new ResponseEntity<NewsResponseDto>(result, HttpStatus.OK);
     }
 }

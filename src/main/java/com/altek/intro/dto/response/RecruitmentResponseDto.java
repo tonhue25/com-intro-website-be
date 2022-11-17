@@ -5,14 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class SliderResponseDTO extends AbstractResponseDTO {
+public class RecruitmentResponseDto extends AbstractResponseDto {
 
-    private String title;
+    private String jobTitle;
+    private String jobDescription;
     private String image;
-    private String content;
+    private String file;
 
 }

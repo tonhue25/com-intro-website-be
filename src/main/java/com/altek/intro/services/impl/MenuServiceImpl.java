@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.altek.intro.dto.request.MenuRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.MenuResponseDTO;
+import com.altek.intro.dto.response.MenuResponseDto;
 
 import com.altek.intro.entities.Menu;
 import com.altek.intro.exceptions.ResourceNotFoundException;
@@ -36,11 +36,11 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
     @Override
     public BaseResponse getAll() {
         try {
-            List<MenuResponseDTO> menuDTOs = new ArrayList<MenuResponseDTO>();
+            List<MenuResponseDto> menuDTOs = new ArrayList<MenuResponseDto>();
             List<Menu> menuEntities = menuRepository.findAll();
-            MenuResponseDTO dto = new MenuResponseDTO();
+            MenuResponseDto dto = new MenuResponseDto();
             if (CollectionUtils.isNotEmpty(menuEntities)) {
-                menuDTOs = menuEntities.stream().map(item -> (MenuResponseDTO) menuMapper.convertToDTO(dto, item))
+                menuDTOs = menuEntities.stream().map(item -> (MenuResponseDto) menuMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
             return new BaseResponse(Constant.SUCCESS, "get.list.menu", menuDTOs);
@@ -61,7 +61,7 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
         }
         entity = (Menu) menuMapper.convertToEntity(request, entity);
         entity = menuRepository.save(entity);
-        MenuResponseDTO response = modelMapper.map(entity, MenuResponseDTO.class);
+        MenuResponseDto response = modelMapper.map(entity, MenuResponseDto.class);
         return new BaseResponse(Constant.SUCCESS, "add.or.update.menu", response);
     }
 

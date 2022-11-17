@@ -6,7 +6,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ContactResponseDTO extends AbstractResponseDTO{
+public class ContactResponseDto extends AbstractResponseDto {
 
     private String name;
     private String phoneNumber;
