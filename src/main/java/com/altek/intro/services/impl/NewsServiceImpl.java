@@ -1,6 +1,6 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.dto.request.ListRequestDto;
+import com.altek.intro.dto.request.BaseRequest;
 import com.altek.intro.dto.request.NewsRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.ListResponseDto;
@@ -44,32 +44,48 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
     ListResponseMapper<NewsResponseDto, News> listResponseMapper;
 
     @Override
-    public BaseResponse getList(ListRequestDto requestDto) {
-        if (DataUtil.isEmpty(requestDto.getPage())) {
-            throw new IllegalArgumentException("page.is.invalid");
-        }
-        if (DataUtil.isEmpty(requestDto.getSize())) {
-            throw new IllegalArgumentException("size.is.invalid");
-        }
-        Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize());
-        if (!DataUtil.isEmpty(requestDto.getSortBy()) && !DataUtil.isEmpty(requestDto.getSortType())) {
-            Sort.Direction sort = Sort.Direction.ASC;
-            if (requestDto.getSortType().equals("DESC")) {
-                sort = Sort.Direction.DESC;
-            }
-            pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(),
-                    Sort.by(sort, requestDto.getSortBy()));
-        }
-        Page<News> pageEntity = newsRepository.getList(requestDto.getSearch(),
-                pageable);
-        List<News> listEntity = pageEntity.getContent();
+    public BaseResponse getList(BaseRequest requestDto) {
+        List<News> listEntity = new ArrayList<>();
+        ListResponseDto<NewsResponseDto> response = new ListResponseDto<>();
         List<NewsResponseDto> listResponse = new ArrayList<>();
         NewsResponseDto dto = new NewsResponseDto();
+        int pageNumber = 1;
+        int size = 0;
+        int recordPerPage = 0;
+        int totalPages = 1;
+        if (DataUtil.isEmpty(requestDto.getPage()) || DataUtil.isEmpty(requestDto.getSize())) {
+            listEntity = newsRepository.getAll(requestDto.getSearch());
+            size = recordPerPage = listEntity.size();
+        } else {
+            Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize());
+            if (!DataUtil.isEmpty(requestDto.getSortBy()) && !DataUtil.isEmpty(requestDto.getSortType())) {
+                Sort.Direction sort = Sort.Direction.ASC;
+                if (requestDto.getSortType().equals("DESC")) {
+                    sort = Sort.Direction.DESC;
+                }
+                pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(),
+                        Sort.by(sort, requestDto.getSortBy()));
+            }
+            Page<News> pageEntity = newsRepository.getList(requestDto.getSearch(),
+                    pageable);
+            listEntity = pageEntity.getContent();
+            size = pageEntity.getNumberOfElements();
+            recordPerPage = pageable.getPageSize();
+            totalPages = pageEntity.getTotalPages();
+            pageNumber = pageable.getPageNumber();
+            if (pageEntity.getTotalPages() > 0) {
+                pageNumber = pageNumber + 1;
+            }
+        }
         if (CollectionUtils.isNotEmpty(listEntity)) {
             listResponse = listEntity.stream().map(item -> (NewsResponseDto) newsMapper.convertToDTO(dto, item)).collect(Collectors.toList());
+            response.setList(listResponse);
+            response.setPage(pageNumber);
+            response.setSize(size);
+            response.setTotalPages(totalPages);
+            response.setRecordPerPage(recordPerPage);
+//            listResponseMapper.setDataListResponse()
         }
-        ListResponseDto<NewsResponseDto> response = listResponseMapper.setDataListResponse(listResponse,
-                pageEntity, pageable);
         return new BaseResponse(Constant.SUCCESS, "get.list.news", response);
     }
 
@@ -88,8 +104,8 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
     public NewsResponseDto delete(Long id) {
         Optional<News> optional = newsRepository.findById(id);
-        if(!optional.isPresent()){
-            throw new ResourceNotFoundException(String.format("News.not.found.with.id:%s",id));
+        if (!optional.isPresent()) {
+            throw new ResourceNotFoundException(String.format("News.not.found.with.id:%s", id));
         }
         News entity = optional.get();
         entity.setStatus(Constant.DELETE);
@@ -97,5 +113,4 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
         NewsResponseDto response = modelMapper.map(entity, NewsResponseDto.class);
         return response;
     }
-
 }

@@ -33,4 +33,15 @@ public class Recruitment extends AbstractEntity implements Serializable {
     @Column(name = "LOCATION")
     private String location;
 
+    private RecruitmentType recruitmentType;
+    @ManyToOne(fetch = FetchType.LAZY)
+    public RecruitmentType getRecruitmentType() {
+        return recruitmentType;
+    }
+
+    List<ProductgroupRecruitment> productgroupRecruitments;
+    @OneToMany(mappedBy = "recruitment")
+    public List<ProductgroupRecruitment> getProductgroupRecruitments() {
+        return productgroupRecruitments;
+    }
 }

@@ -7,6 +7,8 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LeadershipResponseDto extends AbstractResponseDto {
+
+     Long leadershipId;
      String image;
      String name;
      String position;

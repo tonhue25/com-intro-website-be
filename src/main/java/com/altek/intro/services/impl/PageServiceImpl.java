@@ -1,6 +1,6 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.dto.request.ListRequestDto;
+import com.altek.intro.dto.request.BaseRequest;
 import com.altek.intro.dto.request.PageRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.ListResponseDto;
@@ -119,7 +119,7 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
     }
 
     @Override
-    public BaseResponse listPageContent(ListRequestDto requestDto) {
+    public BaseResponse listPageContent(BaseRequest requestDto) {
         if (DataUtil.isEmpty(requestDto.getPage())) {
             throw new IllegalArgumentException("page.is.invalid");
         }

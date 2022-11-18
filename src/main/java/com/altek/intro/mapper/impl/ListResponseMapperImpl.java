@@ -26,4 +26,11 @@ public class ListResponseMapperImpl<D, E> implements ListResponseMapper<D,E>{
         responseDto.setPage(pageNumber);
         return responseDto;
     }
+
+    @Override
+    public ListResponseDto<D> setDataListResponse(List<D> listDTO) {
+        ListResponseDto<D> responseDto = new ListResponseDto<>();
+        responseDto.setList(listDTO);
+        return responseDto;
+    }
 }

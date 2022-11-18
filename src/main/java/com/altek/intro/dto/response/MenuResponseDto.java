@@ -9,7 +9,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class MenuResponseDto extends AbstractResponseDto {
+public class MenuResponseDto extends AbstractResponseDto{
+    private Long menuId;
     private String label;
     private String link;
 

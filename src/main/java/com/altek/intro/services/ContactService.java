@@ -1,7 +1,7 @@
 package com.altek.intro.services;
 
 import com.altek.intro.dto.request.ContactRequestDto;
-import com.altek.intro.dto.request.ListRequestDto;
+import com.altek.intro.dto.request.BaseRequest;
 import com.altek.intro.dto.response.BaseResponse;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +14,5 @@ public interface ContactService extends AbstractService{
 
     BaseResponse delete(Long id);
 
-    BaseResponse getAllContact(ListRequestDto dto);
+    BaseResponse getAllContact(BaseRequest dto);
 }

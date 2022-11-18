@@ -1,7 +1,7 @@
 package com.altek.intro.controller;
 
 
-import com.altek.intro.dto.request.ListRequestDto;
+import com.altek.intro.dto.request.BaseRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -42,7 +42,7 @@ public class ContactController {
     }
 
     @PostMapping("/list")
-    public ResponseEntity<BaseResponse> getListContact(@RequestBody ListRequestDto dto) {
+    public ResponseEntity<BaseResponse> getListContact(@RequestBody BaseRequest dto) {
         return new ResponseEntity(contactService.getAllContact(dto), HttpStatus.OK);
     }
 

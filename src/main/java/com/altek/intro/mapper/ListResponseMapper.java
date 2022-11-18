@@ -11,5 +11,6 @@ public interface ListResponseMapper<D, E> {
 
     public ListResponseDto<D> setDataListResponse(List<D> listDTO,
             Page<E> pageEntity, Pageable pageable);
-     
+
+    public ListResponseDto<D> setDataListResponse(List<D> listDTO);
 }

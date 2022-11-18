@@ -9,8 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoleResponseDto extends  AbstractResponseDto{
-
-    private Long roleId;
+public class RecruitmentTypeResponseDto extends  AbstractResponseDto{
+    private String recruitmentTypeId;
     private String name;
 }

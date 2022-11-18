@@ -8,6 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 public class NewsDetailResponseDto extends AbstractResponseDto {
 
+    private Long newsDetailId;
     private String content;
     private Long newsId;
 }

@@ -5,11 +5,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ListRequestDto {
+public class BaseRequest {
 
     private Integer size;
     private Integer page;
@@ -17,5 +19,7 @@ public class ListRequestDto {
     private String sortType;
     private String sortBy;
     private Long id;
-    
+    private List<Long> types;
+    private List<String> locations;
+    private List<Long> groups;
 }
