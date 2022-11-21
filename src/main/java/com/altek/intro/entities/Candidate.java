@@ -36,10 +36,9 @@ public class Candidate extends AbstractEntity implements Serializable {
 //    public List<Recruitment> getRecruitments() {
 //        return recruitments;
 //    }
-    private List<Candidate_Recruitment> candidateRecruitments;
-    @JsonIgnore
+    private List<Recruitment_Candidate> candidateRecruitments;
     @OneToMany(mappedBy = "candidate")
-    public List<Candidate_Recruitment> getCandidateRecruitments() {
+    public List<Recruitment_Candidate> getCandidateRecruitments() {
         return candidateRecruitments;
     }
 }
