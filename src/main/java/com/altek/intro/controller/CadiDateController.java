@@ -3,7 +3,7 @@ package com.altek.intro.controller;
 import com.altek.intro.dto.request.CandidateRequestDto;
 import com.altek.intro.dto.response.CandidateResponseDto;
 import com.altek.intro.exceptions.ResourceNotFoundException;
-import com.altek.intro.services.CandiDateService;
+import com.altek.intro.services.CandidateService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ import java.util.List;
 public class CadiDateController {
 
     @Autowired
-    private CandiDateService candiDateService;
+    private CandidateService candiDateService;
 
     @GetMapping
     public ResponseEntity<CandidateResponseDto> listAll() {

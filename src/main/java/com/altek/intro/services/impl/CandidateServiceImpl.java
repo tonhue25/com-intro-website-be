@@ -1,14 +1,12 @@
 package com.altek.intro.services.impl;
 
 import com.altek.intro.dto.request.CandidateRequestDto;
-import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.CandidateResponseDto;
 import com.altek.intro.entities.Candidate;
-import com.altek.intro.entities.Recruitment;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.CandiDateMapper;
-import com.altek.intro.repository.CandiDateRepository;
-import com.altek.intro.services.CandiDateService;
+import com.altek.intro.repository.CandidateRepository;
+import com.altek.intro.services.CandidateService;
 import com.altek.intro.utils.Constant;
 import com.altek.intro.utils.DataUtil;
 import org.apache.commons.collections4.CollectionUtils;
@@ -16,7 +14,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,10 +21,10 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class CandiDateServiceImpl extends AbstractServiceImpl implements CandiDateService {
+public class CandidateServiceImpl extends AbstractServiceImpl implements CandidateService {
 
     @Autowired
-    private CandiDateRepository candiDateRepository;
+    private CandidateRepository candiDateRepository;
 
     @Autowired
     private CandiDateMapper candiDateMapper;

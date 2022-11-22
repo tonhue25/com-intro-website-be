@@ -9,7 +9,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoleResponseDto extends  AbstractResponseDto{
-
+public class ProductGroupResponseDto extends  AbstractResponseDto{
     private String name;
 }

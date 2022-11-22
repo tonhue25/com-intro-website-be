@@ -1,6 +1,6 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.dto.request.ListRequestDto;
+import com.altek.intro.dto.request.BaseRequest;
 import com.altek.intro.dto.request.PageRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.exceptions.ResourceNotFoundException;
@@ -51,7 +51,7 @@ public class PageController {
     }
 
     @PostMapping("list")
-    public ResponseEntity<BaseResponse> listPageContent(@RequestBody ListRequestDto requestDto){
+    public ResponseEntity<BaseResponse> listPageContent(@RequestBody BaseRequest requestDto){
         return new ResponseEntity<BaseResponse>(pageContentService.listPageContent(requestDto), HttpStatus.OK);
     }
 

@@ -17,8 +17,8 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<BaseResponse> getUser(@RequestParam Long id){
-        return new ResponseEntity<BaseResponse>(userService.getUser(id), HttpStatus.OK);
+    public ResponseEntity<BaseResponse> getUser(@RequestParam String username){
+        return new ResponseEntity<BaseResponse>(userService.getUser(username), HttpStatus.OK);
     }
 
     @PostMapping

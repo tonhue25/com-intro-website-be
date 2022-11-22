@@ -1,15 +1,19 @@
 package com.altek.intro.services.impl;
 
-import com.altek.intro.dto.request.ListRequestDto;
+import com.altek.intro.dto.request.BaseRequest;
 import com.altek.intro.dto.request.RecruitmentRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.dto.response.RecruitmentResponseDto;
+import com.altek.intro.entities.ProductGroup;
 import com.altek.intro.entities.Recruitment;
+import com.altek.intro.entities.RecruitmentType;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.ListResponseMapper;
 import com.altek.intro.mapper.RecruitmentMapper;
+import com.altek.intro.repository.ProductGroupRepository;
 import com.altek.intro.repository.RecruitmentRepository;
+import com.altek.intro.repository.RecruitmentTypeRepository;
 import com.altek.intro.services.RecruitmentService;
 import com.altek.intro.utils.Constant;
 import com.altek.intro.utils.DataUtil;
@@ -23,6 +27,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,6 +45,12 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
 
     @Autowired
     ListResponseMapper<RecruitmentResponseDto, Recruitment> listResponseMapper;
+
+    @Autowired
+    private RecruitmentTypeRepository recruitmentTypeRepository;
+
+    @Autowired
+    private ProductGroupRepository productGroupRepository;
 
     @Override
     public List<RecruitmentResponseDto> getAllRecruitment() {
@@ -60,32 +71,68 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
     }
 
     @Override
-    public BaseResponse getList(ListRequestDto requestDto) {
-        if (DataUtil.isEmpty(requestDto.getPage())) {
-            throw new IllegalArgumentException("page.is.invalid");
-        }
-        if (DataUtil.isEmpty(requestDto.getSize())) {
-            throw new IllegalArgumentException("size.is.invalid");
-        }
-        Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize());
-        if (!DataUtil.isEmpty(requestDto.getSortBy()) && !DataUtil.isEmpty(requestDto.getSortType())) {
-            Sort.Direction sort = Sort.Direction.ASC;
-            if (requestDto.getSortType().equals("DESC")) {
-                sort = Sort.Direction.DESC;
-            }
-            pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(),
-                    Sort.by(sort, requestDto.getSortBy()));
-        }
-        Page<Recruitment> pageEntity = recruitmentRepository.getList(requestDto.getSearch(),
-                pageable);
-        List<Recruitment> listEntity = pageEntity.getContent();
+    public BaseResponse getList(BaseRequest requestDto) {
+        List<Recruitment> listEntity = new ArrayList<>();
+        ListResponseDto<RecruitmentResponseDto> response = new ListResponseDto<>();
         List<RecruitmentResponseDto> listResponse = new ArrayList<>();
         RecruitmentResponseDto dto = new RecruitmentResponseDto();
-        if (CollectionUtils.isNotEmpty(listEntity)) {
-            listResponse = recruitmentMapper.mapList(listEntity);
+        List<String> locations = new ArrayList<>();
+        int pageNumber = 1;
+        int size = 0;
+        int recordPerPage = 0;
+        int totalPages = 1;
+        List<Long> types = new ArrayList<>();
+        List<Long> groups = new ArrayList<>();
+        if (DataUtil.isEmpty(requestDto.getLocations())) {
+            locations = Arrays.asList(Constant.HCM, Constant.HN);
+        } else {
+            locations = requestDto.getLocations();
         }
-        ListResponseDto<RecruitmentResponseDto> response = listResponseMapper.setDataListResponse(listResponse,
-                pageEntity, pageable);
+        if (DataUtil.isEmpty(requestDto.getTypes())) {
+            types = recruitmentTypeRepository.findAll().stream()
+                    .map(RecruitmentType::getId)
+                    .collect(Collectors.toList());
+        } else {
+            types = requestDto.getTypes();
+        }
+        if (DataUtil.isEmpty(requestDto.getGroups())) {
+            groups = productGroupRepository.findAll().stream()
+                    .map(ProductGroup::getId)
+                    .collect(Collectors.toList());
+        } else {
+            groups = requestDto.getGroups();
+        }
+        if (DataUtil.isEmpty(requestDto.getPage()) || DataUtil.isEmpty(requestDto.getSize())) {
+            listEntity = recruitmentRepository.getAll(requestDto.getSearch(), locations, types, groups);
+            size = recordPerPage = listEntity.size();
+        } else {
+            Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize());
+            if (!DataUtil.isEmpty(requestDto.getSortBy()) && !DataUtil.isEmpty(requestDto.getSortType())) {
+                Sort.Direction sort = Sort.Direction.ASC;
+                if (requestDto.getSortType().equals("DESC")) {
+                    sort = Sort.Direction.DESC;
+                }
+                pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(),
+                        Sort.by(sort, requestDto.getSortBy()));
+            }
+            Page<Recruitment> pageEntity = recruitmentRepository.getList(requestDto.getSearch(), locations, types, groups, pageable);
+            listEntity = pageEntity.getContent();
+            size = pageEntity.getNumberOfElements();
+            recordPerPage = pageable.getPageSize();
+            totalPages = pageEntity.getTotalPages();
+            pageNumber = pageable.getPageNumber();
+            if (pageEntity.getTotalPages() > 0) {
+                pageNumber = pageNumber + 1;
+            }
+        }
+        if (CollectionUtils.isNotEmpty(listEntity)) {
+            listResponse = listEntity.stream().map(item -> (RecruitmentResponseDto) recruitmentMapper.convertToDTO(dto, item)).collect(Collectors.toList());
+            response.setList(listResponse);
+            response.setPage(pageNumber);
+            response.setSize(size);
+            response.setTotalPages(totalPages);
+            response.setRecordPerPage(recordPerPage);
+        }
         return new BaseResponse(Constant.SUCCESS, "get.list.recruitment", response);
     }
 

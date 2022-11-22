@@ -25,4 +25,6 @@ public class Constant {
     public static final String my_api_key = "148136783149491";
     public static final String my_api_secret = "2HrHD9U-WsBDf6-YB2bV-H-3NGA";
 
+    public static final String HCM = "Hồ Chí Minh";
+    public static final String HN = "Hà Nội";
 }

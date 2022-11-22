@@ -1,7 +1,7 @@
 package com.altek.intro.services;
 
 
-import com.altek.intro.dto.request.ListRequestDto;
+import com.altek.intro.dto.request.BaseRequest;
 import com.altek.intro.dto.request.RecruitmentRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.RecruitmentResponseDto;
@@ -12,7 +12,7 @@ import java.util.List;
 public interface RecruitmentService extends AbstractService{
     List<RecruitmentResponseDto> getAllRecruitment();
 
-    BaseResponse getList(ListRequestDto requestDto);
+    BaseResponse getList(BaseRequest requestDto);
 
     RecruitmentResponseDto create(RecruitmentRequestDto request);
 

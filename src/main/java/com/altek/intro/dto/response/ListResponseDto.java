@@ -20,6 +20,6 @@ public class ListResponseDto<D> {
     private Integer page;
     private Integer totalPages;
     private Integer recordPerPage;
+    private String language;
     private List<D> list;
-    
 }

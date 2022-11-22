@@ -8,5 +8,5 @@ public interface UserService {
 
     BaseResponse deleteUser(Long id);
 
-    BaseResponse getUser(Long id);
+    BaseResponse getUser(String username);
 }

@@ -1,6 +1,6 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.dto.request.ListRequestDto;
+import com.altek.intro.dto.request.BaseRequest;
 import com.altek.intro.dto.request.NewsRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.NewsResponseDto;
@@ -21,7 +21,7 @@ public class NewsController {
     private NewsService newsService;
 
     @PostMapping("/list")
-    public ResponseEntity<BaseResponse> list(@RequestBody ListRequestDto requestDto) {
+    public ResponseEntity<BaseResponse> list(@RequestBody BaseRequest requestDto) {
         try {
             return new ResponseEntity(newsService.getList(requestDto), HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
@@ -32,6 +32,19 @@ public class NewsController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+//    @PostMapping("/new")
+//    public ResponseEntity<BaseResponse> getListNew(@RequestBody BaseRequest requestDto) {
+//        try {
+//            return new ResponseEntity(newsService.getListNew(requestDto), HttpStatus.OK);
+//        } catch (ResourceNotFoundException e) {
+//            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+//        } catch (Exception e) {
+//            log.error(e.getMessage());
+//            e.printStackTrace();
+//            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
 
     @PostMapping
     public ResponseEntity<NewsResponseDto> Create(@RequestBody NewsRequestDto request) {

@@ -5,7 +5,7 @@ import com.altek.intro.dto.response.CandidateResponseDto;
 
 import java.util.List;
 
-public interface CandiDateService extends AbstractService {
+public interface CandidateService extends AbstractService {
 
     List<CandidateResponseDto> getAll();
 

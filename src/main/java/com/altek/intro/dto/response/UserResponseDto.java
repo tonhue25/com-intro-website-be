@@ -14,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserResponseDto extends  AbstractResponseDto{
+
     private String username;
     private String email;
     List<UserRoleResponseDto> userRoles;

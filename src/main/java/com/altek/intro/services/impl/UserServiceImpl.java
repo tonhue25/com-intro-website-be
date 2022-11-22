@@ -65,13 +65,13 @@ public class UserServiceImpl implements UserService {
         if (!DataUtil.isEmpty(request.getPassword())) {
             request.setPassword(passwordEncoder.encode(request.getPassword()));
         }
-//        if (!DataUtil.isEmpty(request.getId())) {
+        if (!DataUtil.isEmpty(request.getId())) {
             Optional<User> optional = userRepository.findById(request.getId());
             if (optional.isPresent()) {
                 user = optional.get();
-//                list = optional.get().getUserRoles();
+                list = optional.get().getUserRoles();
             }
-//        }
+        }
         user = modelMapper.map(request, User.class);
         user.setId(1L);
         user = userRepository.save(user);
@@ -98,14 +98,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public BaseResponse getUser(Long id) {
-        Optional<User> optional = userRepository.findById(id);
+    public BaseResponse getUser(String username) {
+        Optional<User> optional = userRepository.findByUsername(username);
         if (!optional.isPresent()) {
-            throw new ResourceNotFoundException(String.format("user.not.found.with.id:%s", id));
+            throw new ResourceNotFoundException(String.format("user.not.found.with.username:%s", username));
         }
         User user = optional.get();
         UserResponseDto response = modelMapper.map(user, UserResponseDto.class);
-        return new BaseResponse(Constant.SUCCESS, String.format("get.user.with.id:%s", user.getId()),
+        return new BaseResponse(Constant.SUCCESS, String.format("get.user.with.username:%s", user.getUsername()),
                 response);
     }
 }

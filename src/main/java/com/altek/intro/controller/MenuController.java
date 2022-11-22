@@ -20,9 +20,9 @@ public class MenuController {
     private MenuService menuService;
 
     @GetMapping
-    public ResponseEntity<BaseResponse> listAll() {
+    public ResponseEntity<BaseResponse> listAll(@RequestParam("lang") String lang) {
         try {
-            return new ResponseEntity(menuService.getAll(), HttpStatus.OK);
+            return new ResponseEntity(menuService.getAll(lang), HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

@@ -1,9 +1,12 @@
 package com.altek.intro.dto.response;
 
+import com.altek.intro.entities.ProductgroupRecruitment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,5 +18,6 @@ public class RecruitmentResponseDto extends AbstractResponseDto {
     private String jobDescription;
     private String image;
     private String file;
-
+    private String location;
+    List<ProductgroupRecruitmentResponseDto> productgroupRecruitments;
 }
