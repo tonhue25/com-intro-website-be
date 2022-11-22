@@ -2,23 +2,21 @@ package com.altek.intro.entities;
 
 import java.io.Serializable;
 import java.util.List;
-
+import java.util.Set;
 import javax.persistence.*;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
 @Table(name = "ALT_CANDIDATE")
 public class Candidate extends AbstractEntity implements Serializable {
+
     @Column(name = "FULL_NAME")
-    private String fullName;
+    private String name;
 
     @Column(name = "EMAIL")
     private String email;
@@ -28,15 +26,10 @@ public class Candidate extends AbstractEntity implements Serializable {
 
     @Column(name = "CV")
     private String cv;
-//
-//    private List<Recruitment> recruitments;
-//    @ManyToMany
-//    @JoinTable(name = "RECRUITMENT_CANDIDATE",
-//            joinColumns = @JoinColumn(name = "CANDIDATE_ID"),
-//            inverseJoinColumns = @JoinColumn(name = "RECRUITMENT_ID")
-//    )
-//    public List<Recruitment> getRecruitments() {
-//        return recruitments;
-//    }
 
+    private List<Recruitment_Candidate> candidateRecruitments;
+    @OneToMany(mappedBy = "candidate")
+    public List<Recruitment_Candidate> getCandidateRecruitments() {
+        return candidateRecruitments;
+    }
 }

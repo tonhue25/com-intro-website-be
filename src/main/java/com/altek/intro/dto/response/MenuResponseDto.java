@@ -12,5 +12,6 @@ import lombok.Setter;
 public class MenuResponseDto extends AbstractResponseDto{
     private String label;
     private String link;
-
+    private String languageId;
+    private Long menuId;
 }

@@ -1,5 +1,4 @@
 package com.altek.intro.dto.response;
-
 import lombok.*;
 
 @Getter
@@ -7,7 +6,6 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NewsDetailResponseDto extends AbstractResponseDto {
-
     private String content;
     private Long newsId;
 }

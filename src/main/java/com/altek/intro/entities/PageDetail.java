@@ -1,9 +1,7 @@
 package com.altek.intro.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "ALT_PAGE_DETAIL")
-public class PageDetail extends AbstractEntity implements Serializable {
+public class PageDetail extends AbstractEntity{
 
     @Column(name = "TITLE")
     private String title;
@@ -33,6 +31,7 @@ public class PageDetail extends AbstractEntity implements Serializable {
     private String image;
 
     private Page page;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "PAGE_ID", nullable = false, unique = true)
     public Page getPage() {

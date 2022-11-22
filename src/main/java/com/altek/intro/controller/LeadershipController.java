@@ -1,7 +1,6 @@
 package com.altek.intro.controller;
 
 import java.util.List;
-
 import com.altek.intro.dto.request.LeadershipRequestDto;
 import com.altek.intro.dto.response.LeadershipResponseDto;
 import com.altek.intro.exceptions.ResourceNotFoundException;
@@ -11,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 
 @RestController
 @RequestMapping("/leaderships")
@@ -53,5 +51,4 @@ public class LeadershipController {
         LeadershipResponseDto result = leadershipService.delete(id);
         return new ResponseEntity<LeadershipResponseDto>(result, HttpStatus.OK);
     }
-
 }

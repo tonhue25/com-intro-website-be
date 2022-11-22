@@ -1,16 +1,12 @@
 package com.altek.intro.entities;
 
 import java.io.Serializable;
-
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
+import org.hibernate.annotations.OnDelete;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -25,4 +21,11 @@ public class NewsDetail extends AbstractEntity implements Serializable {
     public News getNews() {
         return news;
     }
+//
+//    private News news;
+//    @OneToOne(mappedBy = "newsDetail")
+//    @JsonManagedReference
+//    public News getNews() {
+//        return news;
+//    }
 }

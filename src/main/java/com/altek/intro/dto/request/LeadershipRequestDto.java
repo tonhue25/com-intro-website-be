@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LeadershipRequestDto {
+     Long id;
      String image;
      String name;
      String position;

@@ -3,7 +3,6 @@ package com.altek.intro.exceptions;
 
 import com.altek.intro.dto.response.ErrorResponse;
 import org.hibernate.HibernateException;
-import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -49,6 +48,7 @@ public class GlobalControllerExceptionHandler {
         ErrorResponse error = new ErrorResponse(HttpStatus.UNAUTHORIZED, request, ex);
         return new ResponseEntity<Object>(error, HttpStatus.UNAUTHORIZED);
     }
+
     @ExceptionHandler({DataIntegrityViolationException.class})
     public ResponseEntity<Object> handleConstraintViolationException(HttpServletRequest request,
                                                                      Exception ex) {

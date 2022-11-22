@@ -11,7 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class NewsResponseDto extends AbstractResponseDto {
     private String title;
-    private String thumbnail;
+    private String languageId;
+    private Long newsId;
+    private String detail;
     private String shortDescription;
-
+    private String thumbnail;
 }

@@ -25,7 +25,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -82,13 +81,13 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
         int size = 0;
         int recordPerPage = 0;
         int totalPages = 1;
+        List<Long> types = new ArrayList<>();
+        List<Long> groups = new ArrayList<>();
         if (DataUtil.isEmpty(requestDto.getLocations())) {
             locations = Arrays.asList(Constant.HCM, Constant.HN);
         } else {
             locations = requestDto.getLocations();
         }
-        List<Long> types = new ArrayList<>();
-        List<Long> groups = new ArrayList<>();
         if (DataUtil.isEmpty(requestDto.getTypes())) {
             types = recruitmentTypeRepository.findAll().stream()
                     .map(RecruitmentType::getId)
@@ -141,6 +140,12 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
     public RecruitmentResponseDto create(RecruitmentRequestDto request) {
         Recruitment entity = new Recruitment();
+        if(!DataUtil.isEmpty(request.getId())){
+            Optional<Recruitment> optional = recruitmentRepository.findById(request.getId());
+            if(optional.isPresent()){
+                entity = optional.get();
+            }
+        }
         entity = (Recruitment) recruitmentMapper.convertToEntity(request, entity);
         entity.setStatus(Constant.INSERT);
         entity = recruitmentRepository.save(entity);

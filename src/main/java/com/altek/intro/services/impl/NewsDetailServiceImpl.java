@@ -3,7 +3,6 @@ package com.altek.intro.services.impl;
 import com.altek.intro.dto.request.NewsDetailRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.NewsDetailResponseDto;
-
 import com.altek.intro.entities.NewsDetail;
 import com.altek.intro.entities.News;
 import com.altek.intro.exceptions.ResourceNotFoundException;
@@ -12,6 +11,7 @@ import com.altek.intro.repository.NewsDetailRepository;
 import com.altek.intro.repository.NewsRepository;
 import com.altek.intro.services.NewsDetailService;
 import com.altek.intro.utils.Constant;
+import com.altek.intro.utils.DataUtil;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -52,9 +52,15 @@ public class NewsDetailServiceImpl extends AbstractServiceImpl implements NewsDe
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
     public NewsDetailResponseDto create(NewsDetailRequestDto request) {
         NewsDetail entity = new NewsDetail();
-        entity = (NewsDetail)  newsDetailMapper.convertToEntity(request, entity);
+        if (!DataUtil.isEmpty(request.getId())) {
+            Optional<NewsDetail> optional = newsDetailRepository.findById(request.getId());
+            if (optional.isPresent()) {
+                entity = optional.get();
+            }
+        }
+        entity = (NewsDetail) newsDetailMapper.convertToEntity(request, entity);
         entity.setStatus(Constant.INSERT);
-        entity = newsDetailRepository.save(entity);
+        newsDetailRepository.save(entity);
         NewsDetailResponseDto response = modelMapper.map(entity, NewsDetailResponseDto.class);
         return response;
     }
@@ -73,3 +79,4 @@ public class NewsDetailServiceImpl extends AbstractServiceImpl implements NewsDe
         return response;
     }
 }
+

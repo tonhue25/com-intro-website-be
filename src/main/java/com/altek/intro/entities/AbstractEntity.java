@@ -20,7 +20,7 @@ import lombok.Setter;
 @Setter
 @EntityListeners(AuditingEntityListener.class)
 @Access(AccessType.PROPERTY)
-public abstract class AbstractEntity implements Serializable {
+public abstract class AbstractEntity{
 
     private Long id;
     @Id
@@ -64,7 +64,10 @@ public abstract class AbstractEntity implements Serializable {
         return lastUpdatedBy;
     }
 
+    private Date lastUpdatedTime;
     @Column(name = "LAST_UPDATED_TIME")
     @LastModifiedDate
-    private Date lastUpdatedTime;
+    public Date getLastUpdatedTime() {
+        return lastUpdatedTime;
+    }
 }

@@ -24,4 +24,5 @@ public class BaseRequest {
     private List<Long> groups;
     private String startDate;
     private String endDate;
+    private String language;
 }

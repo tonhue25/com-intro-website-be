@@ -39,5 +39,3 @@ public interface RecruitmentRepository extends AbstractRepository<Recruitment, L
                              @Param("types") List<Long> types,
                              @Param("groups") List<Long> groups);
 }
-
-

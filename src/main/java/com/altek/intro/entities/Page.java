@@ -15,7 +15,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "ALT_PAGE")
-public class Page extends AbstractEntity implements Serializable {
+public class Page extends AbstractEntity{
     @Column(name = "PAGE_TITLE")
     private String pageTitle;
 

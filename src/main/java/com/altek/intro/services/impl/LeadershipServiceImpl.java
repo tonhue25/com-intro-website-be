@@ -9,6 +9,7 @@ import com.altek.intro.mapper.LeadershipMapper;
 import com.altek.intro.repository.LeadershipRepository;
 import com.altek.intro.services.LeadershipService;
 import com.altek.intro.utils.Constant;
+import com.altek.intro.utils.DataUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,6 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
     @Autowired
     private ModelMapper modelMapper;
 
-
     @Override
     public List<LeadershipResponseDto> getAllLeadership() {
         try {
@@ -54,6 +54,12 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
     public LeadershipResponseDto create(LeadershipRequestDto request) {
         Leadership entity = new Leadership();
+        if(!DataUtil.isEmpty(request.getId())){
+            Optional<Leadership> optional = leadershipRepository.findById(request.getId());
+            if(optional.isPresent()){
+                entity = optional.get();
+            }
+        }
         entity = (Leadership) leadershipMapper.convertToEntity(request, entity);
         entity.setStatus(Constant.INSERT);
         entity = leadershipRepository.save(entity);
@@ -66,7 +72,7 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
     public LeadershipResponseDto delete(Long id) {
         Optional<Leadership> optional = leadershipRepository.findById(id);
         if (!optional.isPresent()) {
-            throw new ResourceNotFoundException(String.format("Leadership.not.found.with.id:%s", id));
+            throw new ResourceNotFoundException(String.format("leadership.not.found.with.id:%s", id));
         }
         Leadership entity = optional.get();
         entity.setStatus(Constant.DELETE);

@@ -1,17 +1,14 @@
 package com.altek.intro.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.*;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Setter
-@Getter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -43,5 +40,12 @@ public class Recruitment extends AbstractEntity implements Serializable {
     @OneToMany(mappedBy = "recruitment")
     public List<ProductgroupRecruitment> getProductgroupRecruitments() {
         return productgroupRecruitments;
+    }
+
+    private List<Recruitment_Candidate> candidateRecruitments;
+
+    @OneToMany(mappedBy = "recruitment")
+    public List<Recruitment_Candidate> getCandidateRecruitments() {
+        return candidateRecruitments;
     }
 }

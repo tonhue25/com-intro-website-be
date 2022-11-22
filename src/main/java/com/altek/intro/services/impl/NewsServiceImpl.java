@@ -6,10 +6,12 @@ import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.dto.response.NewsResponseDto;
 import com.altek.intro.entities.News;
+import com.altek.intro.entities.NewsTranslate;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.ListResponseMapper;
 import com.altek.intro.mapper.NewsMapper;
 import com.altek.intro.repository.NewsRepository;
+import com.altek.intro.repository.NewsTranslateRepository;
 import com.altek.intro.services.NewsService;
 import com.altek.intro.utils.Constant;
 import com.altek.intro.utils.DataUtil;
@@ -43,9 +45,12 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
     @Autowired
     ListResponseMapper<NewsResponseDto, News> listResponseMapper;
 
+    @Autowired
+    private NewsTranslateRepository newsTranslateRepository;
+
     @Override
     public BaseResponse getList(BaseRequest requestDto) {
-        List<News> listEntity = new ArrayList<>();
+        List<NewsTranslate> listEntity = new ArrayList<>();
         ListResponseDto<NewsResponseDto> response = new ListResponseDto<>();
         List<NewsResponseDto> listResponse = new ArrayList<>();
         NewsResponseDto dto = new NewsResponseDto();
@@ -54,7 +59,8 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
         int recordPerPage = 0;
         int totalPages = 1;
         if (DataUtil.isEmpty(requestDto.getPage()) || DataUtil.isEmpty(requestDto.getSize())) {
-            listEntity = newsRepository.getAll(requestDto.getSearch());
+//            listEntity = newsRepository.getAll(requestDto.getSearch());
+            listEntity = newsTranslateRepository.getAll(requestDto.getSearch());
             size = recordPerPage = listEntity.size();
         } else {
             Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize());
@@ -66,7 +72,9 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
                 pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(),
                         Sort.by(sort, requestDto.getSortBy()));
             }
-            Page<News> pageEntity = newsRepository.getList(requestDto.getSearch(),
+//            Page<News> pageEntity = newsRepository.getList(requestDto.getSearch(),
+//                    pageable);
+            Page<NewsTranslate> pageEntity = newsTranslateRepository.getList(requestDto.getSearch(),
                     pageable);
             listEntity = pageEntity.getContent();
             size = pageEntity.getNumberOfElements();
@@ -85,6 +93,7 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
             response.setTotalPages(totalPages);
             response.setRecordPerPage(recordPerPage);
         }
+        response.setLanguage(requestDto.getLanguage());
         return new BaseResponse(Constant.SUCCESS, "get.list.news", response);
     }
 
@@ -113,50 +122,52 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
         return response;
     }
 
-    @Override
-    public BaseResponse getListNew(BaseRequest requestDto) {
-        List<News> listEntity = new ArrayList<>();
-        ListResponseDto<NewsResponseDto> response = new ListResponseDto<>();
-        List<NewsResponseDto> listResponse = new ArrayList<>();
-        NewsResponseDto dto = new NewsResponseDto();
-        int pageNumber = 1;
-        int size = 0;
-        int recordPerPage = 0;
-        int totalPages = 1;
-        if (DataUtil.isEmpty(requestDto.getPage()) || DataUtil.isEmpty(requestDto.getSize())) {
-            listEntity = newsRepository.getAllNewsNew(requestDto.getSearch(), requestDto.getStartDate(),
-                    requestDto.getEndDate());
-            size = recordPerPage = listEntity.size();
-        } else {
-            Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize());
-            if (!DataUtil.isEmpty(requestDto.getSortBy()) && !DataUtil.isEmpty(requestDto.getSortType())) {
-                Sort.Direction sort = Sort.Direction.ASC;
-                if (requestDto.getSortType().equals("DESC")) {
-                    sort = Sort.Direction.DESC;
-                }
-                pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(),
-                        Sort.by(sort, requestDto.getSortBy()));
-            }
-            Page<News> pageEntity = newsRepository.getListNewsNew(requestDto.getSearch(), requestDto.getStartDate(),
-                    requestDto.getEndDate(),
-                    pageable);
-            listEntity = pageEntity.getContent();
-            size = pageEntity.getNumberOfElements();
-            recordPerPage = pageable.getPageSize();
-            totalPages = pageEntity.getTotalPages();
-            pageNumber = pageable.getPageNumber();
-            if (pageEntity.getTotalPages() > 0) {
-                pageNumber = pageNumber + 1;
-            }
-        }
-        if (CollectionUtils.isNotEmpty(listEntity)) {
-            listResponse = listEntity.stream().map(item -> (NewsResponseDto) newsMapper.convertToDTO(dto, item)).collect(Collectors.toList());
-            response.setList(listResponse);
-            response.setPage(pageNumber);
-            response.setSize(size);
-            response.setTotalPages(totalPages);
-            response.setRecordPerPage(recordPerPage);
-        }
-        return new BaseResponse(Constant.SUCCESS, "get.list.news.new", response);
-    }
+//    @Override
+//    public BaseResponse getListNew(BaseRequest requestDto) {
+//        List<News> listEntity = new ArrayList<>();
+//        ListResponseDto<NewsResponseDto> response = new ListResponseDto<>();
+//        List<NewsResponseDto> listResponse = new ArrayList<>();
+//        NewsResponseDto dto = new NewsResponseDto();
+//        int pageNumber = 1;
+//        int size = 0;
+//        int recordPerPage = 0;
+//        int totalPages = 1;
+//
+//        if (DataUtil.isEmpty(requestDto.getPage()) || DataUtil.isEmpty(requestDto.getSize())) {
+//            listEntity = newsRepository.getAllNewsNew(requestDto.getSearch(), requestDto.getStartDate(),
+//                    requestDto.getEndDate());
+//            size = recordPerPage = listEntity.size();
+//        } else {
+//            Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize());
+//            if (!DataUtil.isEmpty(requestDto.getSortBy()) && !DataUtil.isEmpty(requestDto.getSortType())) {
+//                Sort.Direction sort = Sort.Direction.ASC;
+//                if (requestDto.getSortType().equals("DESC")) {
+//                    sort = Sort.Direction.DESC;
+//                }
+//                pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(),
+//                        Sort.by(sort, requestDto.getSortBy()));
+//            }
+//            Page<News> pageEntity = newsRepository.getListNewsNew(requestDto.getSearch(), requestDto.getStartDate(),
+//                    requestDto.getEndDate(),
+//                    pageable);
+//            listEntity = pageEntity.getContent();
+//            size = pageEntity.getNumberOfElements();
+//            recordPerPage = pageable.getPageSize();
+//            totalPages = pageEntity.getTotalPages();
+//            pageNumber = pageable.getPageNumber();
+//            if (pageEntity.getTotalPages() > 0) {
+//                pageNumber = pageNumber + 1;
+//            }
+//        }
+//        if (CollectionUtils.isNotEmpty(listEntity)) {
+//            listResponse = listEntity.stream().map(item -> (NewsResponseDto) newsMapper.convertToDTO(dto, item)).collect(Collectors.toList());
+//            response.setList(listResponse);
+//            response.setPage(pageNumber);
+//            response.setSize(size);
+//            response.setTotalPages(totalPages);
+//            response.setRecordPerPage(recordPerPage);
+//        }
+//        response.setLanguage(requestDto.getLanguage());
+//        return new BaseResponse(Constant.SUCCESS, "get.list.news.new", response);
+//    }
 }
