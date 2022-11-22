@@ -45,8 +45,7 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
             }
             return new BaseResponse(Constant.SUCCESS, "get.list.menu", menuDTOs);
         } catch (Exception ex) {
-            return new BaseResponse(Constant.FAIL,
-                    ex.getMessage());
+            return new BaseResponse(Constant.FAIL, ex.getMessage());
         }
     }
 
