@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 public class RecruitmentResponseDto extends AbstractResponseDto {
 
-    private Long recruitmentId;
     private String jobTitle;
     private String jobDescription;
     private String image;

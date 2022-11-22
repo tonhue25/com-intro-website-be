@@ -11,7 +11,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PageResponseDto extends AbstractResponseDto {
 
-    private Long pageId;
     private String pageTitle;
     private String shortDescription;
     private String address;

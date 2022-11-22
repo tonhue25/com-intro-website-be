@@ -10,6 +10,5 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RecruitmentTypeResponseDto extends  AbstractResponseDto{
-    private String recruitmentTypeId;
     private String name;
 }

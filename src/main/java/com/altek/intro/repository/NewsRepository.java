@@ -24,4 +24,23 @@ public interface NewsRepository extends AbstractRepository<News, Long> {
             "   ( lower(e.title) like lower(concat(:search, '%'))  or " +
             "   lower(e.shortDescription) like lower(concat(:search, '%')) )) ")
     List<News> getAll(@Param("search") String search);
+
+
+    @Query("select e from News e where  e.status = 1 and (:search is null or " +
+            "   ( lower(e.title) like lower(concat(:search, '%')) )) " +
+            " and ( :startDate is null or  createdTime >= TO_DATE(:startDate,'DD-MM-YY') ) " +
+            " and ( :endDate is null or  createdTime <=  TO_DATE(:endDate,'DD-MM-YY') )" )
+    Page<News> getListNewsNew(@Param("search") String search,
+                              @Param("startDate") String startDate,
+                              @Param("endDate") String endDate,
+                       Pageable pageable);
+
+    @Query("select e from News e where  e.status = 1 and (:search is null or " +
+            "   ( lower(e.title) like lower(concat(:search, '%'))  or " +
+            "   lower(e.shortDescription) like lower(concat(:search, '%')) )) "+
+            " and ( :startDate is null or  createdTime >= TO_DATE(:startDate,'DD-MM-YY') ) " +
+            " and ( :endDate is null or  createdTime <=  TO_DATE(:endDate,'DD-MM-YY') )" )
+    List<News> getAllNewsNew(@Param("search") String search,
+                             @Param("startDate") String startDate,
+                             @Param("endDate") String endDate);
 }

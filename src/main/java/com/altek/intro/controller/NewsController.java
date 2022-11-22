@@ -33,6 +33,19 @@ public class NewsController {
         }
     }
 
+    @PostMapping("/new")
+    public ResponseEntity<BaseResponse> getListNew(@RequestBody BaseRequest requestDto) {
+        try {
+            return new ResponseEntity(newsService.getListNew(requestDto), HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<NewsResponseDto> Create(@RequestBody NewsRequestDto request) {
         try {

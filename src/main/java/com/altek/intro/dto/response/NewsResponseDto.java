@@ -10,8 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class NewsResponseDto extends AbstractResponseDto {
-
-    private Long newsId;
     private String title;
     private String thumbnail;
     private String shortDescription;

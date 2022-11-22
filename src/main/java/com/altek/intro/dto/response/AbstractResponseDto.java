@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AbstractResponseDto {
-
+    private Long id;
     private Integer status;
     private String createdBy;
     private String createdTime;

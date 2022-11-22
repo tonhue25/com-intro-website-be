@@ -12,7 +12,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserRoleResponseDto{
 
-    private Long userRoleId;
     private RoleResponseDto role;
 
 }

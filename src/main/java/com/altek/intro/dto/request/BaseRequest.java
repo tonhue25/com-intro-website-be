@@ -22,4 +22,6 @@ public class BaseRequest {
     private List<Long> types;
     private List<String> locations;
     private List<Long> groups;
+    private String startDate;
+    private String endDate;
 }
