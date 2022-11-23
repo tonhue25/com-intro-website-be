@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 @Service
 public interface RecruitmentService extends AbstractService{
-    List<RecruitmentResponseDto> getAllRecruitment();
 
     BaseResponse getList(BaseRequest requestDto);
 

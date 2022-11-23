@@ -27,4 +27,6 @@ public class Constant {
 
     public static final String HCM = "Hồ Chí Minh";
     public static final String HN = "Hà Nội";
+
+    public static final String HCMC = "HCMC";
 }

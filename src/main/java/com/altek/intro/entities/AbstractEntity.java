@@ -50,7 +50,7 @@ public abstract class AbstractEntity{
     }
 
     private Date createdTime;
-    @Column(name = "CREATED_TIME", nullable = false, updatable = false)
+    @Column(name = "CREATED_TIME")
     @CreatedDate
     public Date getCreatedTime() {
         return createdTime;

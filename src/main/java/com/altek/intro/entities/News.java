@@ -16,7 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "ALT_NEWS")
-public class News extends AbstractEntity implements Serializable {
+public class News extends AbstractEntity {
     @Column(name = "THUMBNAIL")
     private String thumbnail;
 

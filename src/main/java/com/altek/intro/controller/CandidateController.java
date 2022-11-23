@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/cadidate")
+@RequestMapping("/candidate")
 @Slf4j
-public class CadiDateController {
+public class CandidateController {
 
     @Autowired
     private CandidateService candiDateService;
@@ -50,5 +50,4 @@ public class CadiDateController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
 }

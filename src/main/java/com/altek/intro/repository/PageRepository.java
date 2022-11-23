@@ -2,7 +2,6 @@ package com.altek.intro.repository;
 
 import com.altek.intro.entities.Menu;
 import com.altek.intro.entities.Page;
-import com.altek.intro.entities.PageDetail;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,7 +20,8 @@ public interface PageRepository extends AbstractRepository<Page, Long>{
     @Query(value = "select u from Page u where u.status = 1 and u.id = :id")
     Optional<Page> findById(Long id);
 
-    @Query("select e from Page e where  e.status = 1 and (e.menu = :menu) and" +
-            " ( lower(e.pageTitle) like lower(concat('%', :search, '%')) )")
-    org.springframework.data.domain.Page<Page> getList(@Param("search")String search, @Param("menu") Menu menu, Pageable pageable);
+//    @Query("select e from Page e where  e.status = 1 and (e.menu = :menu) and" +
+//            " ( lower(e.pageTitle) like lower(concat('%', :search, '%')) )")
+//    org.springframework.data.domain.Page<Page> getList(@Param("search")String search, @Param("menu") Menu menu, Pageable pageable);
+
 }

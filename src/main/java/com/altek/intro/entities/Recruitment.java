@@ -14,28 +14,19 @@ import java.util.List;
 @Entity
 @Table(name = "ALT_RECRUITMENT")
 public class Recruitment extends AbstractEntity implements Serializable {
-
-    @Column(name = "JOB_TITLE", nullable = false)
-    private String jobTitle;
-
-    @Column(name = "JOB_DESCRIPTION")
-    private String jobDescription;
-
     @Column(name = "IMAGE")
     private String image;
 
-    @Column(name = "FILE")
-    private String file;
-
-    @Column(name = "LOCATION")
-    private String location;
+    @Column(name = "FILE_LINK")
+    private String fileLink;
 
     private RecruitmentType recruitmentType;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     public RecruitmentType getRecruitmentType() {
         return recruitmentType;
     }
 
+    //==================
     List<ProductgroupRecruitment> productgroupRecruitments;
     @OneToMany(mappedBy = "recruitment")
     public List<ProductgroupRecruitment> getProductgroupRecruitments() {

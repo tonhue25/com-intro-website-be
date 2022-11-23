@@ -10,5 +10,5 @@ public interface NewsService extends AbstractService{
     BaseResponse getList(BaseRequest request);
     NewsResponseDto create(NewsRequestDto request);
     NewsResponseDto delete(Long id);
-//    BaseResponse getListNew(BaseRequest requestDto);
+    BaseResponse getListNew(BaseRequest requestDto);
 }

@@ -23,8 +23,7 @@ public class RecruitmentTypeController {
     private RecruitmentTypeService recruitmentTypeService;
 
     @GetMapping
-    public ResponseEntity<BaseResponse> listAll() {
-        return new ResponseEntity(recruitmentTypeService.getAll(), HttpStatus.OK);
+    public ResponseEntity<BaseResponse> listAll(@RequestParam("language") String language) {
+        return new ResponseEntity(recruitmentTypeService.getAll(language), HttpStatus.OK);
     }
-
 }
