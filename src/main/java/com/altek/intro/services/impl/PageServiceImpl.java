@@ -7,11 +7,13 @@ import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.dto.response.PageResponseDto;
 import com.altek.intro.entities.Menu;
 import com.altek.intro.entities.Page;
+import com.altek.intro.entities.PageTranslate;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.ListResponseMapper;
 import com.altek.intro.mapper.PageMapper;
 import com.altek.intro.repository.MenuRepository;
 import com.altek.intro.repository.PageRepository;
+import com.altek.intro.repository.PageTranslateRepository;
 import com.altek.intro.services.PageService;
 import com.altek.intro.utils.Constant;
 import com.altek.intro.utils.DataUtil;
@@ -35,6 +37,9 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
     private PageRepository pageContentRepository;
 
     @Autowired
+    private PageTranslateRepository pageContentTranslateRepository;
+
+    @Autowired
     private MenuRepository menuRepository;
 
     @Autowired
@@ -47,10 +52,10 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
     ListResponseMapper<PageResponseDto, Page> listResponseMapper;
 
     @Override
-    public BaseResponse getAll() {
+    public BaseResponse getAllPageContent(String lang) {
         try {
             List<PageResponseDto> listDto = new ArrayList<>();
-            List<Page> listEntity = pageContentRepository.findAll();
+            List<PageTranslate> listEntity = pageContentTranslateRepository.findAllPageContent(lang);
             PageResponseDto dto = new PageResponseDto();
             if (CollectionUtils.isNotEmpty(listEntity)) {
                 listDto = listEntity.stream().map(item -> (PageResponseDto) pageContentMapper.convertToDTO(dto, item)).collect(Collectors.toList());
@@ -63,14 +68,14 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
     }
 
     @Override
-    public BaseResponse listPageContentByMenuId(Long id) {
-        Optional<Menu> optional = menuRepository.findById(id);
+    public BaseResponse getAllPageContentByMenuId(String lang,Long menuId) {
+        Optional<Menu> optional = menuRepository.findById(menuId);
         if (!optional.isPresent()) {
-            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", id));
+            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", menuId));
         }
         List<PageResponseDto> listDTO = new ArrayList<>();
         PageResponseDto dto = new PageResponseDto();
-        List<Page> listEntity = pageContentRepository.findByMenuAndStatus(optional.get(), 1);
+        List<PageTranslate> listEntity = pageContentTranslateRepository.findAllPageContentByMenuID(lang,menuId);
         if (CollectionUtils.isNotEmpty(listEntity)) {
             listDTO = listEntity.stream().map(item -> (PageResponseDto) pageContentMapper.convertToDTO(dto, item)).collect(Collectors.toList());
         }

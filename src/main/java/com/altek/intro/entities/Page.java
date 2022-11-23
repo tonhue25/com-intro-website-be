@@ -16,26 +16,15 @@ import lombok.Setter;
 @Entity
 @Table(name = "ALT_PAGE")
 public class Page extends AbstractEntity{
+
     @Column(name = "PAGE_TITLE")
     private String pageTitle;
 
     @Column(name = "SHORT_DESCRIPTION", length = 1000)
     private String shortDescription;
 
-    @Column(name = "ADDRESS")
-    private String address;
-
-    @Column(name = "PHONE_NUMBER", length = 12)
-    private String phoneNumber;
-
     @Column(name = "IMAGE")
     private String image;
-
-    @Column(name = "TIMELINE")
-    private String timeLine;
-
-    @Column(name = "EVENT_NAME")
-    private String eventName;
 
     private PageDetail pageDetail;
     @OneToOne(mappedBy = "page")
@@ -52,9 +41,6 @@ public class Page extends AbstractEntity{
     public Menu getMenu() {
         return menu;
     }
-
-    @Column(name = "LINK")
-    private String link;
 
     @Column(name = "ICON")
     private String icon;

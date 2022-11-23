@@ -10,9 +10,9 @@ import com.altek.intro.dto.response.BaseResponse;
 @Service
 public interface PageService extends AbstractService {
 
-    BaseResponse getAll();
+    BaseResponse getAllPageContent(String lang);
 
-    BaseResponse listPageContentByMenuId(Long id);
+    BaseResponse getAllPageContentByMenuId(String lang,Long menuId);
 
     BaseResponse create(PageRequestDto request);
 

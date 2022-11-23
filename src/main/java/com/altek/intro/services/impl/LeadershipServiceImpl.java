@@ -59,7 +59,7 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
             response.setTotalPages(1);
             response.setRecordPerPage(leadershipDTOS.size());
             response.setLanguage(lang);
-            return new BaseResponse(Constant.SUCCESS, "get.list.menu", leadershipDTOS);
+            return new BaseResponse(Constant.SUCCESS, "get.list.leadership", leadershipDTOS);
         } catch (Exception ex) {
             return new BaseResponse(Constant.FAIL, ex.getMessage());
         }

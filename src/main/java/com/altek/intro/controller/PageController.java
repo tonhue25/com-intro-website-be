@@ -20,10 +20,10 @@ public class PageController {
     @Autowired
     private PageService pageContentService;
 
-    @GetMapping
-    public ResponseEntity<BaseResponse> listAll() {
+    @GetMapping("all")
+    public ResponseEntity<BaseResponse> listAll(@RequestHeader("Accept-Language") String lang) {
         try {
-            return new ResponseEntity(pageContentService.getAll(), HttpStatus.OK);
+            return new ResponseEntity(pageContentService.getAllPageContent(lang), HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -34,10 +34,24 @@ public class PageController {
         }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<BaseResponse> listPageContentByMenuId(@PathVariable Long id) {
-        return new ResponseEntity<>(pageContentService.listPageContentByMenuId(id), HttpStatus.OK);
+    @GetMapping()
+    public ResponseEntity<BaseResponse> findAllPageContentByMenuId(@RequestHeader("Accept-Language") String lang, @RequestParam("menuId") Long menuId) {
+        try {
+            return new ResponseEntity(pageContentService.getAllPageContentByMenuId(lang,menuId), HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
+
+//    @GetMapping("/{id}")
+//    public ResponseEntity<BaseResponse> listPageContentByMenuId(@PathVariable Long id) {
+//        return new ResponseEntity<>(pageContentService.listPageContentByMenuId(id), HttpStatus.OK);
+//    }
 
     @PostMapping
     public ResponseEntity<BaseResponse> create(@RequestBody PageRequestDto request) {
