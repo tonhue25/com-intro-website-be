@@ -64,10 +64,10 @@ public class PageController {
         }
     }
 
-    @PostMapping("list")
-    public ResponseEntity<BaseResponse> listPageContent(@RequestBody BaseRequest requestDto){
-        return new ResponseEntity<BaseResponse>(pageContentService.listPageContent(requestDto), HttpStatus.OK);
-    }
+//    @PostMapping("list")
+//    public ResponseEntity<BaseResponse> listPageContent(@RequestBody BaseRequest requestDto){
+//        return new ResponseEntity<BaseResponse>(pageContentService.listPageContent(requestDto), HttpStatus.OK);
+//    }
 
     @DeleteMapping
     public ResponseEntity<BaseResponse> delete(@RequestParam(value = "id", required = true) Long id) {

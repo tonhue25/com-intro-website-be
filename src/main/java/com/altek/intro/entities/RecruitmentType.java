@@ -16,11 +16,6 @@ import java.util.List;
 @Entity
 @Table(name = "ALT_RECRUITMENT_TYPE")
 public class RecruitmentType extends AbstractEntity implements Serializable {
-    private String name;
-    @Column(name = "NAME", unique = true)
-    public String getName() {
-        return name;
-    }
 
     private List<Recruitment> recruitment;
     @OneToMany(mappedBy = "recruitmentType")

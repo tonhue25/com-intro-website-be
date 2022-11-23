@@ -25,14 +25,10 @@ public class RecruitmentTypeServiceImpl extends AbstractServiceImpl implements R
     private ModelMapper modelMapper;
 
     @Override
-    public BaseResponse getAll() {
+    public BaseResponse getAll(String language) {
         ListResponseDto<RecruitmentTypeResponseDto> response = new ListResponseDto<>();
-        List<RecruitmentTypeResponseDto> responseList = new ArrayList<RecruitmentTypeResponseDto>();
-        List<RecruitmentType> menus = recruitmentTypeRepository.findAll();
-        if (CollectionUtils.isNotEmpty(menus)) {
-            responseList = menus.stream().map(item -> modelMapper.map(item, RecruitmentTypeResponseDto.class))
-                    .collect(Collectors.toList());
-        }
+        List<RecruitmentTypeResponseDto> responseList = recruitmentTypeRepository.getAll(language);
+        response.setLanguage(language);
         response.setList(responseList);
         response.setTotalPages(1);
         response.setPage(1);

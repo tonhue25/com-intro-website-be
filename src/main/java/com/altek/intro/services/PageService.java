@@ -18,5 +18,5 @@ public interface PageService extends AbstractService {
 
     BaseResponse delete(Long id);
 
-    BaseResponse listPageContent(BaseRequest requestDto);
+//    BaseResponse listPageContent(BaseRequest requestDto);
 }

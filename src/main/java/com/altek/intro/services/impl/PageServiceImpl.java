@@ -123,39 +123,38 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
                 String.format("status.of.page.content:%s", entity.getStatus()));
     }
 
-    @Override
-    public BaseResponse listPageContent(BaseRequest requestDto) {
-        if (DataUtil.isEmpty(requestDto.getPage())) {
-            throw new IllegalArgumentException("page.is.invalid");
-        }
-        if (DataUtil.isEmpty(requestDto.getSize())) {
-            throw new IllegalArgumentException("size.is.invalid");
-        }
-        if (DataUtil.isEmpty(requestDto.getId())) {
-            throw new IllegalArgumentException("menu.id.is.invalid");
-        }
-        Optional<Menu> menuOptional = menuRepository.findById(requestDto.getId());
-        if (!menuOptional.isPresent()) {
-            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", requestDto.getId()));
-        }
-        Menu menu = menuOptional.get();
-        Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize());
-        if (!DataUtil.isEmpty(requestDto.getSortBy()) && !DataUtil.isEmpty(requestDto.getSortType())) {
-            Sort.Direction sort = Sort.Direction.ASC;
-            if (requestDto.getSortType().equals("DESC")) {
-                sort = Sort.Direction.DESC;
-            }
-            pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(), Sort.by(sort, requestDto.getSortBy()));
-        }
-        org.springframework.data.domain.Page<Page> pageEntity = pageContentRepository.getList(requestDto.getSearch(), menu, pageable);
-        List<Page> listEntity = pageEntity.getContent();
-        List<PageResponseDto> listDTO = new ArrayList<>();
-        PageResponseDto dto = new PageResponseDto();
-        if (CollectionUtils.isNotEmpty(listEntity)) {
-            listDTO = listEntity.stream().map(item -> (PageResponseDto) pageContentMapper.convertToDTO(dto, item)).collect(Collectors.toList());
-        }
-        ListResponseDto<PageResponseDto> response = listResponseMapper.setDataListResponse(listDTO, pageEntity, pageable);
-        return new BaseResponse(Constant.SUCCESS, "get.list.page", response);
-    }
-
+//    @Override
+//    public BaseResponse listPageContent(BaseRequest requestDto) {
+//        if (DataUtil.isEmpty(requestDto.getPage())) {
+//            throw new IllegalArgumentException("page.is.invalid");
+//        }
+//        if (DataUtil.isEmpty(requestDto.getSize())) {
+//            throw new IllegalArgumentException("size.is.invalid");
+//        }
+//        if (DataUtil.isEmpty(requestDto.getId())) {
+//            throw new IllegalArgumentException("menu.id.is.invalid");
+//        }
+//        Optional<Menu> menuOptional = menuRepository.findById(requestDto.getId());
+//        if (!menuOptional.isPresent()) {
+//            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", requestDto.getId()));
+//        }
+//        Menu menu = menuOptional.get();
+//        Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize());
+//        if (!DataUtil.isEmpty(requestDto.getSortBy()) && !DataUtil.isEmpty(requestDto.getSortType())) {
+//            Sort.Direction sort = Sort.Direction.ASC;
+//            if (requestDto.getSortType().equals("DESC")) {
+//                sort = Sort.Direction.DESC;
+//            }
+//            pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(), Sort.by(sort, requestDto.getSortBy()));
+//        }
+//        org.springframework.data.domain.Page<Page> pageEntity = pageContentRepository.getList(requestDto.getSearch(), menu, pageable);
+//        List<Page> listEntity = pageEntity.getContent();
+//        List<PageResponseDto> listDTO = new ArrayList<>();
+//        PageResponseDto dto = new PageResponseDto();
+//        if (CollectionUtils.isNotEmpty(listEntity)) {
+//            listDTO = listEntity.stream().map(item -> (PageResponseDto) pageContentMapper.convertToDTO(dto, item)).collect(Collectors.toList());
+//        }
+//        ListResponseDto<PageResponseDto> response = listResponseMapper.setDataListResponse(listDTO, pageEntity, pageable);
+//        return new BaseResponse(Constant.SUCCESS, "get.list.page", response);
+//    }
 }
