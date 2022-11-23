@@ -14,4 +14,6 @@ public class LeadershipResponseDto extends AbstractResponseDto {
      String information;
      String facebook;
      String linkedin;
+     String languageId;
+     Long leadershipId;
 }

@@ -20,7 +20,7 @@ public class MenuController {
     private MenuService menuService;
 
     @GetMapping
-    public ResponseEntity<BaseResponse> listAll(@RequestParam("lang") String lang) {
+    public ResponseEntity<BaseResponse> listAll(@RequestHeader("Accept-Language") String lang) {
         try {
             return new ResponseEntity(menuService.getAll(lang), HttpStatus.OK);
         } catch (ResourceNotFoundException e) {

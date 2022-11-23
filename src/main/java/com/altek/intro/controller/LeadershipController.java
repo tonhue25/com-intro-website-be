@@ -2,6 +2,7 @@ package com.altek.intro.controller;
 
 import java.util.List;
 import com.altek.intro.dto.request.LeadershipRequestDto;
+import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.LeadershipResponseDto;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.LeadershipService;
@@ -20,9 +21,9 @@ public class LeadershipController {
     private LeadershipService leadershipService;
 
     @GetMapping
-    public ResponseEntity<LeadershipResponseDto> listAll() {
+    public ResponseEntity<LeadershipResponseDto> listAll(@RequestHeader("Accept-Language") String lang) {
         try {
-            List<LeadershipResponseDto> response = leadershipService.getAllLeadership();
+            BaseResponse response = leadershipService.getAllLeadership(lang);
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             log.error(e.getMessage());
