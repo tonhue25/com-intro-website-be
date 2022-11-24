@@ -49,50 +49,6 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
     private NewsTranslateRepository newsTranslateRepository;
 
     @Override
-    public BaseResponse getList(BaseRequest requestDto) {
-        ListResponseDto<NewsResponseDto> response = new ListResponseDto<>();
-        List<NewsResponseDto> listResponse = new ArrayList<>();
-        NewsResponseDto dto = new NewsResponseDto();
-        int pageNumber = 1;
-        int size = 0;
-        int recordPerPage = 0;
-        int totalPages = 1;
-        if (DataUtil.isEmpty(requestDto.getPage()) || DataUtil.isEmpty(requestDto.getSize())) {
-            listResponse = newsTranslateRepository.getAll(requestDto.getSearch(), requestDto.getLanguage());
-            size = recordPerPage = listResponse.size();
-        } else {
-            Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize());
-            if (!DataUtil.isEmpty(requestDto.getSortBy()) && !DataUtil.isEmpty(requestDto.getSortType())) {
-                Sort.Direction sort = Sort.Direction.ASC;
-                if (requestDto.getSortType().equals("DESC")) {
-                    sort = Sort.Direction.DESC;
-                }
-                pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(),
-                        Sort.by(sort, requestDto.getSortBy()));
-            }
-            Page<NewsResponseDto> pageEntity = newsTranslateRepository.getList(requestDto.getSearch(), requestDto.getLanguage(),
-                    pageable);
-            listResponse = pageEntity.getContent();
-            size = pageEntity.getNumberOfElements();
-            recordPerPage = pageable.getPageSize();
-            totalPages = pageEntity.getTotalPages();
-            pageNumber = pageable.getPageNumber();
-            if (pageEntity.getTotalPages() > 0) {
-                pageNumber = pageNumber + 1;
-            }
-        }
-        if (CollectionUtils.isNotEmpty(listResponse)) {
-            response.setList(listResponse);
-            response.setPage(pageNumber);
-            response.setSize(size);
-            response.setTotalPages(totalPages);
-            response.setRecordPerPage(recordPerPage);
-        }
-        response.setLanguage(requestDto.getLanguage());
-        return new BaseResponse(Constant.SUCCESS, "get.list.news", response);
-    }
-
-    @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
     public NewsResponseDto create(NewsRequestDto request) {
         News entity = new News();
@@ -118,17 +74,20 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
     }
 
     @Override
-    public BaseResponse getListNew(BaseRequest requestDto) {
+    public BaseResponse getList(BaseRequest requestDto) {
         ListResponseDto<NewsResponseDto> response = new ListResponseDto<>();
         List<NewsResponseDto> listResponse = new ArrayList<>();
-        int pageNumber = 1;
+        int pageNumber = 0;
         int size = 0;
         int recordPerPage = 0;
-        int totalPages = 1;
+        int totalPages = 0;
         if (DataUtil.isEmpty(requestDto.getPage()) || DataUtil.isEmpty(requestDto.getSize())) {
-            listResponse = newsTranslateRepository.getAllNewsNew(requestDto.getSearch(), requestDto.getLanguage(),
+            listResponse = newsTranslateRepository.getList(requestDto.getSearch(), requestDto.getLanguage(),
                     requestDto.getStartDate(), requestDto.getEndDate());
-            size = recordPerPage = listResponse.size();
+            if(listResponse.size() > 0){
+                size = recordPerPage = listResponse.size();
+                pageNumber = totalPages = 1;
+            }
         } else {
             Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize());
             if (!DataUtil.isEmpty(requestDto.getSortBy()) && !DataUtil.isEmpty(requestDto.getSortType())) {
@@ -139,7 +98,7 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
                 pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(),
                         Sort.by(sort, requestDto.getSortBy()));
             }
-            Page<NewsResponseDto> pageEntity = newsTranslateRepository.getListNewsNew(requestDto.getSearch(), requestDto.getLanguage(), requestDto.getStartDate(),
+            Page<NewsResponseDto> pageEntity = newsTranslateRepository.getList(requestDto.getSearch(), requestDto.getLanguage(), requestDto.getStartDate(),
                     requestDto.getEndDate(),
                     pageable);
             listResponse = pageEntity.getContent();
@@ -151,14 +110,12 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
                 pageNumber = pageNumber + 1;
             }
         }
-        if (CollectionUtils.isNotEmpty(listResponse)) {
-            response.setList(listResponse);
-            response.setPage(pageNumber);
-            response.setSize(size);
-            response.setTotalPages(totalPages);
-            response.setRecordPerPage(recordPerPage);
-        }
+        response.setList(listResponse);
+        response.setPage(pageNumber);
+        response.setSize(size);
+        response.setTotalPages(totalPages);
+        response.setRecordPerPage(recordPerPage);
         response.setLanguage(requestDto.getLanguage());
-        return new BaseResponse(Constant.SUCCESS, "get.list.news.new", response);
+        return new BaseResponse(Constant.SUCCESS, "get.list.news", response);
     }
 }

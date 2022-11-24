@@ -7,11 +7,13 @@ import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.dto.response.PageResponseDto;
 import com.altek.intro.entities.Menu;
 import com.altek.intro.entities.Page;
+import com.altek.intro.entities.PageTranslate;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.ListResponseMapper;
 import com.altek.intro.mapper.PageMapper;
 import com.altek.intro.repository.MenuRepository;
 import com.altek.intro.repository.PageRepository;
+import com.altek.intro.repository.PageTranslateRepository;
 import com.altek.intro.services.PageService;
 import com.altek.intro.utils.Constant;
 import com.altek.intro.utils.DataUtil;
@@ -32,7 +34,10 @@ import java.util.stream.Collectors;
 public class PageServiceImpl extends AbstractServiceImpl implements PageService {
 
     @Autowired
-    private PageRepository pageContentRepository;
+    private PageRepository pageRepository;
+
+    @Autowired
+    private PageTranslateRepository pageContentTranslateRepository;
 
     @Autowired
     private MenuRepository menuRepository;
@@ -47,10 +52,10 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
     ListResponseMapper<PageResponseDto, Page> listResponseMapper;
 
     @Override
-    public BaseResponse getAll() {
+    public BaseResponse getAllPageContent(String lang) {
         try {
             List<PageResponseDto> listDto = new ArrayList<>();
-            List<Page> listEntity = pageContentRepository.findAll();
+            List<PageTranslate> listEntity = pageContentTranslateRepository.findAllPageContent(lang);
             PageResponseDto dto = new PageResponseDto();
             if (CollectionUtils.isNotEmpty(listEntity)) {
                 listDto = listEntity.stream().map(item -> (PageResponseDto) pageContentMapper.convertToDTO(dto, item)).collect(Collectors.toList());
@@ -63,14 +68,14 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
     }
 
     @Override
-    public BaseResponse listPageContentByMenuId(Long id) {
-        Optional<Menu> optional = menuRepository.findById(id);
+    public BaseResponse getAllPageContentByMenuId(String lang,Long menuId) {
+        Optional<Menu> optional = menuRepository.findById(menuId);
         if (!optional.isPresent()) {
-            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", id));
+            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", menuId));
         }
         List<PageResponseDto> listDTO = new ArrayList<>();
         PageResponseDto dto = new PageResponseDto();
-        List<Page> listEntity = pageContentRepository.findByMenuAndStatus(optional.get(), 1);
+        List<PageTranslate> listEntity = pageContentTranslateRepository.findAllPageContentByMenuID(lang,menuId);
         if (CollectionUtils.isNotEmpty(listEntity)) {
             listDTO = listEntity.stream().map(item -> (PageResponseDto) pageContentMapper.convertToDTO(dto, item)).collect(Collectors.toList());
         }
@@ -83,27 +88,24 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
         if (!optionalMenu.isPresent()) {
             throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", request.getMenuId()));
         }
-
         Menu menuEntity = optionalMenu.get();
         Page entity = new Page();
-
         if (!DataUtil.isEmpty(request.getId())) {
-            Optional<Page> optional = pageContentRepository.findById(request.getId());
+            Optional<Page> optional = pageRepository.findById(request.getId());
             if (optional.isPresent()) {
                 entity = optional.get();
             }
         }
-
         entity = (Page) pageContentMapper.convertToEntity(request, entity);
         entity.setMenu(menuEntity);
-        entity = pageContentRepository.save(entity);
+        entity = pageRepository.save(entity);
         PageResponseDto response = modelMapper.map(entity, PageResponseDto.class);
         return new BaseResponse(Constant.SUCCESS, "add.or.update.page", response);
     }
 
     @Override
     public BaseResponse delete(Long id) {
-        Optional<Page> optional = pageContentRepository.findById(id);
+        Optional<Page> optional = pageRepository.findById(id);
         if (!optional.isPresent()) {
             throw new ResourceNotFoundException(String.format("page.not.found.with.id:%s", id));
         }
@@ -113,43 +115,8 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
                     String.format("status.of.page.content:%s", entity.getStatus()));
         }
         entity.setStatus(Constant.DELETE);
-        entity = pageContentRepository.save(entity);
+        entity = pageRepository.save(entity);
         return new BaseResponse(Constant.SUCCESS, String.format("delete.page.with.id:%s", id),
                 String.format("status.of.page.content:%s", entity.getStatus()));
     }
-
-//    @Override
-//    public BaseResponse listPageContent(BaseRequest requestDto) {
-//        if (DataUtil.isEmpty(requestDto.getPage())) {
-//            throw new IllegalArgumentException("page.is.invalid");
-//        }
-//        if (DataUtil.isEmpty(requestDto.getSize())) {
-//            throw new IllegalArgumentException("size.is.invalid");
-//        }
-//        if (DataUtil.isEmpty(requestDto.getId())) {
-//            throw new IllegalArgumentException("menu.id.is.invalid");
-//        }
-//        Optional<Menu> menuOptional = menuRepository.findById(requestDto.getId());
-//        if (!menuOptional.isPresent()) {
-//            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", requestDto.getId()));
-//        }
-//        Menu menu = menuOptional.get();
-//        Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize());
-//        if (!DataUtil.isEmpty(requestDto.getSortBy()) && !DataUtil.isEmpty(requestDto.getSortType())) {
-//            Sort.Direction sort = Sort.Direction.ASC;
-//            if (requestDto.getSortType().equals("DESC")) {
-//                sort = Sort.Direction.DESC;
-//            }
-//            pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(), Sort.by(sort, requestDto.getSortBy()));
-//        }
-//        org.springframework.data.domain.Page<Page> pageEntity = pageContentRepository.getList(requestDto.getSearch(), menu, pageable);
-//        List<Page> listEntity = pageEntity.getContent();
-//        List<PageResponseDto> listDTO = new ArrayList<>();
-//        PageResponseDto dto = new PageResponseDto();
-//        if (CollectionUtils.isNotEmpty(listEntity)) {
-//            listDTO = listEntity.stream().map(item -> (PageResponseDto) pageContentMapper.convertToDTO(dto, item)).collect(Collectors.toList());
-//        }
-//        ListResponseDto<PageResponseDto> response = listResponseMapper.setDataListResponse(listDTO, pageEntity, pageable);
-//        return new BaseResponse(Constant.SUCCESS, "get.list.page", response);
-//    }
 }

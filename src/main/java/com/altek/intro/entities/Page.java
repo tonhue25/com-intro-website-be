@@ -20,6 +20,7 @@ public class Page extends AbstractEntity{
     private String image;
     @Column(name = "TIMELINE")
     private String timeline;
+
     private PageDetail pageDetail;
     @OneToOne(mappedBy = "page")
     public PageDetail getPageDetail() {
@@ -35,9 +36,6 @@ public class Page extends AbstractEntity{
     public Menu getMenu() {
         return menu;
     }
-
-    @Column(name = "LINK")
-    private String link;
 
     @Column(name = "ICON")
     private String icon;

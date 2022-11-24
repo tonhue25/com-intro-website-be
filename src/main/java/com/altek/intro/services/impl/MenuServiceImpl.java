@@ -58,8 +58,7 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
             response.setLanguage(lang);
             return new BaseResponse(Constant.SUCCESS, "get.list.menu", response);
         } catch (Exception ex) {
-            return new BaseResponse(Constant.FAIL,
-                    ex.getMessage());
+            return new BaseResponse(Constant.FAIL, ex.getMessage());
         }
     }
 
