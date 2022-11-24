@@ -94,4 +94,26 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
                 String.format("status.of.menu:%s", entity.getStatus()));
     }
 
+    @Override
+    public BaseResponse getNav(String language, Long parentId) {
+        try {
+            List<MenuResponseDto> menuDTOs = new ArrayList<>();
+            List<MenuTranslate> menus = menuTranslateRepository.getNav(language,parentId);
+            if (CollectionUtils.isNotEmpty(menus)) {
+                menuDTOs = menus.stream().map(item -> modelMapper.map(item, MenuResponseDto.class))
+                        .collect(Collectors.toList());
+            }
+            ListResponseDto<MenuResponseDto> response = new ListResponseDto<>();
+            response.setList(menuDTOs);
+            response.setPage(1);
+            response.setSize(menuDTOs.size());
+            response.setTotalPages(1);
+            response.setRecordPerPage(menuDTOs.size());
+            response.setLanguage(language);
+            return new BaseResponse(Constant.SUCCESS, "get.list.nav.news", response);
+        } catch (Exception ex) {
+            return new BaseResponse(Constant.FAIL, ex.getMessage());
+        }
+    }
+
 }

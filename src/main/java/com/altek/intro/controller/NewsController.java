@@ -5,6 +5,7 @@ import com.altek.intro.dto.request.NewsRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.NewsResponseDto;
 import com.altek.intro.exceptions.ResourceNotFoundException;
+import com.altek.intro.services.MenuService;
 import com.altek.intro.services.NewsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,23 @@ public class NewsController {
 
     @Autowired
     private NewsService newsService;
+
+    @Autowired
+    private MenuService menuService;
+
+    @GetMapping("/navbar")
+    public ResponseEntity<BaseResponse> getNav(@RequestParam("language") String language,
+                                               @RequestParam("parentId") Long parentId) {
+        try {
+            return new ResponseEntity(menuService.getNav(language, parentId), HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @PostMapping("/list")
     public ResponseEntity<BaseResponse> getList(@RequestBody BaseRequest requestDto) {

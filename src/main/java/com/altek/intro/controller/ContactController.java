@@ -21,12 +21,15 @@ import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.ContactService;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/contacts")
 @Slf4j
 public class ContactController {
     @Autowired
     private ContactService contactService;
+
     @GetMapping
     public ResponseEntity<BaseResponse> listAll() {
         try {
@@ -48,7 +51,7 @@ public class ContactController {
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponse> create(@RequestBody ContactRequestDto request) {
+    public ResponseEntity<BaseResponse> create(@RequestBody @Valid ContactRequestDto request) {
         return new ResponseEntity<BaseResponse>(contactService.create(request), HttpStatus.OK);
     }
 

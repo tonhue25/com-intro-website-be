@@ -13,4 +13,5 @@ public interface MenuService extends AbstractService {
 
     BaseResponse delete(Long id);
 
+    BaseResponse getNav(String language, Long parentId);
 }

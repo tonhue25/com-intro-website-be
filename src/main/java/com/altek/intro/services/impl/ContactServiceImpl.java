@@ -59,8 +59,9 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
     @Override
     public BaseResponse create(ContactRequestDto request) {
         Contact entity = new Contact();
-        if (!DataUtil.isEmpty(request.getId())) {
-            Optional<Contact> optional = contactRepository.findById(request.getId());
+
+        if (!DataUtil.isEmpty(request.getPhoneNumber())) {
+            Optional<Contact> optional = contactRepository.findByPhoneNumber(request.getPhoneNumber());
             if (optional.isPresent()) {
                 entity = optional.get();
             }

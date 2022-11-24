@@ -26,4 +26,7 @@ public interface ContactRepository extends AbstractRepository<Contact, Long> {
 
     @Query(value = "select u from Contact u where u.status = 1 and u.id = :id")
     Optional<Contact> findById(Long id);
+
+    @Query(value = "select u from Contact u where u.status = 1 and u.phoneNumber = :phoneNumber")
+    Optional<Contact> findByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 }

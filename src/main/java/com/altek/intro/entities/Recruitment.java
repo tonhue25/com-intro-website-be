@@ -33,10 +33,9 @@ public class Recruitment extends AbstractEntity implements Serializable {
         return productgroupRecruitments;
     }
 
-    private List<Recruitment_Candidate> candidateRecruitments;
-
+    private List<RecruitmentCandidate> candidateRecruitments;
     @OneToMany(mappedBy = "recruitment")
-    public List<Recruitment_Candidate> getCandidateRecruitments() {
+    public List<RecruitmentCandidate> getCandidateRecruitments() {
         return candidateRecruitments;
     }
 }

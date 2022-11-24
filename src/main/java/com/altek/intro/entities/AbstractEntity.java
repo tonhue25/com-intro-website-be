@@ -6,6 +6,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -19,6 +21,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor
+@AllArgsConstructor
 @Access(AccessType.PROPERTY)
 public abstract class AbstractEntity{
 
@@ -69,5 +73,8 @@ public abstract class AbstractEntity{
     @LastModifiedDate
     public Date getLastUpdatedTime() {
         return lastUpdatedTime;
+    }
+    public AbstractEntity(Integer status) {
+        this.status = status;
     }
 }

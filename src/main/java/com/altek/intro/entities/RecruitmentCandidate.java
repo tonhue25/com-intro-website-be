@@ -3,16 +3,15 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 
-@SuppressWarnings("serial")
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "ALT_RECRUITMENT_CANDIDATE")
-public class Recruitment_Candidate extends AbstractEntity implements Serializable {
+public class RecruitmentCandidate extends AbstractEntity implements Serializable {
     Recruitment recruitment;
     @ManyToOne
     @JoinColumn(name = "recruitment_id",nullable = false)
@@ -25,5 +24,11 @@ public class Recruitment_Candidate extends AbstractEntity implements Serializabl
     @JoinColumn(name = "candidate_id",nullable = false)
     public Candidate getCandidate() {
         return candidate;
+    }
+
+    public RecruitmentCandidate(Integer status, Recruitment recruitment, Candidate candidate) {
+        super(status);
+        this.recruitment = recruitment;
+        this.candidate = candidate;
     }
 }
