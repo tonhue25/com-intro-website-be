@@ -1,6 +1,7 @@
 package com.altek.intro.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -25,17 +26,9 @@ public class News extends AbstractEntity implements Serializable {
     @Column(name = "SHORT_DESCRIPTION")
     private String shortDescription;
 
-    private NewsDetail newsDetail;
-    @OneToOne(mappedBy = "news")
-    public NewsDetail getNewsDetail() {
-        return newsDetail;
+    private List<NewsTranslate> newsTranslate;
+    @OneToMany(mappedBy = "news")
+    public List<NewsTranslate> getNewsTranslate() {
+        return newsTranslate;
     }
-//
-//    private NewsDetail newsDetail;
-//    @OneToOne(cascade = CascadeType.ALL)
-//    @JoinColumn(name = "newsdetail_id", referencedColumnName = "id")
-//    @JsonManagedReference
-//    public NewsDetail getNewsDetail() {
-//        return newsDetail;
-//    }
 }

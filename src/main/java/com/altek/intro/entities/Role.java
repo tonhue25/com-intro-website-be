@@ -22,11 +22,6 @@ import java.util.Set;
 public class Role extends AbstractEntity implements Serializable {
     private String name;
 
-//    private List<User> users;
-//    @ManyToMany(mappedBy = "roles")
-//    public List<User> getUsers() {
-//        return users;
-//    }
     List<UserRole> userRoles;
     @OneToMany(mappedBy = "role")
     public List<UserRole> getUserRoles() {

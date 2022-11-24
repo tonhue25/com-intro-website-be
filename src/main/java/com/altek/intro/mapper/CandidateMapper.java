@@ -7,6 +7,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public interface CandiDateMapper extends AbstractMapper {
+public interface CandidateMapper extends AbstractMapper {
     List<CandidateResponseDto> mapList(List<Candidate> list);
 }

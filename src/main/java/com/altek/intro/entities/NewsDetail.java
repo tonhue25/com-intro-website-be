@@ -21,11 +21,4 @@ public class NewsDetail extends AbstractEntity implements Serializable {
     public News getNews() {
         return news;
     }
-//
-//    private News news;
-//    @OneToOne(mappedBy = "newsDetail")
-//    @JsonManagedReference
-//    public News getNews() {
-//        return news;
-//    }
 }
