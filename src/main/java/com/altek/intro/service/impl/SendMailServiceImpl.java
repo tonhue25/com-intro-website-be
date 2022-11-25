@@ -1,6 +1,6 @@
 package com.altek.intro.service.impl;
 
-import com.altek.intro.dto.request.MailDTO;
+import com.altek.intro.dto.request.MailDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.service.SendMailService;
 import com.altek.intro.util.Constant;
@@ -20,7 +20,7 @@ public class SendMailServiceImpl implements SendMailService {
     @Autowired
     public JavaMailSender emailSender;
 
-    public BaseResponse sendMail(MailDTO dto) throws MessagingException {
+    public BaseResponse sendMail(MailDto dto) throws MessagingException {
         MimeMessage message = emailSender.createMimeMessage();
         boolean multipart = false;
         if (!DataUtil.isEmpty(dto.getFiles().get(0))) {

@@ -1,10 +1,10 @@
 package com.altek.intro.service;
 
-import com.altek.intro.dto.request.MailDTO;
+import com.altek.intro.dto.request.MailDto;
 import com.altek.intro.dto.response.BaseResponse;
 
 import javax.mail.MessagingException;
 
 public interface SendMailService {
-    BaseResponse sendMail(MailDTO dto) throws MessagingException;
+    BaseResponse sendMail(MailDto dto) throws MessagingException;
 }

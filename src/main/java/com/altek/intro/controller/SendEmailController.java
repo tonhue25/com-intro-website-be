@@ -1,6 +1,6 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.dto.request.MailDTO;
+import com.altek.intro.dto.request.MailDto;
 import com.altek.intro.service.SendMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +18,7 @@ public class SendEmailController {
 
     @ResponseBody
     @RequestMapping("/send-mail")
-    public ResponseEntity<?> sendEmail(MailDTO dto) throws MessagingException {
+    public ResponseEntity<?> sendEmail(MailDto dto) throws MessagingException {
         return new ResponseEntity(sendMailService.sendMail(dto), HttpStatus.OK);
     }
 }

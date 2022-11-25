@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class PageDetailResponseDTO extends AbstractResponseDto {
+public class PageDetailResponseDto extends AbstractResponseDto {
 
     private String title;
     private String shortDescription;

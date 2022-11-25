@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.altek.intro.dto.request.PageDetailRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.PageDetailResponseDTO;
+import com.altek.intro.dto.response.PageDetailResponseDto;
 import com.altek.intro.entity.Page;
 import com.altek.intro.entity.PageDetail;
 import com.altek.intro.exception.ResourceNotFoundException;
@@ -44,7 +44,7 @@ public class PageDetailServiceImpl extends AbstractServiceImpl implements PageDe
         if (!optionalPageDetail.isPresent()) {
             throw new ResourceNotFoundException(String.format("page.no.have.page.detail.id:%s", id));
         }
-        PageDetailResponseDTO response = modelMapper.map(optionalPageDetail.get(), PageDetailResponseDTO.class);
+        PageDetailResponseDto response = modelMapper.map(optionalPageDetail.get(), PageDetailResponseDto.class);
         return new BaseResponse(Constant.SUCCESS, "get.page.detail.by.page.id", response);
     }
 
@@ -64,7 +64,7 @@ public class PageDetailServiceImpl extends AbstractServiceImpl implements PageDe
         }
         entity = pageDetailMapper.convertToEntity(entity, request, optional.get());
         entity = pageDetailRepository.save(entity);
-        PageDetailResponseDTO response = modelMapper.map(entity, PageDetailResponseDTO.class);
+        PageDetailResponseDto response = modelMapper.map(entity, PageDetailResponseDto.class);
         return new BaseResponse(Constant.SUCCESS, "add.or.update.page.detail", response);
     }
 

@@ -12,7 +12,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MailDTO {
+public class MailDto {
     private String subject;
     private String content;
     private String email;
