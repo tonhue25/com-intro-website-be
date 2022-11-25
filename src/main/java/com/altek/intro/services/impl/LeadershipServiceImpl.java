@@ -45,13 +45,7 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
     @Override
     public BaseResponse getAllLeadership(String lang) {
         try {
-            List<LeadershipResponseDto> leadershipDTOS = new ArrayList<LeadershipResponseDto>();
-            List<LeadershipTranslate> leadershipEntities = leadershipTranslateRepository.findAll(lang);
-            LeadershipResponseDto dto = new LeadershipResponseDto();
-            if (CollectionUtils.isNotEmpty(leadershipEntities)) {
-                leadershipDTOS = leadershipEntities.stream().map(item -> (LeadershipResponseDto) leadershipMapper.convertToDTO(dto, item))
-                        .collect(Collectors.toList());
-            }
+            List<LeadershipResponseDto> leadershipDTOS = leadershipTranslateRepository.findAll(lang);
             ListResponseDto<LeadershipResponseDto> response = new ListResponseDto<>();
             response.setList(leadershipDTOS);
             response.setPage(1);
