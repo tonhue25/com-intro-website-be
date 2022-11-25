@@ -19,7 +19,7 @@ public class Page extends AbstractEntity{
     @Column(name = "IMAGE")
     private String image;
 
-    @Column(name = "TIMELINE")
+    @Column(name = "TIME_LINE")
     private String timeline;
 
     private PageDetail pageDetail;
