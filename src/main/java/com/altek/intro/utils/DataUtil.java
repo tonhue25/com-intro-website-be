@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 public class DataUtil {
@@ -31,7 +32,7 @@ public class DataUtil {
         return false;
     }
 
-    public static boolean isEmpty(CommonsMultipartFile input) {
+    public static boolean isEmpty(MultipartFile input) {
         if (input == null || StringUtils.isBlank(input.getOriginalFilename())) {
             return true;
         }

@@ -1,17 +1,20 @@
 package com.altek.intro.dto.request;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class MailDTO {
-    private String name;
     private String subject;
     private String content;
     private String email;
-    private MultipartFile file;
+    private List<MultipartFile> files;
 }
