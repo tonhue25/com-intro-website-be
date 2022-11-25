@@ -30,7 +30,8 @@ public class PageResponseDto extends AbstractResponseDto {
         }
         return dateString;
     }
-    public PageResponseDto(Long id, Integer status, String createdBy, Date createdTime, String lastUpdatedBy, Date lastUpdatedTime, String pageTitle, String shortDescription, String image, String timeLine, Long menuId, String url) {
+    public PageResponseDto(Long id, Integer status, String createdBy, Date createdTime, String lastUpdatedBy, Date lastUpdatedTime,
+                           String pageTitle, String shortDescription, String image, String timeLine, Long menuId, String url) {
         super(id, status, createdBy, convertDatetoString(createdTime), lastUpdatedBy, convertDatetoString(lastUpdatedTime));
         this.pageTitle = pageTitle;
         this.shortDescription = shortDescription;
