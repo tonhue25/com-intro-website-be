@@ -1,12 +1,14 @@
 package com.altek.intro.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Blob;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;
-
-import lombok.*;
 
 @Getter
 @Setter

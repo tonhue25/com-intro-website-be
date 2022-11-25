@@ -11,9 +11,13 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CandidateRequestDto{
     private Long id;
+//<<<<<<< HEAD
     private Integer status;
     private String fullName;
 
+//=======
+//    private String name;
+//>>>>>>> baodang
     private String email;
 
     private String phoneNumber;

@@ -11,6 +11,5 @@ import java.util.List;
 @Component
 public interface CandidateMapper extends AbstractMapper {
     List<CandidateResponseDto> mapList(List<Candidate> list);
-
     Candidate convertToEntity(CandidateRequestDto dto, Candidate entity, Date dateOfBirth);
 }

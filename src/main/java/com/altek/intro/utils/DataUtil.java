@@ -9,6 +9,8 @@ import java.util.List;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
+
 public class DataUtil {
 
     public static Date stringToDate(String input){
@@ -24,6 +26,13 @@ public class DataUtil {
 
     public static boolean isEmpty(Integer input) {
         if (input == null || StringUtils.isBlank(input.toString())) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean isEmpty(CommonsMultipartFile input) {
+        if (input == null || StringUtils.isBlank(input.getOriginalFilename())) {
             return true;
         }
         return false;

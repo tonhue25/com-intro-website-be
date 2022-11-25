@@ -1,6 +1,7 @@
 package com.altek.intro.entities;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.*;
 
@@ -20,10 +21,10 @@ public class News extends AbstractEntity {
     @Column(name = "THUMBNAIL")
     private String thumbnail;
 
-    private NewsDetail newsDetail;
-    @OneToOne(mappedBy = "news")
-    public NewsDetail getNewsDetail() {
-        return newsDetail;
+    private List<NewsTranslate> newsTranslate;
+    @OneToMany(mappedBy = "news")
+    public List<NewsTranslate> getNewsTranslate() {
+        return newsTranslate;
     }
 
 }

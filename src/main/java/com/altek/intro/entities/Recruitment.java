@@ -26,7 +26,6 @@ public class Recruitment extends AbstractEntity implements Serializable {
         return recruitmentType;
     }
 
-    //==================
     List<ProductgroupRecruitment> productgroupRecruitments;
     @OneToMany(mappedBy = "recruitment")
     public List<ProductgroupRecruitment> getProductgroupRecruitments() {
