@@ -19,8 +19,9 @@ public interface PageTranslateRepository extends AbstractRepository<PageTranslat
             "WHERE p.status = 1 AND pt.languageId = :language")
     List<PageTranslate> findAllPageContent(@Param("language") String language);
 
-    @Query("SELECT new com.altek.intro.dto.response.PageResponseDto (p.id, p.status, p.createdBy, p.createdTime, p.lastUpdatedBy, p.lastUpdatedTime, " +
-            "pt.pageTitle, pt.shortDescription, p.image, p.timeLine, p.menu.id, p.url) " +
+    @Query("SELECT new com.altek.intro.dto.response.PageResponseDto (p.id, p.status, p.createdBy, " +
+            "CHAR_TO(p.createdTime,'dd/MM/yyyyy'), p.lastUpdatedBy, CHAR_TO(p.lastUpdatedTime,'dd/MM/yyyyy') , " +
+            "pt.pageTitle, pt.shortDescription, p.image, p.menu.id, CHAR_TO(p.timeLine, 'dd/MM/yyyy'), p.url) " +
             "FROM PageTranslate  pt INNER JOIN Page p ON pt.pageId = p.id " +
             "WHERE p.status = 1 AND pt.languageId = :language AND p.menu.id = :menuId")
     List<PageResponseDto> findAllPageContentByMenuID(@Param("language") String language,

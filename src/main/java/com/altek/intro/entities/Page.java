@@ -1,6 +1,7 @@
 package com.altek.intro.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.*;
 
@@ -20,8 +21,7 @@ public class Page extends AbstractEntity{
     @Column(name = "IMAGE")
     private String image;
 
-
-    @Column(name = "TIME_LINE")
+    @Column(name = "TIMELINE")
     private String timeLine;
 
     @Column(name = "URL")

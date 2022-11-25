@@ -67,19 +67,40 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
         }
     }
 
+    public int returnValidPageNumber(Integer pageNumber, Integer pageSize){
+        if(pageNumber <= 1){
+            return 1;
+        }
+        int maxPage = (pageContentRepository.findAll().size() / pageSize) + 1;
+        if(pageNumber > maxPage){
+            return maxPage;
+        }
+        return pageNumber;
+    }
+
+    public void isNullPageNumberAndPageSize(Integer pageNumber, Integer pageSize){
+        if( pageSize == null || pageNumber == null){
+            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", pageNumber));// sửa throw lại nè.
+        }
+    }
+
     @Override
     public BaseResponse getAllPageContentByMenuId(PageRequestDto requestBody) {
         Optional<Menu> optional = menuRepository.findById(requestBody.getMenuId());
         if (!optional.isPresent()) {
             throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", requestBody.getMenuId()));
         }
-        if(requestBody.getSize() == null || requestBody.getPage() == null){
-            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", requestBody.getMenuId()));// sửa throw lại nè.
-        }
-        Pageable paging = getPageable(requestBody.getPage(), requestBody.getSize());
-        List<PageResponseDto> listEntity = pageContentTranslateRepository.findAllPageContentByMenuID(requestBody.getLanguage(), requestBody.getMenuId(),paging);
+        isNullPageNumberAndPageSize(requestBody.getPage(), requestBody.getSize());
+
+        Integer pageSize = requestBody.getSize();
+        Integer pageNumber = returnValidPageNumber(requestBody.getPage(), requestBody.getSize());
+
+        Pageable pageable = getPageable(pageNumber - 1, pageSize);
+        List<PageResponseDto> listEntity =
+                pageContentTranslateRepository.findAllPageContentByMenuID(requestBody.getLanguage(), requestBody.getMenuId(), pageable);
         return new BaseResponse(Constant.SUCCESS, "get.list.page.by.menuId", listEntity);
     }
+
 
     @Override
     public BaseResponse create(PageRequestDto request) {
