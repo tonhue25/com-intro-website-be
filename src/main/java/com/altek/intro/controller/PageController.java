@@ -34,7 +34,7 @@ public class PageController {
         }
     }
 
-    @PostMapping("all")
+    @PostMapping
     public ResponseEntity<BaseResponse> findAllPageContentByMenuId(@RequestBody PageRequestDto requestBody) {
         try {
             return new ResponseEntity(pageContentService.getAllPageContentByMenuId(requestBody), HttpStatus.OK);
@@ -53,7 +53,7 @@ public class PageController {
 //        return new ResponseEntity<>(pageContentService.listPageContentByMenuId(id), HttpStatus.OK);
 //    }
 
-    @PostMapping
+    @PostMapping("add")
     public ResponseEntity<BaseResponse> create(@RequestBody PageRequestDto request) {
         try {
             return new ResponseEntity<BaseResponse>(pageContentService.create(request), HttpStatus.OK);
