@@ -50,18 +50,12 @@ public class CandidateServiceImpl extends AbstractServiceImpl implements Candida
 
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
-    public CandidateResponseDto create(CandidateRequestDto request) {
-        Candidate entity = new Candidate();
-        if (!DataUtil.isEmpty(request.getId())) {
-            Optional<Candidate> optional = candiDateRepository.findById(request.getId());
-            if (optional.isPresent()) {
-                entity = optional.get();
-            }
-        }
-        entity = (Candidate) candiDateMapper.convertToEntity(request, entity);
-        entity.setStatus(Constant.INSERT);
-        entity = candiDateRepository.save(entity);
-        CandidateResponseDto response = modelMapper.map(entity, CandidateResponseDto.class);
+    public CandidateResponseDto saveCandidateInformation(CandidateRequestDto request) {
+        Candidate candidateEntity = new Candidate();
+        candidateEntity = (Candidate) candiDateMapper.convertToEntity(request, candidateEntity);
+        candidateEntity.setStatus(Constant.INSERT);
+        candidateEntity = candiDateRepository.save(candidateEntity);
+        CandidateResponseDto response = modelMapper.map(candidateEntity, CandidateResponseDto.class);
         return response;
     }
 

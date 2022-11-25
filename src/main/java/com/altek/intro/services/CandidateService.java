@@ -9,7 +9,7 @@ public interface CandidateService extends AbstractService {
 
     List<CandidateResponseDto> getAll();
 
-    CandidateResponseDto create(CandidateRequestDto request);
+    CandidateResponseDto saveCandidateInformation(CandidateRequestDto request);
 
     CandidateResponseDto delete(Long id);
 

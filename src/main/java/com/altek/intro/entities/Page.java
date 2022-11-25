@@ -17,14 +17,15 @@ import lombok.Setter;
 @Table(name = "ALT_PAGE")
 public class Page extends AbstractEntity{
 
-    @Column(name = "PAGE_TITLE")
-    private String pageTitle;
-
-    @Column(name = "SHORT_DESCRIPTION", length = 1000)
-    private String shortDescription;
-
     @Column(name = "IMAGE")
     private String image;
+
+
+    @Column(name = "TIME_LINE")
+    private String timeLine;
+
+    @Column(name = "URL")
+    private String url;
 
     private PageDetail pageDetail;
     @OneToOne(mappedBy = "page")
@@ -37,7 +38,7 @@ public class Page extends AbstractEntity{
     }
 
     private Menu menu;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     public Menu getMenu() {
         return menu;
     }

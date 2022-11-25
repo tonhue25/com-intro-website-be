@@ -17,7 +17,7 @@ public class PageTranslate extends AbstractEntity{
     @Column(name = "PAGE_TITLE")
     private String pageTitle;
 
-    @Column(name = "SHORT_DESCRIPTION", length = 1000)
+    @Column(name = "SHORT_DESCRIPTION")
     private String shortDescription;
 
     @Column(name = "LANGUAGE_ID")

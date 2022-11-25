@@ -68,18 +68,17 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
     }
 
     @Override
-    public BaseResponse getAllPageContentByMenuId(String lang,Long menuId) {
-        Optional<Menu> optional = menuRepository.findById(menuId);
+    public BaseResponse getAllPageContentByMenuId(PageRequestDto requestBody) {
+        Optional<Menu> optional = menuRepository.findById(requestBody.getMenuId());
         if (!optional.isPresent()) {
-            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", menuId));
+            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", requestBody.getMenuId()));
         }
-        List<PageResponseDto> listDTO = new ArrayList<>();
-        PageResponseDto dto = new PageResponseDto();
-        List<PageTranslate> listEntity = pageContentTranslateRepository.findAllPageContentByMenuID(lang,menuId);
-        if (CollectionUtils.isNotEmpty(listEntity)) {
-            listDTO = listEntity.stream().map(item -> (PageResponseDto) pageContentMapper.convertToDTO(dto, item)).collect(Collectors.toList());
+        if(requestBody.getSize() == null || requestBody.getPage() == null){
+            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", requestBody.getMenuId()));// sửa throw lại nè.
         }
-        return new BaseResponse(Constant.SUCCESS, "get.list.page.by.menuId", listDTO);
+        Pageable paging = getPageable(requestBody.getPage(), requestBody.getSize());
+        List<PageResponseDto> listEntity = pageContentTranslateRepository.findAllPageContentByMenuID(requestBody.getLanguage(), requestBody.getMenuId(),paging);
+        return new BaseResponse(Constant.SUCCESS, "get.list.page.by.menuId", listEntity);
     }
 
     @Override

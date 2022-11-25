@@ -22,12 +22,12 @@ import java.util.List;
 public class CandidateController {
 
     @Autowired
-    private CandidateService candiDateService;
+    private CandidateService candidateService;
 
     @GetMapping
     public ResponseEntity<CandidateResponseDto> listAll() {
         try {
-            List<CandidateResponseDto> response = candiDateService.getAll();
+            List<CandidateResponseDto> response = candidateService.getAll();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             log.error(e.getMessage());
@@ -40,9 +40,9 @@ public class CandidateController {
     }
 
     @PostMapping
-    public ResponseEntity<CandidateResponseDto> create(@RequestBody CandidateRequestDto request){
+    public ResponseEntity<CandidateResponseDto> saveCandidateInformation(@RequestBody CandidateRequestDto request){
         try {
-            CandidateResponseDto result = candiDateService.create(request);
+            CandidateResponseDto result = candidateService.saveCandidateInformation(request);
             return new ResponseEntity<CandidateResponseDto>(result,HttpStatus.CREATED);
         } catch (Exception e) {
             log.error(e.getMessage());

@@ -13,4 +13,7 @@ public class CandidateResponseDto extends AbstractResponseDto {
     private String phoneNumber;
     private String cv;
     private Long recruitmentId;
+    private String address;
+    private String dateOfBirth;
+    private String gender;
 }

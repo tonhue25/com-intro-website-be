@@ -9,5 +9,7 @@ public class CandidateRequestDto {
     private String email;
     private String phoneNumber;
     private String cv;
-    private Long recruitmentId;
+    private String address;
+    private String dateOfBirth;
+    private String gender;
 }

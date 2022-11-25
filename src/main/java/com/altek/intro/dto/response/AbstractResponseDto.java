@@ -17,9 +17,7 @@ public class AbstractResponseDto {
     private Long id;
     private Integer status;
     private String createdBy;
-
     private String createdTime;
     private String lastUpdatedBy;
-
     private String lastUpdatedTime;
 }

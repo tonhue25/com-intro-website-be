@@ -12,7 +12,7 @@ public interface PageService extends AbstractService {
 
     BaseResponse getAllPageContent(String lang);
 
-    BaseResponse getAllPageContentByMenuId(String lang,Long menuId);
+    BaseResponse getAllPageContentByMenuId(PageRequestDto requestBody);
 
     BaseResponse create(PageRequestDto request);
 

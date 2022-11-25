@@ -20,7 +20,7 @@ public class PageController {
     @Autowired
     private PageService pageContentService;
 
-    @GetMapping("all")
+    @GetMapping
     public ResponseEntity<BaseResponse> listAll(@RequestHeader("Accept-Language") String lang) {
         try {
             return new ResponseEntity(pageContentService.getAllPageContent(lang), HttpStatus.OK);
@@ -34,10 +34,10 @@ public class PageController {
         }
     }
 
-    @GetMapping()
-    public ResponseEntity<BaseResponse> findAllPageContentByMenuId(@RequestHeader("Accept-Language") String lang, @RequestParam("menuId") Long menuId) {
+    @PostMapping("all")
+    public ResponseEntity<BaseResponse> findAllPageContentByMenuId(@RequestBody PageRequestDto requestBody) {
         try {
-            return new ResponseEntity(pageContentService.getAllPageContentByMenuId(lang,menuId), HttpStatus.OK);
+            return new ResponseEntity(pageContentService.getAllPageContentByMenuId(requestBody), HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             log.error(e.getMessage());
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

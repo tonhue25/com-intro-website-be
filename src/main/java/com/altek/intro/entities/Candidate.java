@@ -27,6 +27,16 @@ public class Candidate extends AbstractEntity implements Serializable {
     @Column(name = "CV")
     private String cv;
 
+    @Column(name = "ADDRESS")
+    private String address;
+
+    @Column(name = "DATE_OF_BIRTH")
+    private String dateOfBirth;
+
+    @Column(name = "GENDER")
+    private String gender;
+
+
     private List<Recruitment_Candidate> candidateRecruitments;
     @OneToMany(mappedBy = "candidate")
     public List<Recruitment_Candidate> getCandidateRecruitments() {
