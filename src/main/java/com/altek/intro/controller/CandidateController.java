@@ -3,7 +3,7 @@ package com.altek.intro.controller;
 import com.altek.intro.dto.request.CandidateRequestDto;
 import com.altek.intro.dto.response.CandidateResponseDto;
 import com.altek.intro.exceptions.ResourceNotFoundException;
-import com.altek.intro.services.CandiDateService;
+import com.altek.intro.services.CandidateService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,17 +17,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("/cadidate")
+@RequestMapping("/candidate")
 @Slf4j
-public class CadiDateController {
+public class CandidateController {
 
     @Autowired
-    private CandiDateService candiDateService;
+    private CandidateService candidateService;
 
     @GetMapping
     public ResponseEntity<CandidateResponseDto> listAll() {
         try {
-            List<CandidateResponseDto> response = candiDateService.getAll();
+            List<CandidateResponseDto> response = candidateService.getAll();
             return new ResponseEntity(response, HttpStatus.OK);
         }catch (ResourceNotFoundException e) {
             log.error(e.getMessage());
@@ -42,7 +42,7 @@ public class CadiDateController {
     @PostMapping
     public ResponseEntity<CandidateResponseDto> create(@RequestBody CandidateRequestDto request){
         try {
-            CandidateResponseDto result = candiDateService.create(request);
+            CandidateResponseDto result = candidateService.create(request);
             return new ResponseEntity<CandidateResponseDto>(result,HttpStatus.CREATED);
         } catch (Exception e) {
             log.error(e.getMessage());
@@ -50,5 +50,4 @@ public class CadiDateController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
-
 }

@@ -4,7 +4,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 @SuppressWarnings("serial")
 @Data
@@ -13,6 +12,16 @@ import java.util.List;
 @Entity
 @Table(name = "ALT_RECRUITMENT_CANDIDATE")
 public class Recruitment_Candidate extends AbstractEntity implements Serializable {
+
+    @Column(name = "DESCRIPTION")
+    private String description;
+
+    @Column(name = "REQUEST")
+    private String request;
+
+    @Column(name = "BENEFIT")
+    private String benefit;
+
     Recruitment recruitment;
     @ManyToOne
     @JoinColumn(name = "recruitment_id",nullable = false)

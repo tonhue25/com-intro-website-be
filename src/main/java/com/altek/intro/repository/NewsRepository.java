@@ -23,4 +23,5 @@ public interface NewsRepository extends AbstractRepository<News, Long> {
             "   ( lower(e.title) like lower(concat(:search, '%'))  or " +
             "   lower(e.shortDescription) like lower(concat(:search, '%')) )) ")
     List<News> getAll(@Param("search") String search);
+
 }

@@ -16,12 +16,6 @@ import java.io.Serializable;
 @Table(name = "ALT_USER_ROLE")
 public class UserRole extends AbstractEntity implements Serializable {
 
-//    @Column(name = "USER_ID")
-//    private Long userId;
-//
-//    @Column(name = "ROLE_ID")
-//    private Long roleId;
-
     User user;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

@@ -1,14 +1,12 @@
 package com.altek.intro.services.impl;
 
 import com.altek.intro.dto.request.CandidateRequestDto;
-import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.CandidateResponseDto;
 import com.altek.intro.entities.Candidate;
-import com.altek.intro.entities.Recruitment;
 import com.altek.intro.exceptions.ResourceNotFoundException;
-import com.altek.intro.mapper.CandiDateMapper;
-import com.altek.intro.repository.CandiDateRepository;
-import com.altek.intro.services.CandiDateService;
+import com.altek.intro.mapper.CandidateMapper;
+import com.altek.intro.repository.CandidateRepository;
+import com.altek.intro.services.CandidateService;
 import com.altek.intro.utils.Constant;
 import com.altek.intro.utils.DataUtil;
 import org.apache.commons.collections4.CollectionUtils;
@@ -16,7 +14,6 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.text.html.Option;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +21,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class CandiDateServiceImpl extends AbstractServiceImpl implements CandiDateService {
+public class CandidateServiceImpl extends AbstractServiceImpl implements CandidateService {
 
     @Autowired
-    private CandiDateRepository candiDateRepository;
+    private CandidateRepository candidateRepository;
 
     @Autowired
-    private CandiDateMapper candiDateMapper;
+    private CandidateMapper candidateMapper;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -39,10 +36,10 @@ public class CandiDateServiceImpl extends AbstractServiceImpl implements CandiDa
     public List<CandidateResponseDto> getAll() {
         try {
             List<CandidateResponseDto> responseDtoList = new ArrayList<>();
-            List<Candidate> cadidateEntity = candiDateRepository.findAll();
+            List<Candidate> cadidateEntity = candidateRepository.findAll();
             CandidateResponseDto dto = new CandidateResponseDto();
             if (CollectionUtils.isNotEmpty(cadidateEntity)) {
-                responseDtoList = cadidateEntity.stream().map(item -> (CandidateResponseDto) candiDateMapper.convertToDTO(dto, item)).collect(Collectors.toList());
+                responseDtoList = cadidateEntity.stream().map(item -> (CandidateResponseDto) candidateMapper.convertToDTO(dto, item)).collect(Collectors.toList());
             }
             return responseDtoList;
         } catch (Exception e) {
@@ -56,20 +53,29 @@ public class CandiDateServiceImpl extends AbstractServiceImpl implements CandiDa
     public CandidateResponseDto create(CandidateRequestDto request) {
         Candidate entity = new Candidate();
         if (!DataUtil.isEmpty(request.getId())) {
-            Optional<Candidate> optional = candiDateRepository.findById(request.getId());
+            Optional<Candidate> optional = candidateRepository.findById(request.getId());
             if (optional.isPresent()) {
                 entity = optional.get();
             }
         }
-        entity = (Candidate) candiDateMapper.convertToEntity(request, entity);
+        entity = (Candidate) candidateMapper.convertToEntity(request, entity);
         entity.setStatus(Constant.INSERT);
-        entity = candiDateRepository.save(entity);
+        entity = candidateRepository.save(entity);
         CandidateResponseDto response = modelMapper.map(entity, CandidateResponseDto.class);
         return response;
     }
 
     @Override
+    @Transactional(rollbackOn = {Exception.class, Throwable.class})
     public CandidateResponseDto delete(Long id) {
-        return null;
+        Optional<Candidate> optional = candidateRepository.findById(id);
+        if(!optional.isPresent()){
+            throw new ResourceNotFoundException(String.format("candidate.not.found.with.id:%s", id));
+        }
+        Candidate entity = optional.get();
+        entity.setStatus(Constant.DELETE);
+        candidateRepository.save(entity);
+        CandidateResponseDto response = modelMapper.map(entity, CandidateResponseDto.class);
+        return response;
     }
 }

@@ -29,13 +29,7 @@ public class Recruitment extends AbstractEntity implements Serializable {
     @Column(name = "LOCATION")
     private String location;
 
-//    private List<Candidate> candidates;
-//    @ManyToMany(mappedBy = "recruitments")
-//    public List<Candidate> getCandidates() {
-//        return candidates;
-//    }
     private List<Recruitment_Candidate> candidateRecruitments;
-
     @OneToMany(mappedBy = "recruitment")
     public List<Recruitment_Candidate> getCandidateRecruitments() {
         return candidateRecruitments;
