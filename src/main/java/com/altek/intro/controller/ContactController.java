@@ -4,8 +4,6 @@ package com.altek.intro.controller;
 import com.altek.intro.dto.request.BaseRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.altek.intro.dto.request.ContactRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.exceptions.ResourceNotFoundException;
-import com.altek.intro.services.ContactService;
+import com.altek.intro.exception.ResourceNotFoundException;
+import com.altek.intro.service.ContactService;
 
 import javax.validation.Valid;
 

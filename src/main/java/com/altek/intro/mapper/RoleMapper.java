@@ -1,7 +1,6 @@
 package com.altek.intro.mapper;
 
-import com.altek.intro.entities.Role;
-import com.altek.intro.entities.UserRole;
+import com.altek.intro.entity.Role;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

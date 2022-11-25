@@ -1,7 +1,6 @@
 package com.altek.intro.repository;
 
-import com.altek.intro.entities.Leadership;
-import com.altek.intro.entities.LeadershipTranslate;
+import com.altek.intro.entity.LeadershipTranslate;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;

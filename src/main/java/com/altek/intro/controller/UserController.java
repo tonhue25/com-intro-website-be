@@ -2,8 +2,7 @@ package com.altek.intro.controller;
 
 import com.altek.intro.dto.request.UserRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.NewsDetailResponseDto;
-import com.altek.intro.services.UserService;
+import com.altek.intro.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

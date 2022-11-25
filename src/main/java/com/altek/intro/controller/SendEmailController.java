@@ -1,7 +1,7 @@
 package com.altek.intro.controller;
 
 import com.altek.intro.dto.request.MailDTO;
-import com.altek.intro.services.SendMailService;
+import com.altek.intro.service.SendMailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

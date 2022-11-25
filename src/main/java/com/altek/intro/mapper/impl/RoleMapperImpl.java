@@ -1,8 +1,7 @@
 package com.altek.intro.mapper.impl;
 
-import com.altek.intro.entities.Role;
-import com.altek.intro.entities.UserRole;
-import com.altek.intro.exceptions.ResourceNotFoundException;
+import com.altek.intro.entity.Role;
+import com.altek.intro.exception.ResourceNotFoundException;
 import com.altek.intro.mapper.RoleMapper;
 import com.altek.intro.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;

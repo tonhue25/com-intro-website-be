@@ -1,8 +1,7 @@
 package com.altek.intro.controller;
 
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.services.ProductGroupService;
-import com.altek.intro.services.RecruitmentTypeService;
+import com.altek.intro.service.ProductGroupService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

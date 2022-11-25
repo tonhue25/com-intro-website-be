@@ -1,6 +1,5 @@
 package com.altek.intro.dto.request;
 
-import com.altek.intro.entities.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,6 @@
 package com.altek.intro.repository;
 
-import com.altek.intro.entities.Role;
+import com.altek.intro.entity.Role;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;

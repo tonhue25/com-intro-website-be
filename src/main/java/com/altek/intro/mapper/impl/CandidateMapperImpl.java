@@ -2,7 +2,7 @@ package com.altek.intro.mapper.impl;
 
 import com.altek.intro.dto.request.CandidateRequestDto;
 import com.altek.intro.dto.response.CandidateResponseDto;
-import com.altek.intro.entities.Candidate;
+import com.altek.intro.entity.Candidate;
 import com.altek.intro.mapper.CandidateMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

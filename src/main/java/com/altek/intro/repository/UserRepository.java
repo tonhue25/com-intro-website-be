@@ -1,6 +1,6 @@
 package com.altek.intro.repository;
 
-import com.altek.intro.entities.User;
+import com.altek.intro.entity.User;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 

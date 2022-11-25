@@ -1,10 +1,8 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.config.GlobalConfig;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.exceptions.ResourceNotFoundException;
-import com.altek.intro.services.InformationCompanyService;
-import com.altek.intro.services.impl.InformationCompanyServiceImpl;
+import com.altek.intro.exception.ResourceNotFoundException;
+import com.altek.intro.service.InformationCompanyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

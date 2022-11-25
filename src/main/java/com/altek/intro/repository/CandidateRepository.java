@@ -1,6 +1,6 @@
 package com.altek.intro.repository;
 
-import com.altek.intro.entities.Candidate;
+import com.altek.intro.entity.Candidate;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;

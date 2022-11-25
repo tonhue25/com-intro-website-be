@@ -1,8 +1,8 @@
 package com.altek.intro.mapper.impl;
 
 import com.altek.intro.dto.request.PageDetailRequestDto;
-import com.altek.intro.entities.Page;
-import com.altek.intro.entities.PageDetail;
+import com.altek.intro.entity.Page;
+import com.altek.intro.entity.PageDetail;
 import com.altek.intro.mapper.PageDetailMapper;
 import org.springframework.stereotype.Component;
 
