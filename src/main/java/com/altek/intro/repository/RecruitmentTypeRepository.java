@@ -1,7 +1,7 @@
 package com.altek.intro.repository;
 
 import com.altek.intro.dto.response.RecruitmentTypeResponseDto;
-import com.altek.intro.entities.RecruitmentType;
+import com.altek.intro.entity.RecruitmentType;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;

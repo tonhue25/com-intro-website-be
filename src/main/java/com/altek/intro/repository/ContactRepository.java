@@ -1,7 +1,6 @@
 package com.altek.intro.repository;
 
-import com.altek.intro.entities.Contact;
-import com.altek.intro.entities.Menu;
+import com.altek.intro.entity.Contact;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -26,4 +25,7 @@ public interface ContactRepository extends AbstractRepository<Contact, Long> {
 
     @Query(value = "select u from Contact u where u.status = 1 and u.id = :id")
     Optional<Contact> findById(Long id);
+
+    @Query(value = "select u from Contact u where u.status = 1 and u.phoneNumber = :phoneNumber")
+    Optional<Contact> findByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 }

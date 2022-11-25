@@ -4,8 +4,9 @@ import com.altek.intro.dto.request.BaseRequest;
 import com.altek.intro.dto.request.NewsRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.NewsResponseDto;
-import com.altek.intro.exceptions.ResourceNotFoundException;
-import com.altek.intro.services.NewsService;
+import com.altek.intro.exception.ResourceNotFoundException;
+import com.altek.intro.service.MenuService;
+import com.altek.intro.service.NewsService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,10 +21,14 @@ public class NewsController {
     @Autowired
     private NewsService newsService;
 
-    @PostMapping("/list")
-    public ResponseEntity<BaseResponse> list(@RequestBody BaseRequest requestDto) {
+    @Autowired
+    private MenuService menuService;
+
+    @GetMapping("/navbar")
+    public ResponseEntity<BaseResponse> getNav(@RequestParam("language") String language,
+                                               @RequestParam("parentId") Long parentId) {
         try {
-            return new ResponseEntity(newsService.getList(requestDto), HttpStatus.OK);
+            return new ResponseEntity(menuService.getNav(language, parentId), HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
@@ -33,10 +38,10 @@ public class NewsController {
         }
     }
 
-    @PostMapping("/new")
-    public ResponseEntity<BaseResponse> getListNew(@RequestBody BaseRequest requestDto) {
+    @PostMapping("/list")
+    public ResponseEntity<BaseResponse> getList(@RequestBody BaseRequest requestDto) {
         try {
-            return new ResponseEntity(newsService.getListNew(requestDto), HttpStatus.OK);
+            return new ResponseEntity(newsService.getList(requestDto), HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {

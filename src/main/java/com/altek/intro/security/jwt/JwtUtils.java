@@ -3,7 +3,7 @@ package com.altek.intro.security.jwt;
 import java.security.SignatureException;
 import java.util.Date;
 
-import com.altek.intro.services.impl.UserDetailsImpl;
+import com.altek.intro.service.impl.UserDetailsImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;

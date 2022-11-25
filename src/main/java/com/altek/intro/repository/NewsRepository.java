@@ -1,6 +1,6 @@
 package com.altek.intro.repository;
 
-import com.altek.intro.entities.News;
+import com.altek.intro.entity.News;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.Optional;

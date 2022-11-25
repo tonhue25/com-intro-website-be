@@ -1,7 +1,7 @@
 package com.altek.intro.mapper.impl;
 
 import com.altek.intro.dto.response.ContactResponseDto;
-import com.altek.intro.entities.Contact;
+import com.altek.intro.entity.Contact;
 import com.altek.intro.mapper.ContactMapper;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

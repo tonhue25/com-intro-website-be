@@ -1,11 +1,10 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.dto.request.BaseRequest;
 import com.altek.intro.dto.request.PageRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.exceptions.ResourceNotFoundException;
-import com.altek.intro.services.PageService;
-import com.altek.intro.utils.Constant;
+import com.altek.intro.exception.ResourceNotFoundException;
+import com.altek.intro.service.PageService;
+import com.altek.intro.util.Constant;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,11 +47,6 @@ public class PageController {
         }
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<BaseResponse> listPageContentByMenuId(@PathVariable Long id) {
-//        return new ResponseEntity<>(pageContentService.listPageContentByMenuId(id), HttpStatus.OK);
-//    }
-
     @PostMapping
     public ResponseEntity<BaseResponse> create(@RequestBody PageRequestDto request) {
         try {
@@ -63,11 +57,6 @@ public class PageController {
             return new ResponseEntity<BaseResponse>(result, HttpStatus.CREATED);
         }
     }
-
-//    @PostMapping("list")
-//    public ResponseEntity<BaseResponse> listPageContent(@RequestBody BaseRequest requestDto){
-//        return new ResponseEntity<BaseResponse>(pageContentService.listPageContent(requestDto), HttpStatus.OK);
-//    }
 
     @DeleteMapping
     public ResponseEntity<BaseResponse> delete(@RequestParam(value = "id", required = true) Long id) {
