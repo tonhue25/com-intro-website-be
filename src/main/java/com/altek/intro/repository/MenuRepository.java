@@ -1,18 +1,9 @@
 package com.altek.intro.repository;
 
-import com.altek.intro.dto.response.MenuResponseDto;
-import com.altek.intro.entities.Menu;
-import com.altek.intro.entities.MenuTranslate;
-import com.altek.intro.entities.Recruitment;
-import com.altek.intro.entities.User;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import com.altek.intro.entity.Menu;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.Optional;
 

@@ -2,12 +2,11 @@ package com.altek.intro.repository;
 
 import java.util.Optional;
 
-import com.altek.intro.entities.News;
-import com.altek.intro.entities.Page;
+import com.altek.intro.entity.Page;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import com.altek.intro.entities.PageDetail;
+import com.altek.intro.entity.PageDetail;
 
 @Repository
 public interface PageDetailRepository extends AbstractRepository<PageDetail, Long>{

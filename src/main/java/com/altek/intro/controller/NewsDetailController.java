@@ -2,7 +2,7 @@ package com.altek.intro.controller;
 
 import com.altek.intro.dto.request.NewsDetailRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.services.NewsDetailService;
+import com.altek.intro.service.NewsDetailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

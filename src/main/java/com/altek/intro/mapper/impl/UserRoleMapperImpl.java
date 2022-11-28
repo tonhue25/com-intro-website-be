@@ -1,22 +1,18 @@
 package com.altek.intro.mapper.impl;
 
-import com.altek.intro.entities.Role;
-import com.altek.intro.entities.User;
-import com.altek.intro.entities.UserRole;
-import com.altek.intro.exceptions.ResourceNotFoundException;
-import com.altek.intro.mapper.RoleMapper;
+import com.altek.intro.entity.Role;
+import com.altek.intro.entity.User;
+import com.altek.intro.entity.UserRole;
 import com.altek.intro.mapper.UserRoleMapper;
 import com.altek.intro.repository.RoleRepository;
 import com.altek.intro.repository.UserRoleRepository;
-import com.altek.intro.utils.Constant;
-import org.apache.commons.collections4.CollectionUtils;
+import com.altek.intro.util.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Component
 public class UserRoleMapperImpl extends AbstractMapperImpl implements UserRoleMapper {
