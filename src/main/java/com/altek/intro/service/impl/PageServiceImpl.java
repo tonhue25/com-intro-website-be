@@ -96,6 +96,7 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
         return new BaseResponse(Constant.SUCCESS, "get.list.page.by.menuId", listEntity);
     }
 
+
     @Override
     public BaseResponse create(PageRequestDto request) {
         Optional<Menu> optionalMenu = menuRepository.findById(request.getMenuId());
