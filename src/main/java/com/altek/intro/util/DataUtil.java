@@ -2,11 +2,8 @@ package com.altek.intro.util;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.Date;
 import java.util.List;
 
-import org.apache.http.ParseException;
-import org.apache.http.client.utils.DateUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -60,15 +57,5 @@ public class DataUtil {
             return true;
         }
         return false;
-    }
-    public static Date stringToDate(String input){
-        Date date;
-        try {
-            date = DateUtils.parseDate(input,
-                    new String[] { "yyyy-MM-dd HH:mm:ss", "dd/MM-yyyy","dd/MM/yyyy","yyyy-MM-dd" });
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
-        return date;
     }
 }
