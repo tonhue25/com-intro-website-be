@@ -66,7 +66,7 @@ public class EmailServiceImpl implements EmailService {
 
             //thêm tệp đính kèm
             FileSystemResource file = new FileSystemResource(new File(details.getAttachment().toString()));
-            mimeMessageHelper.addAttachment(file.getFilename(), file);
+            mimeMessageHelper.addAttachment(file.getFilename(), file);...
 
             //gửi email
             javaMailSender.send(mimeMessage);
