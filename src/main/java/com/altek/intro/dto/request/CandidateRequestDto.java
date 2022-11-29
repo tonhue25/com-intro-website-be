@@ -5,11 +5,13 @@ import lombok.Data;
 @Data
 public class CandidateRequestDto {
     private Long id;
+    private Integer status;
     private String fullName;
     private String email;
     private String phoneNumber;
-    private String cv;
+    private byte[] cv;
+    private String gender;
     private String address;
     private String dateOfBirth;
-    private String gender;
+    private Long recruitmentId;
 }

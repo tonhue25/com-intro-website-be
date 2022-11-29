@@ -25,6 +25,8 @@ public class Constant {
     public static final String HN = "Hà Nội";
     public static final String HCMC = "HCMC";
     public static final Integer ACTIVE = 1;
+    public static final Integer FIRST_PAGE = 1;
+    public static final Integer MAX_SIZE = 20;
 
     public static final String MY_EMAIL = "tonhue25@gmail.com";
     public static final String MY_PASSWORD = "liixiqvdzfopkcbi";

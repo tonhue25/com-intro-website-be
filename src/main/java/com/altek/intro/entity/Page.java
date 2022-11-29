@@ -1,10 +1,6 @@
-package com.altek.intro.entities;
-
-import java.io.Serializable;
-import java.util.Date;
+package com.altek.intro.entity;
 
 import javax.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "ALT_PAGE")
-public class Page extends AbstractEntity{
+public class Page extends AbstractEntity {
 
     @Column(name = "IMAGE")
     private String image;

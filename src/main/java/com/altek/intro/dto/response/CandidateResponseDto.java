@@ -18,7 +18,4 @@ public class CandidateResponseDto extends AbstractResponseDto {
     private String address;
     private String dateOfBirth;
     private Long recruitmentId;
-    private String address;
-    private String dateOfBirth;
-    private String gender;
 }

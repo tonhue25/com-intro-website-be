@@ -18,6 +18,7 @@ import com.altek.intro.util.DataUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -62,17 +63,36 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
         }
     }
 
+    public Integer initializePageNumber(Integer pageNumber){
+        if(pageNumber == null){
+            return Constant.FIRST_PAGE;
+        } else {
+            if(pageNumber < 1)
+                return Constant.FIRST_PAGE;
+            return pageNumber;
+        }
+    }
+
+    public Integer initializePageSize(Integer pageSize){
+        if(pageSize == null){
+            return Constant.MAX_SIZE;
+        }
+        return pageSize;
+    }
+
     @Override
     public BaseResponse getAllPageContentByMenuId(PageRequestDto requestBody) {
         Optional<Menu> optional = menuRepository.findById(requestBody.getMenuId());
         if (!optional.isPresent()) {
             throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", requestBody.getMenuId()));
         }
-        if(requestBody.getSize() == null || requestBody.getPage() == null){
-            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", requestBody.getMenuId()));// sửa throw lại nè.
-        }
-        Pageable paging = getPageable(requestBody.getPage(), requestBody.getSize());
-        List<PageResponseDto> listEntity = pageContentTranslateRepository.findAllPageContentByMenuID(requestBody.getLanguage(), requestBody.getMenuId(),paging);
+
+        Integer pageSize = initializePageSize(requestBody.getSize());
+        Integer pageNumber = initializePageNumber(requestBody.getPage());
+
+        Pageable paging = getPageable(pageNumber - 1, pageSize);
+        List<PageResponseDto> listEntity =
+                pageContentTranslateRepository.findAllPageContentByMenuID(requestBody.getLanguage(), requestBody.getMenuId(),paging);
         return new BaseResponse(Constant.SUCCESS, "get.list.page.by.menuId", listEntity);
     }
 
