@@ -1,6 +1,7 @@
 package com.altek.intro.repository;
 
 import com.altek.intro.dto.response.NewsResponseDto;
+import com.altek.intro.entity.News;
 import com.altek.intro.entity.NewsTranslate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -35,4 +36,7 @@ public interface NewsTranslateRepository extends AbstractRepository<NewsTranslat
     List<NewsResponseDto> getList(@Param("search") String search, @Param("language") String language,
                                         @Param("startDate") String startDate,
                                         @Param("endDate") String endDate);
+
+    @Query("SELECT nt FROM NewsTranslate nt WHERE nt.languageId = :language AND nt.news.id = :newsId AND nt.news.status = 1 ")
+    NewsTranslate findByNewsId(@Param("language") String language, @Param("newsId") Long newsId);
 }
