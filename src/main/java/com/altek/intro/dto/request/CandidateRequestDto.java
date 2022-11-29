@@ -1,15 +1,9 @@
 package com.altek.intro.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class CandidateRequestDto{
+@Data
+public class CandidateRequestDto {
     private Long id;
     private Integer status;
     private String fullName;

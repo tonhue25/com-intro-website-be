@@ -6,6 +6,7 @@ import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.dto.response.NewsResponseDto;
 import com.altek.intro.entity.News;
+import com.altek.intro.entity.NewsTranslate;
 import com.altek.intro.exception.ResourceNotFoundException;
 import com.altek.intro.mapper.ListResponseMapper;
 import com.altek.intro.mapper.NewsMapper;
@@ -45,6 +46,23 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
     @Autowired
     private NewsTranslateRepository newsTranslateRepository;
 
+    public void checkNullNewsEntity(NewsTranslate newsTranslate){
+        if(newsTranslate == null){
+            throw new ResourceNotFoundException(String.format("newsId.not.found"));
+        }
+    }
+    public BaseResponse findNewsById(String language, Long newsId){
+        try{
+            NewsTranslate newsEntity = newsTranslateRepository.findByNewsId(language,newsId);
+            checkNullNewsEntity(newsEntity);
+            NewsResponseDto newsResponseDto = new NewsResponseDto();
+            newsResponseDto = (NewsResponseDto) newsMapper.convertToDTO(newsResponseDto, newsEntity);
+            return new BaseResponse(Constant.SUCCESS, "get.news.by.Id", newsResponseDto);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new BaseResponse(Constant.FAIL, e.getMessage());
+        }
+    }
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
     public NewsResponseDto create(NewsRequestDto request) {

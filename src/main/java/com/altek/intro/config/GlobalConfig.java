@@ -5,13 +5,19 @@ import lombok.ToString;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 
 @Component
 @ConfigurationProperties
+@Data
 @PropertySource("classpath:application.yml")
 public class GlobalConfig {
+
+    @Value("${map}")
+    private String map;
+
     @Value("${address}")
     private String address;
 
@@ -21,12 +27,4 @@ public class GlobalConfig {
     @Value("${mail}")
     private String mail;
 
-    @Override
-    public String toString() {
-        return "GlobalConfig{" +
-                "address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", mail='" + mail + '\'' +
-                '}';
-    }
 }

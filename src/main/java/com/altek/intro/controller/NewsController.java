@@ -24,6 +24,19 @@ public class NewsController {
     @Autowired
     private MenuService menuService;
 
+    @GetMapping("/findNewsById")
+    public ResponseEntity<BaseResponse> findNewsById(@RequestHeader("Accept-Language") String language,@RequestParam("newsId") Long newsId) {
+        try {
+            return new ResponseEntity(newsService.findNewsById(language, newsId), HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e) {
+            log.error(e.getMessage());
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @GetMapping("/navbar")
     public ResponseEntity<BaseResponse> getNav(@RequestParam("language") String language,
                                                @RequestParam("parentId") Long parentId) {
