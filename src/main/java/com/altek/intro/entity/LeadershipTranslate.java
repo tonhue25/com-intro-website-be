@@ -32,11 +32,4 @@ public class LeadershipTranslate extends AbstractEntity implements Serializable 
 
     @Column(name = "LEADERSHIP_ID")
     private Long leadershipId;
-
-
-//    private Leadership leadership;
-//    @ManyToOne
-//    public Leadership getLeadership() {
-//        return leadership;
-//    }
 }
