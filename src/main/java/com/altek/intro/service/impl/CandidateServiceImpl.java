@@ -2,36 +2,21 @@ package com.altek.intro.service.impl;
 
 import com.altek.intro.dto.request.CandidateRequestDto;
 import com.altek.intro.dto.response.CandidateResponseDto;
-<<<<<<< HEAD:src/main/java/com/altek/intro/services/impl/CandidateServiceImpl.java
-import com.altek.intro.entities.Candidate;
-import com.altek.intro.entities.Recruitment;
-import com.altek.intro.entities.RecruitmentCandidate;
-import com.altek.intro.exceptions.ResourceNotFoundException;
-=======
 import com.altek.intro.entity.Candidate;
 import com.altek.intro.entity.Recruitment;
 import com.altek.intro.entity.RecruitmentCandidate;
 import com.altek.intro.exception.ResourceNotFoundException;
->>>>>>> tonhue:src/main/java/com/altek/intro/service/impl/CandidateServiceImpl.java
 import com.altek.intro.mapper.CandidateMapper;
 import com.altek.intro.repository.CandidateRepository;
 import com.altek.intro.repository.RecruitmentCandidateRepository;
 import com.altek.intro.repository.RecruitmentRepository;
-<<<<<<< HEAD:src/main/java/com/altek/intro/services/impl/CandidateServiceImpl.java
-import com.altek.intro.services.CandidateService;
-import com.altek.intro.services.impl.AbstractServiceImpl;
-import com.altek.intro.utils.Constant;
-import com.altek.intro.utils.DataUtil;
-=======
 import com.altek.intro.service.CandidateService;
 import com.altek.intro.util.Constant;
 import com.altek.intro.util.DataUtil;
->>>>>>> tonhue:src/main/java/com/altek/intro/service/impl/CandidateServiceImpl.java
 import org.apache.commons.collections4.CollectionUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;

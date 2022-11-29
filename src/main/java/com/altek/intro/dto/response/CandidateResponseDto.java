@@ -7,20 +7,10 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CandidateResponseDto extends AbstractResponseDto {
-
-<<<<<<< HEAD
-<<<<<<< HEAD
     private String name;
-=======
     private Long id;
     private Integer status;
     private String fullName;
->>>>>>> tonhue
-=======
-    private Long id;
-    private Integer status;
-    private String fullName;
->>>>>>> tonhue
     private String email;
     private String phoneNumber;
     private byte[] cv;

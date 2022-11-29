@@ -8,18 +8,9 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-<<<<<<< HEAD
-<<<<<<< HEAD
 public interface MenuRepository extends  AbstractRepository<Menu, Long>{
-    @Query(value = "SELECT * FROM ALT_MENU WHERE STATUS = 1 ", nativeQuery = true)
-=======
-public interface MenuRepository extends AbstractRepository<Menu, Long> {
     @Query(value = "SELECT * FROM ALT_MENU where STATUS = 1 ", nativeQuery = true)
->>>>>>> tonhue
-=======
-public interface MenuRepository extends AbstractRepository<Menu, Long> {
-    @Query(value = "SELECT * FROM ALT_MENU where STATUS = 1 ", nativeQuery = true)
->>>>>>> tonhue
+
     List<Menu> findAll();
 
     //    @Query(value = "select u from Menu u where u.status = 1 and u.id = :id")

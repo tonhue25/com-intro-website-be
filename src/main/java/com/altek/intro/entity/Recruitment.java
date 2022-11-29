@@ -20,12 +20,9 @@ public class Recruitment extends AbstractEntity implements Serializable {
     @Column(name = "FILE_LINK")
     private String fileLink;
 
-<<<<<<< HEAD:src/main/java/com/altek/intro/entities/Recruitment.java
     @Column(name = "LOCATION")
     private String location;
 
-=======
->>>>>>> tonhue:src/main/java/com/altek/intro/entity/Recruitment.java
     private RecruitmentType recruitmentType;
     @ManyToOne
     public RecruitmentType getRecruitmentType() {

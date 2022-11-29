@@ -37,14 +37,11 @@ public class Candidate extends AbstractEntity implements Serializable {
         return cv;
     }
 
-<<<<<<< HEAD:src/main/java/com/altek/intro/entities/Candidate.java
     private List<RecruitmentCandidate> recruitmentCandidate;
     @OneToMany(mappedBy = "candidate")
     public List<RecruitmentCandidate> getRecruitmentCandidate() {
         return recruitmentCandidate;
     }
-=======
->>>>>>> tonhue:src/main/java/com/altek/intro/entity/Candidate.java
     @Column(name = "GENDER")
     private String gender;
 
