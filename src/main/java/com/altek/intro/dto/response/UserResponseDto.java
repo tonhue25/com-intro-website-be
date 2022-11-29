@@ -1,7 +1,5 @@
 package com.altek.intro.dto.response;
 
-import com.altek.intro.entities.Role;
-import com.altek.intro.entities.UserRole;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

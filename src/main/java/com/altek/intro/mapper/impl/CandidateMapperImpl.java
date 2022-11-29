@@ -1,20 +1,31 @@
 package com.altek.intro.mapper.impl;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import com.altek.intro.dto.response.CandidateResponseDto;
 import com.altek.intro.entities.Candidate;
 import com.altek.intro.mapper.CandidateMapper;
 =======
+=======
+
+>>>>>>> tonhue
 import com.altek.intro.dto.request.CandidateRequestDto;
 import com.altek.intro.dto.response.CandidateResponseDto;
-import com.altek.intro.entities.Candidate;
+import com.altek.intro.entity.Candidate;
 import com.altek.intro.mapper.CandidateMapper;
+<<<<<<< HEAD
 import org.apache.commons.lang3.StringUtils;
+>>>>>>> tonhue
+=======
 >>>>>>> tonhue
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+import java.util.Date;
+>>>>>>> tonhue
 =======
 import java.util.Date;
 >>>>>>> tonhue
@@ -34,7 +45,10 @@ public class CandidateMapperImpl extends AbstractMapperImpl implements Candidate
         return response;
     }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> tonhue
 
     @Override
     public Candidate convertToEntity(CandidateRequestDto dto, Candidate entity, Date dateOfBirth){
@@ -48,5 +62,8 @@ public class CandidateMapperImpl extends AbstractMapperImpl implements Candidate
         entity.setDateOfBirth(dateOfBirth);
         return entity;
     }
+<<<<<<< HEAD
+>>>>>>> tonhue
+=======
 >>>>>>> tonhue
 }

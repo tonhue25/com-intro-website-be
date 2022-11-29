@@ -11,7 +11,6 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CandidateRequestDto{
     private Long id;
-    private String name;
     private Integer status;
     private String fullName;
     private String email;
@@ -22,3 +21,4 @@ public class CandidateRequestDto{
     private String dateOfBirth;
     private Long recruitmentId;
 }
+

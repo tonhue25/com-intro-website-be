@@ -1,7 +1,7 @@
 package com.altek.intro.controller;
 
 import com.altek.intro.dto.request.LoginRequestDto;
-import com.altek.intro.services.LoginService;
+import com.altek.intro.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;

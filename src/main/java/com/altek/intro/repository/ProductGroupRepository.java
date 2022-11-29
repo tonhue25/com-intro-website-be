@@ -1,7 +1,6 @@
 package com.altek.intro.repository;
 
-import com.altek.intro.entities.ProductGroup;
-import com.altek.intro.entities.RecruitmentType;
+import com.altek.intro.entity.ProductGroup;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 

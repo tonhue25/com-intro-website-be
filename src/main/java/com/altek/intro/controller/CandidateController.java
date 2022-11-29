@@ -2,8 +2,8 @@ package com.altek.intro.controller;
 
 import com.altek.intro.dto.request.CandidateRequestDto;
 import com.altek.intro.dto.response.CandidateResponseDto;
-import com.altek.intro.exceptions.ResourceNotFoundException;
-import com.altek.intro.services.CandidateService;
+import com.altek.intro.exception.ResourceNotFoundException;
+import com.altek.intro.service.CandidateService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,10 +18,16 @@ import java.util.List;
 
 @Controller
 <<<<<<< HEAD
+<<<<<<< HEAD
 @RequestMapping("/candidate")
 @Slf4j
 public class CandidateController {
 
+=======
+@RequestMapping("/candidates")
+@Slf4j
+public class CandidateController {
+>>>>>>> tonhue
 =======
 @RequestMapping("/candidates")
 @Slf4j

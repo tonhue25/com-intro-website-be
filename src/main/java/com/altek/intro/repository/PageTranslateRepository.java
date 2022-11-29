@@ -1,15 +1,11 @@
 package com.altek.intro.repository;
 
-import com.altek.intro.entities.Menu;
-import com.altek.intro.entities.Page;
-import com.altek.intro.entities.PageTranslate;
-import org.springframework.data.domain.Pageable;
+import com.altek.intro.entity.PageTranslate;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface PageTranslateRepository extends AbstractRepository<PageTranslate, Long>{

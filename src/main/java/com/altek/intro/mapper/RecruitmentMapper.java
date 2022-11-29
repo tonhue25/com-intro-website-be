@@ -1,7 +1,7 @@
 package com.altek.intro.mapper;
 
 import com.altek.intro.dto.response.RecruitmentResponseDto;
-import com.altek.intro.entities.Recruitment;
+import com.altek.intro.entity.Recruitment;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

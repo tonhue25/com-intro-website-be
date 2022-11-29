@@ -1,6 +1,5 @@
 package com.altek.intro.dto.request;
 
-import com.altek.intro.entities.Recruitment;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,7 @@
 package com.altek.intro.mapper.impl;
 
 import com.altek.intro.dto.response.RecruitmentResponseDto;
-import com.altek.intro.entities.Recruitment;
+import com.altek.intro.entity.Recruitment;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

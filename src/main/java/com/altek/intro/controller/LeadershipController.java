@@ -1,11 +1,10 @@
 package com.altek.intro.controller;
 
-import java.util.List;
 import com.altek.intro.dto.request.LeadershipRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.LeadershipResponseDto;
-import com.altek.intro.exceptions.ResourceNotFoundException;
-import com.altek.intro.services.LeadershipService;
+import com.altek.intro.exception.ResourceNotFoundException;
+import com.altek.intro.service.LeadershipService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

@@ -1,7 +1,7 @@
 package com.altek.intro.repository;
 
 import com.altek.intro.dto.response.NewsResponseDto;
-import com.altek.intro.entities.NewsTranslate;
+import com.altek.intro.entity.NewsTranslate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
