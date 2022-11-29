@@ -23,7 +23,6 @@ public class Recruitment extends AbstractEntity implements Serializable {
     @Column(name = "LOCATION")
     private String location;
 
-    private List<RecruitmentCandidate> candidateRecruitments;
     private RecruitmentType recruitmentType;
     @ManyToOne
     public RecruitmentType getRecruitmentType() {

@@ -1,9 +1,8 @@
 package com.altek.intro.dto.request;
 
+import com.sun.istack.NotNull;
 import lombok.Data;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
 
 @Data
 public class ContactRequestDto {
