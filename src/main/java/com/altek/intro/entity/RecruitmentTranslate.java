@@ -21,6 +21,8 @@ public class RecruitmentTranslate extends AbstractEntity implements Serializable
     private String location;
     @Column(name = "LANGUAGE_ID")
     private String languageId;
+    @Column(name = "REQUIREMENT")
+    private String requirement;
     private Recruitment recruitment;
     @ManyToOne
     public Recruitment getRecruitment() {
