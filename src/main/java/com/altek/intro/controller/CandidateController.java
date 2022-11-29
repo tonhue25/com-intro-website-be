@@ -17,10 +17,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
+<<<<<<< HEAD
 @RequestMapping("/candidate")
 @Slf4j
 public class CandidateController {
 
+=======
+@RequestMapping("/candidates")
+@Slf4j
+public class CandidateController {
+>>>>>>> tonhue
     @Autowired
     private CandidateService candidateService;
 

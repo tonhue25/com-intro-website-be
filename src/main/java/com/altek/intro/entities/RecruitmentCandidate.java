@@ -1,17 +1,17 @@
 package com.altek.intro.entities;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
-@SuppressWarnings("serial")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "ALT_RECRUITMENT_CANDIDATE")
-public class Recruitment_Candidate extends AbstractEntity implements Serializable {
+public class RecruitmentCandidate extends AbstractEntity implements Serializable {
 
     @Column(name = "DESCRIPTION")
     private String description;
@@ -34,5 +34,11 @@ public class Recruitment_Candidate extends AbstractEntity implements Serializabl
     @JoinColumn(name = "candidate_id",nullable = false)
     public Candidate getCandidate() {
         return candidate;
+    }
+
+    public RecruitmentCandidate(Integer status, Recruitment recruitment, Candidate candidate) {
+        super(status);
+        this.recruitment = recruitment;
+        this.candidate = candidate;
     }
 }

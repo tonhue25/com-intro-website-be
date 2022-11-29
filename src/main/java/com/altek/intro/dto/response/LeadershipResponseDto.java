@@ -7,10 +7,13 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LeadershipResponseDto extends AbstractResponseDto {
+
      String image;
      String name;
      String position;
      String information;
      String facebook;
      String linkedin;
+     String languageId;
+     Long leadershipId;
 }

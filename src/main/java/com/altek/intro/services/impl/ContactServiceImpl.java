@@ -1,7 +1,7 @@
 package com.altek.intro.services.impl;
 
 import com.altek.intro.dto.request.ContactRequestDto;
-import com.altek.intro.dto.request.ListRequestDto;
+import com.altek.intro.dto.request.BaseRequest;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.ContactResponseDto;
 
@@ -59,8 +59,9 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
     @Override
     public BaseResponse create(ContactRequestDto request) {
         Contact entity = new Contact();
-        if (!DataUtil.isEmpty(request.getId())) {
-            Optional<Contact> optional = contactRepository.findById(request.getId());
+
+        if (!DataUtil.isEmpty(request.getPhoneNumber())) {
+            Optional<Contact> optional = contactRepository.findByPhoneNumber(request.getPhoneNumber());
             if (optional.isPresent()) {
                 entity = optional.get();
             }
@@ -90,7 +91,7 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
     ListResponseMapper<ContactResponseDto, Contact> listResponseMapper;
 
     @Override
-    public BaseResponse getAllContact(ListRequestDto requestDto) {
+    public BaseResponse getAllContact(BaseRequest requestDto) {
         if (DataUtil.isEmpty(requestDto.getPage())) {
             throw new IllegalArgumentException("page.is.invalid");
         }

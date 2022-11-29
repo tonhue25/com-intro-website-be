@@ -1,11 +1,12 @@
 package com.altek.intro.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
-import javax.persistence.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
 
 @Data
 @NoArgsConstructor
@@ -13,25 +14,31 @@ import lombok.*;
 @Entity
 @Table(name = "ALT_RECRUITMENT")
 public class Recruitment extends AbstractEntity implements Serializable {
-
-    @Column(name = "JOB_TITLE", nullable = false)
-    private String jobTitle;
-
-    @Column(name = "JOB_DESCRIPTION")
-    private String jobDescription;
-
     @Column(name = "IMAGE")
     private String image;
 
-    @Column(name = "FILE")
-    private String file;
+    @Column(name = "FILE_LINK")
+    private String fileLink;
 
     @Column(name = "LOCATION")
     private String location;
 
-    private List<Recruitment_Candidate> candidateRecruitments;
+    private List<RecruitmentCandidate> candidateRecruitments;
+    private RecruitmentType recruitmentType;
+    @ManyToOne
+    public RecruitmentType getRecruitmentType() {
+        return recruitmentType;
+    }
+
+    List<ProductgroupRecruitment> productgroupRecruitments;
     @OneToMany(mappedBy = "recruitment")
-    public List<Recruitment_Candidate> getCandidateRecruitments() {
+    public List<ProductgroupRecruitment> getProductgroupRecruitments() {
+        return productgroupRecruitments;
+    }
+
+    private List<RecruitmentCandidate> candidateRecruitments;
+    @OneToMany(mappedBy = "recruitment")
+    public List<RecruitmentCandidate> getCandidateRecruitments() {
         return candidateRecruitments;
     }
 }

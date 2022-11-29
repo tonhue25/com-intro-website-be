@@ -19,12 +19,17 @@ public class Contact extends AbstractEntity implements Serializable {
 
     @Column(name = "FULL_NAME")
     private String fullName;
-
-    @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
+    @Column(name = "PHONE_NUMBER", unique = true, length = 12)
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
 
-    @Column(name = "EMAIL")
     private String email;
+    @Column(name = "EMAIL", unique = true)
+    public String getEmail() {
+        return email;
+    }
 
     @Column(name = "MESSAGE")
     private String message;

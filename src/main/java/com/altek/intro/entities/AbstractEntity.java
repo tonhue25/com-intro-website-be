@@ -6,6 +6,8 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -19,8 +21,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @EntityListeners(AuditingEntityListener.class)
+@NoArgsConstructor
+@AllArgsConstructor
 @Access(AccessType.PROPERTY)
-public abstract class AbstractEntity implements Serializable {
+public abstract class AbstractEntity{
 
     private Long id;
     @Id
@@ -50,7 +54,7 @@ public abstract class AbstractEntity implements Serializable {
     }
 
     private Date createdTime;
-    @Column(name = "CREATED_TIME", nullable = false, updatable = false)
+    @Column(name = "CREATED_TIME")
     @CreatedDate
     public Date getCreatedTime() {
         return createdTime;
@@ -64,7 +68,13 @@ public abstract class AbstractEntity implements Serializable {
         return lastUpdatedBy;
     }
 
+    private Date lastUpdatedTime;
     @Column(name = "LAST_UPDATED_TIME")
     @LastModifiedDate
-    private Date lastUpdatedTime;
+    public Date getLastUpdatedTime() {
+        return lastUpdatedTime;
+    }
+    public AbstractEntity(Integer status) {
+        this.status = status;
+    }
 }

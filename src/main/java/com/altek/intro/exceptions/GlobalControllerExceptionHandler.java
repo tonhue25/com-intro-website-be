@@ -8,17 +8,23 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestValueException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 
-@ControllerAdvice
+@RestControllerAdvice
 public class GlobalControllerExceptionHandler {
 
     @ExceptionHandler({ResourceNotFoundException.class})
@@ -44,15 +50,26 @@ public class GlobalControllerExceptionHandler {
 
     @ExceptionHandler({BadCredentialsException.class})
     public ResponseEntity<Object> handleBadCredentialsException(HttpServletRequest request,
-                                                           BadCredentialsException ex) {
+                                                                BadCredentialsException ex) {
         ErrorResponse error = new ErrorResponse(HttpStatus.UNAUTHORIZED, request, ex);
         return new ResponseEntity<Object>(error, HttpStatus.UNAUTHORIZED);
     }
 
-    @ExceptionHandler({DataIntegrityViolationException.class})
-    public ResponseEntity<Object> handleConstraintViolationException(HttpServletRequest request,
-                                                                     Exception ex) {
-        ErrorResponse error = new ErrorResponse(HttpStatus.UNAUTHORIZED, request, ex);
-        return new ResponseEntity<Object>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    @ExceptionHandler({SQLException.class})
+    public ResponseEntity<Object> handleSQLException(HttpServletRequest request,
+                                                     SQLException ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST, request, ex);
+        return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Map<String, String> handleValidationExceptions(
+            MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+        ex.getBindingResult().getFieldErrors().forEach(e -> {
+            errors.put(e.getField(), e.getDefaultMessage());
+        });
+        return errors;
     }
 }

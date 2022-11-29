@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.altek.intro.dto.response.ListResponseDto;
+import com.altek.intro.dto.response.RecruitmentResponseDto;
+import com.altek.intro.entities.MenuTranslate;
+import com.altek.intro.repository.MenuTranslateRepository;
 import org.apache.commons.collections4.CollectionUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,20 +37,28 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private MenuTranslateRepository menuTranslateRepository;
+
     @Override
-    public BaseResponse getAll() {
+    public BaseResponse getAll(String lang) {
         try {
-            List<MenuResponseDto> menuDTOs = new ArrayList<MenuResponseDto>();
-            List<Menu> menuEntities = menuRepository.findAll();
-            MenuResponseDto dto = new MenuResponseDto();
-            if (CollectionUtils.isNotEmpty(menuEntities)) {
-                menuDTOs = menuEntities.stream().map(item -> (MenuResponseDto) menuMapper.convertToDTO(dto, item))
+            List<MenuResponseDto> menuDTOs = new ArrayList<>();
+            List<MenuTranslate> menus = menuTranslateRepository.get(lang);
+            if (CollectionUtils.isNotEmpty(menus)) {
+                menuDTOs = menus.stream().map(item -> modelMapper.map(item, MenuResponseDto.class))
                         .collect(Collectors.toList());
             }
-            return new BaseResponse(Constant.SUCCESS, "get.list.menu", menuDTOs);
+            ListResponseDto<MenuResponseDto> response = new ListResponseDto<>();
+            response.setList(menuDTOs);
+            response.setPage(1);
+            response.setSize(menuDTOs.size());
+            response.setTotalPages(1);
+            response.setRecordPerPage(menuDTOs.size());
+            response.setLanguage(lang);
+            return new BaseResponse(Constant.SUCCESS, "get.list.menu", response);
         } catch (Exception ex) {
-            return new BaseResponse(Constant.FAIL,
-                    ex.getMessage());
+            return new BaseResponse(Constant.FAIL, ex.getMessage());
         }
     }
 
@@ -80,6 +92,28 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
         entity = menuRepository.save(entity);
         return new BaseResponse(Constant.SUCCESS, String.format("delete.menu.with.id:%s", id),
                 String.format("status.of.menu:%s", entity.getStatus()));
+    }
+
+    @Override
+    public BaseResponse getNav(String language, Long parentId) {
+        try {
+            List<MenuResponseDto> menuDTOs = new ArrayList<>();
+            List<MenuTranslate> menus = menuTranslateRepository.getNav(language,parentId);
+            if (CollectionUtils.isNotEmpty(menus)) {
+                menuDTOs = menus.stream().map(item -> modelMapper.map(item, MenuResponseDto.class))
+                        .collect(Collectors.toList());
+            }
+            ListResponseDto<MenuResponseDto> response = new ListResponseDto<>();
+            response.setList(menuDTOs);
+            response.setPage(1);
+            response.setSize(menuDTOs.size());
+            response.setTotalPages(1);
+            response.setRecordPerPage(menuDTOs.size());
+            response.setLanguage(language);
+            return new BaseResponse(Constant.SUCCESS, "get.list.nav.news", response);
+        } catch (Exception ex) {
+            return new BaseResponse(Constant.FAIL, ex.getMessage());
+        }
     }
 
 }

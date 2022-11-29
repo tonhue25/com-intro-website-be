@@ -10,5 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoleResponseDto extends  AbstractResponseDto{
+
     private String name;
 }

@@ -1,29 +1,39 @@
 package com.altek.intro.entities;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
-import java.io.Serializable;
 
-@Entity
-@Data
-@AllArgsConstructor
+@Setter
+@Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
 @Table(name = "ALT_NEWS_TRANSLATE")
-public class NewsTranslate extends AbstractEntity implements Serializable {
+public class NewsTranslate extends AbstractEntity {
 
+    @Column(name = "TITLE", nullable = false)
+    private String title;
+
+    @Column(name = "SHORT_DESCRIPTION")
+    private String shortDescription;
     @Column(name = "LANGUAGE_ID")
-    private Long languageId;
-
-    @Column(name = "CONTENT")
-    private String content;
+    private String languageId;
 
     private News news;
-
     @ManyToOne
-    @JoinColumn(name = "news_id")
     public News getNews() {
         return news;
+    }
+    @Column(name = "DETAIL", length = 1000)
+    private String detail;
+
+    private String thumbnail;
+    @Transient
+    public String getThumbnail() {
+        return thumbnail;
     }
 }

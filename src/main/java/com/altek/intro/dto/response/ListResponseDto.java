@@ -15,11 +15,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ListResponseDto<D> {
-
     private Integer size;
     private Integer page;
     private Integer totalPages;
     private Integer recordPerPage;
+    private String language;
     private List<D> list;
-    
 }

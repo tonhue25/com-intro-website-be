@@ -1,9 +1,11 @@
 package com.altek.intro.controller;
 
 
-import com.altek.intro.dto.request.ListRequestDto;
+import com.altek.intro.dto.request.BaseRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +20,8 @@ import com.altek.intro.dto.request.ContactRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.services.ContactService;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/contacts")
@@ -42,12 +46,12 @@ public class ContactController {
     }
 
     @PostMapping("/list")
-    public ResponseEntity<BaseResponse> getListContact(@RequestBody ListRequestDto dto) {
+    public ResponseEntity<BaseResponse> getListContact(@RequestBody BaseRequest dto) {
         return new ResponseEntity(contactService.getAllContact(dto), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponse> create(@RequestBody ContactRequestDto request) {
+    public ResponseEntity<BaseResponse> create(@RequestBody @Valid ContactRequestDto request) {
         return new ResponseEntity<BaseResponse>(contactService.create(request), HttpStatus.OK);
     }
 

@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "ALT_PAGE_DETAIL")
-public class PageDetail extends AbstractEntity implements Serializable {
+public class PageDetail extends AbstractEntity{
 
     @Column(name = "TITLE")
     private String title;

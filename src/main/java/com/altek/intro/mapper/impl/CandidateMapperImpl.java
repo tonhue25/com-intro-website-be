@@ -1,11 +1,23 @@
 package com.altek.intro.mapper.impl;
+<<<<<<< HEAD
 import com.altek.intro.dto.response.CandidateResponseDto;
 import com.altek.intro.entities.Candidate;
 import com.altek.intro.mapper.CandidateMapper;
+=======
+import com.altek.intro.dto.request.CandidateRequestDto;
+import com.altek.intro.dto.response.CandidateResponseDto;
+import com.altek.intro.entities.Candidate;
+import com.altek.intro.mapper.CandidateMapper;
+import org.apache.commons.lang3.StringUtils;
+>>>>>>> tonhue
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+<<<<<<< HEAD
+=======
+import java.util.Date;
+>>>>>>> tonhue
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,4 +33,20 @@ public class CandidateMapperImpl extends AbstractMapperImpl implements Candidate
                 .collect(Collectors.toList());
         return response;
     }
+<<<<<<< HEAD
+=======
+
+    @Override
+    public Candidate convertToEntity(CandidateRequestDto dto, Candidate entity, Date dateOfBirth){
+        entity.setStatus(dto.getStatus());
+        entity.setFullName(dto.getFullName());
+        entity.setEmail(dto.getEmail());
+        entity.setPhoneNumber(dto.getPhoneNumber());
+        entity.setCv(dto.getCv());
+        entity.setGender(dto.getGender());
+        entity.setAddress(dto.getAddress());
+        entity.setDateOfBirth(dateOfBirth);
+        return entity;
+    }
+>>>>>>> tonhue
 }

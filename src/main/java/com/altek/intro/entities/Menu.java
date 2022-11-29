@@ -12,21 +12,23 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "ALT_MENU")
-public class Menu extends AbstractEntity implements Serializable {
+public class Menu extends AbstractEntity {
 
-    @Column(name = "LABEL")
-    private String label;
-
-    @Column(name = "LINK")
-    private String link;
-
-    private List<Page> pageContents;
-    @OneToMany(mappedBy = "menu")
-    public List<Page> getPageContents() {
-        return pageContents;
+    //    private List<Page> pageContents;
+//    @OneToMany(mappedBy = "menu")
+//    public List<Page> getPageContents() {
+//        return pageContents;
+//    }
+    private Long parentId;
+    @Column(name = "PARENT_ID")
+    public Long getParentId() {
+        return parentId;
+    }
+    public void setParentId(Long parentId) {
+        this.parentId = parentId;
     }
 }

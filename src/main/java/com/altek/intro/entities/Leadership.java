@@ -20,15 +20,6 @@ public class Leadership extends AbstractEntity implements Serializable {
     @Column(name = "IMAGE")
     private String image;
 
-    @Column(name = "FULL_NAME")
-    private String fullName;
-
-    @Column(name = "POSITION")
-    private String position;
-
-    @Column(name = "INFORMATION")
-    private String information;
-
     @Column(name = "FACEBOOK")
     private String facebook;
 

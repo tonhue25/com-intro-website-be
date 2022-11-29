@@ -1,6 +1,6 @@
 package com.altek.intro.services;
 
-import com.altek.intro.dto.request.ListRequestDto;
+import com.altek.intro.dto.request.BaseRequest;
 import org.springframework.stereotype.Service;
 
 import com.altek.intro.dto.request.PageRequestDto;
@@ -10,13 +10,11 @@ import com.altek.intro.dto.response.BaseResponse;
 @Service
 public interface PageService extends AbstractService {
 
-    BaseResponse getAll();
+    BaseResponse getAllPageContent(String lang);
 
-    BaseResponse listPageContentByMenuId(Long id);
+    BaseResponse getAllPageContentByMenuId(String lang,Long menuId);
 
     BaseResponse create(PageRequestDto request);
 
     BaseResponse delete(Long id);
-
-    BaseResponse listPageContent(ListRequestDto requestDto);
 }

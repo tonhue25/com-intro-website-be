@@ -2,11 +2,17 @@ package com.altek.intro.services.impl;
 
 
 import com.altek.intro.dto.request.LeadershipRequestDto;
+import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.LeadershipResponseDto;
+import com.altek.intro.dto.response.ListResponseDto;
+import com.altek.intro.dto.response.MenuResponseDto;
 import com.altek.intro.entities.Leadership;
+import com.altek.intro.entities.LeadershipTranslate;
+import com.altek.intro.entities.MenuTranslate;
 import com.altek.intro.exceptions.ResourceNotFoundException;
 import com.altek.intro.mapper.LeadershipMapper;
 import com.altek.intro.repository.LeadershipRepository;
+import com.altek.intro.repository.LeadershipTranslateRepository;
 import com.altek.intro.services.LeadershipService;
 import com.altek.intro.utils.Constant;
 import com.altek.intro.utils.DataUtil;
@@ -28,25 +34,34 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
     private LeadershipRepository leadershipRepository;
 
     @Autowired
+    private LeadershipTranslateRepository leadershipTranslateRepository;
+
+    @Autowired
     private LeadershipMapper leadershipMapper;
 
     @Autowired
     private ModelMapper modelMapper;
 
     @Override
-    public List<LeadershipResponseDto> getAllLeadership() {
+    public BaseResponse getAllLeadership(String lang) {
         try {
             List<LeadershipResponseDto> leadershipDTOS = new ArrayList<LeadershipResponseDto>();
-            List<Leadership> leadershipEntities = leadershipRepository.findAll();
+            List<LeadershipTranslate> leadershipEntities = leadershipTranslateRepository.findAll(lang);
             LeadershipResponseDto dto = new LeadershipResponseDto();
             if (CollectionUtils.isNotEmpty(leadershipEntities)) {
                 leadershipDTOS = leadershipEntities.stream().map(item -> (LeadershipResponseDto) leadershipMapper.convertToDTO(dto, item))
                         .collect(Collectors.toList());
             }
-            return leadershipDTOS;
-        } catch (Exception e) {
-            e.printStackTrace();
-            throw new ResourceNotFoundException(e.getMessage());
+            ListResponseDto<LeadershipResponseDto> response = new ListResponseDto<>();
+            response.setList(leadershipDTOS);
+            response.setPage(1);
+            response.setSize(leadershipDTOS.size());
+            response.setTotalPages(1);
+            response.setRecordPerPage(leadershipDTOS.size());
+            response.setLanguage(lang);
+            return new BaseResponse(Constant.SUCCESS, "get.list.leadership", leadershipDTOS);
+        } catch (Exception ex) {
+            return new BaseResponse(Constant.FAIL, ex.getMessage());
         }
     }
 
