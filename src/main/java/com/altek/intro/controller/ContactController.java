@@ -28,24 +28,9 @@ public class ContactController {
     @Autowired
     private ContactService contactService;
 
-    @GetMapping
-    public ResponseEntity<BaseResponse> listAll() {
-        try {
-            BaseResponse response = contactService.getAllContact();
-            return new ResponseEntity(response, HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            log.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
     @PostMapping("/list")
     public ResponseEntity<BaseResponse> getListContact(@RequestBody BaseRequest dto) {
-        return new ResponseEntity(contactService.getAllContact(dto), HttpStatus.OK);
+        return new ResponseEntity(contactService.getListContact(dto), HttpStatus.OK);
     }
 
     @PostMapping

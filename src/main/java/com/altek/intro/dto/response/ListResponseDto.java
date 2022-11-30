@@ -21,4 +21,13 @@ public class ListResponseDto<D> {
     private Integer recordPerPage;
     private String language;
     private List<D> list;
+
+    public ListResponseDto(List<D> list, String language) {
+        this.list = list;
+        this.size = list.size();
+        this.page = 1;
+        this.totalPages = 1;
+        this.recordPerPage = list.size();
+        this.language = language;
+    }
 }
