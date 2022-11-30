@@ -1,12 +1,8 @@
 package com.altek.intro.controller;
 
-//<<<<<<< HEAD
 import com.altek.intro.dto.request.BaseRequest;
 import com.altek.intro.dto.request.RecruitmentRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-//=======
-//import com.altek.intro.dto.request.RecruitmentRequestDto;
-//>>>>>>> baodang
 import com.altek.intro.dto.response.RecruitmentResponseDto;
 import com.altek.intro.service.RecruitmentService;
 import lombok.extern.slf4j.Slf4j;

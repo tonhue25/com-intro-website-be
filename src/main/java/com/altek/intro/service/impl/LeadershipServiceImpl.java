@@ -4,13 +4,9 @@ package com.altek.intro.service.impl;
 import com.altek.intro.dto.request.BaseRequest;
 import com.altek.intro.dto.request.LeadershipRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.ContactResponseDto;
 import com.altek.intro.dto.response.LeadershipResponseDto;
 import com.altek.intro.dto.response.ListResponseDto;
-import com.altek.intro.entity.Contact;
 import com.altek.intro.entity.Leadership;
-import com.altek.intro.entity.LeadershipTranslate;
-import com.altek.intro.enums.ContactType;
 import com.altek.intro.enums.EmployeeType;
 import com.altek.intro.exception.ResourceNotFoundException;
 import com.altek.intro.mapper.LeadershipMapper;
@@ -51,6 +47,7 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
     private ModelMapper modelMapper;
 
     @Override
+//<<<<<<< HEAD
     public BaseResponse getListLeadership(BaseRequest requestDto) {
         List<LeadershipResponseDto> listResponse = new ArrayList<>();
         List<String> listEnumTypes = requestDto.getEnumTypes();
@@ -67,6 +64,21 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
             if(!EmployeeType.getAllEmployeeType().containsAll(enums)){
                 throw new ResourceNotFoundException(String.format("employee.type.invalid:%s", Arrays.asList(requestDto.getEnumTypes())));
             }
+//=======
+//    public BaseResponse getAllLeadership(String lang) {
+//        try {
+//            List<LeadershipResponseDto> leadershipDTOS = leadershipTranslateRepository.findAll(lang);
+//            ListResponseDto<LeadershipResponseDto> response = new ListResponseDto<>();
+//            response.setList(leadershipDTOS);
+//            response.setPage(1);
+//            response.setSize(leadershipDTOS.size());
+//            response.setTotalPages(1);
+//            response.setRecordPerPage(leadershipDTOS.size());
+//            response.setLanguage(lang);
+//            return new BaseResponse(Constant.SUCCESS, "get.list.leadership", leadershipDTOS);
+//        } catch (Exception ex) {
+//            return new BaseResponse(Constant.FAIL, ex.getMessage());
+//>>>>>>> habahoang
         }
         if (DataUtil.isEmpty(requestDto.getPage()) || DataUtil.isEmpty(requestDto.getSize())) {
             listResponse = leadershipTranslateRepository.getListLeadership(requestDto.getLanguage(),enums);

@@ -7,7 +7,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CandidateResponseDto extends AbstractResponseDto {
-
+    private String name;
     private Long id;
     private Integer status;
     private String fullName;

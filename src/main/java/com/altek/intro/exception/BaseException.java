@@ -7,7 +7,6 @@ import java.util.HashMap;
 public class BaseException extends RuntimeException {
     private static final long serialVersionUID = 1L;
     private static final int UNKNOWN = -1;
-
     private HttpStatus httpStatus;
     private Object errorDetails;
 
@@ -55,5 +54,4 @@ public class BaseException extends RuntimeException {
     public void setErrorDetails(Object errorDetails) {
         this.errorDetails = errorDetails;
     }
-
 }

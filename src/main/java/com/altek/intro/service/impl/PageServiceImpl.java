@@ -18,6 +18,7 @@ import com.altek.intro.util.DataUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -62,19 +63,37 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
         }
     }
 
+    public Integer initializePageNumber(Integer pageNumber){
+        if(pageNumber == null){
+            return Constant.FIRST_PAGE;
+        } else {
+            if(pageNumber < 1)
+                return Constant.FIRST_PAGE;
+            return pageNumber;
+        }
+    }
+
+    public Integer initializePageSize(Integer pageSize){
+        if(pageSize == null){
+            return Constant.MAX_SIZE;
+        }
+        return pageSize;
+    }
+
     @Override
-    public BaseResponse getAllPageContentByMenuId(String lang,Long menuId) {
-        Optional<Menu> optional = menuRepository.findById(menuId);
+    public BaseResponse getAllPageContentByMenuId(PageRequestDto requestBody) {
+        Optional<Menu> optional = menuRepository.findById(requestBody.getMenuId());
         if (!optional.isPresent()) {
-            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", menuId));
+            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", requestBody.getMenuId()));
         }
-        List<PageResponseDto> listDTO = new ArrayList<>();
-        PageResponseDto dto = new PageResponseDto();
-        List<PageTranslate> listEntity = pageContentTranslateRepository.findAllPageContentByMenuID(lang,menuId);
-        if (CollectionUtils.isNotEmpty(listEntity)) {
-            listDTO = listEntity.stream().map(item -> (PageResponseDto) pageContentMapper.convertToDTO(dto, item)).collect(Collectors.toList());
-        }
-        return new BaseResponse(Constant.SUCCESS, "get.list.page.by.menuId", listDTO);
+
+        Integer pageSize = initializePageSize(requestBody.getSize());
+        Integer pageNumber = initializePageNumber(requestBody.getPage());
+
+        Pageable paging = getPageable(pageNumber - 1, pageSize);
+        List<PageResponseDto> listEntity =
+                pageContentTranslateRepository.findAllPageContentByMenuID(requestBody.getLanguage(), requestBody.getMenuId(),paging);
+        return new BaseResponse(Constant.SUCCESS, "get.list.page.by.menuId", listEntity);
     }
 
     @Override
@@ -105,10 +124,6 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
             throw new ResourceNotFoundException(String.format("page.not.found.with.id:%s", id));
         }
         Page entity = optional.get();
-        if(entity.getStatus().equals(Constant.DELETE)){
-            return new BaseResponse(Constant.SUCCESS, String.format("page.already.delete.with.id:%s", id),
-                    String.format("status.of.page.content:%s", entity.getStatus()));
-        }
         entity.setStatus(Constant.DELETE);
         entity = pageRepository.save(entity);
         return new BaseResponse(Constant.SUCCESS, String.format("delete.page.with.id:%s", id),

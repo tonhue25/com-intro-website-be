@@ -21,7 +21,7 @@ public interface RecruitmentRepository extends AbstractRepository<Recruitment, L
             + " rt.id, rt.status,rt.createdBy,  TO_CHAR (rt.createdTime, 'DD/MM/YYYY'), " +
             " rt.lastUpdatedBy ,  TO_CHAR (rt.lastUpdatedTime, 'DD/MM/YYYY'),  rt.jobTitle,  " +
             " rt.jobDescription,r.image, r.fileLink," +
-            " rt.location, r.recruitmentType.id as recruitmentTypeId, rt.languageId , rt.recruitment.id as recruitmentId , pgr.productGroup.id as  productGroupId) " +
+            " rt.location, r.recruitmentType.id as recruitmentTypeId, rt.languageId , rt.recruitment.id as recruitmentId , pgr.productGroup.id as  productGroupId, rt.requirement ) " +
             " from RecruitmentTranslate rt , Recruitment r , ProductgroupRecruitment pgr "
             + " where r.id = rt.recruitment.id " +
             " and pgr.recruitment.id = r.id " +
@@ -36,12 +36,11 @@ public interface RecruitmentRepository extends AbstractRepository<Recruitment, L
                                      @Param("locations") List<String> locations,
                                      @Param("types") List<Long> types,
                                      @Param("groups") List<Long> groups);
-
     @Query("select new com.altek.intro.dto.response.RecruitmentResponseDto("
             + " rt.id, rt.status,rt.createdBy,  TO_CHAR (rt.createdTime, 'DD/MM/YYYY'), " +
             " rt.lastUpdatedBy ,  TO_CHAR (rt.lastUpdatedTime, 'DD/MM/YYYY'),  rt.jobTitle,  " +
             " rt.jobDescription,r.image, r.fileLink," +
-            " rt.location, r.recruitmentType.id as recruitmentTypeId, rt.languageId , rt.recruitment.id as recruitmentId , pgr.productGroup.id as  productGroupId) " +
+            " rt.location, r.recruitmentType.id as recruitmentTypeId, rt.languageId , rt.recruitment.id as recruitmentId , pgr.productGroup.id as  productGroupId, rt.requirement)" +
             " from RecruitmentTranslate rt , Recruitment r , ProductgroupRecruitment pgr "
             + " where r.id = rt.recruitment.id " +
             " and pgr.recruitment.id = r.id " +
@@ -56,5 +55,4 @@ public interface RecruitmentRepository extends AbstractRepository<Recruitment, L
                                      @Param("locations") List<String> locations,
                                      @Param("types") List<Long> types,
                                      @Param("groups") List<Long> groups, Pageable pageable);
-
 }

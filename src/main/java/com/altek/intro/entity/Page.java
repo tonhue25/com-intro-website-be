@@ -1,9 +1,6 @@
 package com.altek.intro.entity;
 
-import java.util.Date;
-
 import javax.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,12 +12,16 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "ALT_PAGE")
-public class Page extends AbstractEntity{
+public class Page extends AbstractEntity {
+
     @Column(name = "IMAGE")
     private String image;
 
-    @Column(name = "TIME_LINE")
-    private String timeline;
+    @Column(name = "TIMELINE")
+    private String timeLine;
+
+    @Column(name = "URL")
+    private String url;
 
     private PageDetail pageDetail;
     @OneToOne(mappedBy = "page")
@@ -33,7 +34,7 @@ public class Page extends AbstractEntity{
     }
 
     private Menu menu;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne()
     public Menu getMenu() {
         return menu;
     }
