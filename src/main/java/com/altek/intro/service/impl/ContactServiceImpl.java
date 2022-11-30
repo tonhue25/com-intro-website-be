@@ -61,7 +61,6 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
         return new BaseResponse(Constant.SUCCESS, "add.or.update.contact.success", response);
     }
 
-
     @Override
     public BaseResponse delete(Long id) {
         Optional<Contact> optional = contactRepository.findById(id);
