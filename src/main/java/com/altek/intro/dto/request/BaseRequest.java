@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.util.List;
 
 @Getter
@@ -12,7 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseRequest<T> {
-
     private Integer size;
     private Integer page;
     private String search;

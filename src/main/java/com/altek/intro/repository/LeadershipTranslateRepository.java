@@ -2,7 +2,6 @@ package com.altek.intro.repository;
 
 import com.altek.intro.dto.response.LeadershipResponseDto;
 import com.altek.intro.entity.LeadershipTranslate;
-import com.altek.intro.enums.ContactType;
 import com.altek.intro.enums.EmployeeType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

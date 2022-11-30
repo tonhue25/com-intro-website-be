@@ -37,6 +37,11 @@ public class Candidate extends AbstractEntity implements Serializable {
         return cv;
     }
 
+    private List<RecruitmentCandidate> recruitmentCandidate;
+    @OneToMany(mappedBy = "candidate")
+    public List<RecruitmentCandidate> getRecruitmentCandidate() {
+        return recruitmentCandidate;
+    }
     @Column(name = "GENDER")
     private String gender;
 
@@ -48,6 +53,7 @@ public class Candidate extends AbstractEntity implements Serializable {
     public Date getDateOfBirth() {
         return dateOfBirth;
     }
+
     private List<RecruitmentCandidate> candidateRecruitments;
     @OneToMany(mappedBy = "candidate")
     public List<RecruitmentCandidate> getCandidateRecruitments() {

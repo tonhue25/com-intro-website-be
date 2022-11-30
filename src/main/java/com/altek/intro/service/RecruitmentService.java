@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 public interface RecruitmentService extends AbstractService{
 
     BaseResponse getList(BaseRequest requestDto);
-
     RecruitmentResponseDto create(RecruitmentRequestDto request);
-
     RecruitmentResponseDto delete(Long id);
 
 }

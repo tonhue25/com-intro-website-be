@@ -3,7 +3,7 @@ package com.altek.intro.dto.request;
 import lombok.Data;
 
 @Data
-public class PageRequestDto {
+public class PageRequestDto extends BaseRequest {
     private Long id;
     private String pageTitle;
     private String shortDescription;

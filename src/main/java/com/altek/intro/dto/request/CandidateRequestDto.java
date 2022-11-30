@@ -1,25 +1,13 @@
 package com.altek.intro.dto.request;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class CandidateRequestDto{
+@Data
+public class CandidateRequestDto {
     private Long id;
-//<<<<<<< HEAD
     private Integer status;
     private String fullName;
-
-//=======
-//    private String name;
-//>>>>>>> baodang
     private String email;
-
     private String phoneNumber;
     private byte[] cv;
     private String gender;
@@ -27,3 +15,4 @@ public class CandidateRequestDto{
     private String dateOfBirth;
     private Long recruitmentId;
 }
+

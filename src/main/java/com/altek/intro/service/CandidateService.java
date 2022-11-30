@@ -8,7 +8,6 @@ import java.util.List;
 public interface CandidateService extends AbstractService {
 
     List<CandidateResponseDto> getAll();
-
     CandidateResponseDto create(CandidateRequestDto request);
 
     CandidateResponseDto delete(Long id);

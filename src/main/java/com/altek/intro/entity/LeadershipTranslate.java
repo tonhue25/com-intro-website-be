@@ -1,13 +1,13 @@
 package com.altek.intro.entity;
 
-import com.altek.intro.enums.EmployeeType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Setter
 @Getter

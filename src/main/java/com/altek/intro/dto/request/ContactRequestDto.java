@@ -3,6 +3,7 @@ package com.altek.intro.dto.request;
 import lombok.*;
 
 import javax.validation.constraints.Email;
+
 import javax.validation.constraints.NotNull;
 
 @Getter@Setter
@@ -30,3 +31,4 @@ public class ContactRequestDto {
     private Integer status;
     private String type;
 }
+

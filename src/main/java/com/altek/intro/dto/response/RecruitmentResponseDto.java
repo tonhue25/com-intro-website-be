@@ -22,10 +22,12 @@ public class RecruitmentResponseDto extends AbstractResponseDto {
 
     private Long productGroupId;
 
+    private String requirement;
+
     public RecruitmentResponseDto(Long id, Integer status, String createdBy, String createdTime,
                                   String lastUpdatedBy, String lastUpdatedTime, String jobTitle, String jobDescription,
                                   String image, String fileLink, String location, Long recruitmentTypeId, String languageId,
-                                  Long recruitmentId , Long productGroupId) {
+                                  Long recruitmentId , Long productGroupId,String requirement) {
         super(id, status, createdBy, createdTime, lastUpdatedBy, lastUpdatedTime);
         this.jobTitle = jobTitle;
         this.jobDescription = jobDescription;
@@ -36,5 +38,7 @@ public class RecruitmentResponseDto extends AbstractResponseDto {
         this.languageId = languageId;
         this.recruitmentId = recruitmentId;
         this.productGroupId = productGroupId;
+        this.requirement = requirement;
     }
+
 }

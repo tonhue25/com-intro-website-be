@@ -20,6 +20,7 @@ public class NewsTranslate extends AbstractEntity {
 
     @Column(name = "SHORT_DESCRIPTION")
     private String shortDescription;
+
     @Column(name = "LANGUAGE_ID")
     private String languageId;
 
@@ -36,4 +37,5 @@ public class NewsTranslate extends AbstractEntity {
     public String getThumbnail() {
         return thumbnail;
     }
+
 }
