@@ -1,12 +1,14 @@
 package com.altek.intro.dto.request;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.validation.constraints.Email;
 
 import javax.validation.constraints.NotNull;
 
-@Data
+@Getter@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class ContactRequestDto {
 
     private Long id;
@@ -27,5 +29,6 @@ public class ContactRequestDto {
     }
     private String message;
     private Integer status;
+    private String type;
 }
 

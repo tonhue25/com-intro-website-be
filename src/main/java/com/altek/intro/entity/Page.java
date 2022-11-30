@@ -17,15 +17,8 @@ public class Page extends AbstractEntity {
     @Column(name = "IMAGE")
     private String image;
 
-//    private Date timeLine;
-    @Column(name = "TIMELINE")
-//    public Date getTimeLine() {
-//        return timeLine;
-//    }
-    private String timeLine;
-
-    @Column(name = "URL")
-    private String url;
+    @Column(name = "TIME_LINE")
+    private String timeline;
 
     private PageDetail pageDetail;
     @OneToOne(mappedBy = "page")
