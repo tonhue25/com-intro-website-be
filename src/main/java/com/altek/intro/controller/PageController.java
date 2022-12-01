@@ -34,7 +34,7 @@ public class PageController {
         }
     }
 
-    @PostMapping("findPageById")
+    @GetMapping("findPageById")
     public ResponseEntity<BaseResponse> findAllPageContentByMenuId(@RequestBody PageRequestDto requestBody) {
         try {
             return new ResponseEntity(pageContentService.getAllPageContentByMenuId(requestBody), HttpStatus.OK);

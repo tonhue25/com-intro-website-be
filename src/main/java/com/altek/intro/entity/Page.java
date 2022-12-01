@@ -20,6 +20,9 @@ public class Page extends AbstractEntity {
     @Column(name = "TIME_LINE")
     private String timeline;
 
+    @Column(name = "URL")
+    private String url;
+
     private PageDetail pageDetail;
     @OneToOne(mappedBy = "page")
     public PageDetail getPageDetail() {
