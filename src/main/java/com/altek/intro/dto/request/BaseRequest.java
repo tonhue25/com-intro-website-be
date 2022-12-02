@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseRequest<T> {
+
     private Integer size;
     private Integer page;
     private String search;

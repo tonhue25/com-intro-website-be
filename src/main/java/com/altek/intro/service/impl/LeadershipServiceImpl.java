@@ -46,8 +46,6 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
     @Autowired
     private ModelMapper modelMapper;
 
-    @Override
-//<<<<<<< HEAD
     public BaseResponse getListLeadership(BaseRequest requestDto) {
         List<LeadershipResponseDto> listResponse = new ArrayList<>();
         List<String> listEnumTypes = requestDto.getEnumTypes();
@@ -64,21 +62,6 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
             if(!EmployeeType.getAllEmployeeType().containsAll(enums)){
                 throw new ResourceNotFoundException(String.format("employee.type.invalid:%s", Arrays.asList(requestDto.getEnumTypes())));
             }
-//=======
-//    public BaseResponse getAllLeadership(String lang) {
-//        try {
-//            List<LeadershipResponseDto> leadershipDTOS = leadershipTranslateRepository.findAll(lang);
-//            ListResponseDto<LeadershipResponseDto> response = new ListResponseDto<>();
-//            response.setList(leadershipDTOS);
-//            response.setPage(1);
-//            response.setSize(leadershipDTOS.size());
-//            response.setTotalPages(1);
-//            response.setRecordPerPage(leadershipDTOS.size());
-//            response.setLanguage(lang);
-//            return new BaseResponse(Constant.SUCCESS, "get.list.leadership", leadershipDTOS);
-//        } catch (Exception ex) {
-//            return new BaseResponse(Constant.FAIL, ex.getMessage());
-//>>>>>>> habahoang
         }
         if (DataUtil.isEmpty(requestDto.getPage()) || DataUtil.isEmpty(requestDto.getSize())) {
             listResponse = leadershipTranslateRepository.getListLeadership(requestDto.getLanguage(),enums);
