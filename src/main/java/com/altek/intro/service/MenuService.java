@@ -7,11 +7,7 @@ import com.altek.intro.dto.response.BaseResponse;
 
 @Service
 public interface MenuService extends AbstractService {
-    BaseResponse getAll(String lang);
-
-    BaseResponse create(MenuRequestDto request);
-
-    BaseResponse delete(Long id);
+    BaseResponse getListMenu(String lang);
 
     BaseResponse getNav(String language, Long parentId);
 }

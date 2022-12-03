@@ -11,7 +11,7 @@ import java.util.List;
 public interface MenuTranslateRepository extends AbstractRepository<MenuTranslate, Long> {
     @Query(value = "select mt.* from ALT_MENU_TRANSLATE mt, ALT_MENU m where language_id = :language and mt.menu_id = m.id " +
             " and m.status = 1", nativeQuery = true)
-    List<MenuTranslate> get(@Param("language") String language);
+    List<MenuTranslate> getListMenu(@Param("language") String language);
     @Query(value = "select mt.* from ALT_MENU_TRANSLATE mt, ALT_MENU m where language_id = :language and mt.menu_id = m.id " +
             " and m.parent_id = :parentId", nativeQuery = true)
     List<MenuTranslate> getNav(@Param("language") String language, @Param("parentId") Long parentId);

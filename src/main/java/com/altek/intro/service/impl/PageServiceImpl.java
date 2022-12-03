@@ -30,22 +30,13 @@ import java.util.stream.Collectors;
 public class PageServiceImpl extends AbstractServiceImpl implements PageService {
 
     @Autowired
-    private PageRepository pageRepository;
-
-    @Autowired
     private PageTranslateRepository pageContentTranslateRepository;
 
     @Autowired
     private MenuRepository menuRepository;
 
     @Autowired
-    private ModelMapper modelMapper;
-
-    @Autowired
     private PageMapper pageContentMapper;
-
-    @Autowired
-    ListResponseMapper<PageResponseDto, Page> listResponseMapper;
 
     @Override
     public BaseResponse getAllPageContent(String lang) {
@@ -96,37 +87,4 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
         return new BaseResponse(Constant.SUCCESS, "get.list.page.by.menuId", listEntity);
     }
 
-    @Override
-    public BaseResponse create(PageRequestDto request) {
-        Optional<Menu> optionalMenu = menuRepository.findById(request.getMenuId());
-        if (!optionalMenu.isPresent()) {
-            throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", request.getMenuId()));
-        }
-        Menu menuEntity = optionalMenu.get();
-        Page entity = new Page();
-        if (!DataUtil.isEmpty(request.getId())) {
-            Optional<Page> optional = pageRepository.findById(request.getId());
-            if (optional.isPresent()) {
-                entity = optional.get();
-            }
-        }
-        entity = (Page) pageContentMapper.convertToEntity(request, entity);
-        entity.setMenu(menuEntity);
-        entity = pageRepository.save(entity);
-        PageResponseDto response = modelMapper.map(entity, PageResponseDto.class);
-        return new BaseResponse(Constant.SUCCESS, "add.or.update.page", response);
-    }
-
-    @Override
-    public BaseResponse delete(Long id) {
-        Optional<Page> optional = pageRepository.findById(id);
-        if (!optional.isPresent()) {
-            throw new ResourceNotFoundException(String.format("page.not.found.with.id:%s", id));
-        }
-        Page entity = optional.get();
-        entity.setStatus(Constant.DELETE);
-        entity = pageRepository.save(entity);
-        return new BaseResponse(Constant.SUCCESS, String.format("delete.page.with.id:%s", id),
-                String.format("status.of.page.content:%s", entity.getStatus()));
-    }
 }

@@ -19,9 +19,6 @@ public class Recruitment extends AbstractEntity implements Serializable {
     @Column(name = "FILE_LINK")
     private String fileLink;
 
-    @Column(name = "LOCATION")
-    private String location;
-
     private RecruitmentType recruitmentType;
     @ManyToOne
     public RecruitmentType getRecruitmentType() {

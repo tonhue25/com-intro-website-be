@@ -15,10 +15,13 @@ import java.util.List;
 @AllArgsConstructor
 @Entity
 @Table(name = "ALT_ROLE")
-public class Role extends AbstractEntity implements Serializable {
+public class Role extends AbstractEntity{
 
-    @Column(name = "NAME", unique = true, nullable = false)
     private String name;
+    @Column(name = "NAME", unique = true, nullable = false)
+    public String getName() {
+        return name;
+    }
 
     List<UserRole> userRoles;
     @OneToMany(mappedBy = "role")

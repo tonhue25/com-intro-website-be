@@ -29,6 +29,7 @@ public class NewsTranslate extends AbstractEntity {
     public News getNews() {
         return news;
     }
+
     @Column(name = "DETAIL", length = 1000)
     private String detail;
 

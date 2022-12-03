@@ -22,35 +22,9 @@ public class MenuController {
     @GetMapping
     public ResponseEntity<BaseResponse> listAll(@RequestHeader("Accept-Language") String lang) {
         try {
-            return new ResponseEntity(menuService.getAll(lang), HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            log.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity(menuService.getListMenu(lang), HttpStatus.OK);
         } catch (Exception e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-
-    @PostMapping
-    public ResponseEntity<BaseResponse> create(@RequestBody MenuRequestDto request) {
-        try {
-            return new ResponseEntity<BaseResponse>(menuService.create(request), HttpStatus.OK);
-        } catch (Exception ex) {
-            BaseResponse result = new BaseResponse(Constant.FAIL,
-                    "ex.common.system.error.");
-            return new ResponseEntity<BaseResponse>(result, HttpStatus.OK);
-        }
-    }
-
-    @DeleteMapping
-    public ResponseEntity<?> delete(@RequestParam(value = "id", required = true) Long id) {
-        try {
-            return new ResponseEntity<BaseResponse>(menuService.delete(id), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<BaseResponse>(new BaseResponse(Constant.FAIL,
-                    "ex.common.system.error."), HttpStatus.OK);
         }
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.mail.MessagingException;
 
 @RestController
@@ -18,7 +19,11 @@ public class SendEmailController {
 
     @ResponseBody
     @RequestMapping("/send-mail")
-    public ResponseEntity<?> sendEmail(MailDto dto) throws MessagingException {
-        return new ResponseEntity(sendMailService.sendMail(dto), HttpStatus.OK);
+    public ResponseEntity<?> sendEmail(MailDto dto) {
+        try {
+            return new ResponseEntity(sendMailService.sendMail(dto), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

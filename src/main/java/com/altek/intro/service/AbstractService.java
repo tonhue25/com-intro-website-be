@@ -1,5 +1,6 @@
 package com.altek.intro.service;
 
+import com.altek.intro.dto.request.BaseRequest;
 import com.altek.intro.dto.response.AbstractResponseDto;
 import com.altek.intro.entity.AbstractEntity;
 import org.springframework.data.domain.Pageable;
@@ -31,5 +32,5 @@ public interface AbstractService<D extends AbstractResponseDto, E extends Abstra
      */
     Pageable getPageable(Integer page, Integer size);
 
-
+    Pageable getPageable(BaseRequest requestDto);
 }

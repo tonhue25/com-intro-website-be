@@ -15,4 +15,5 @@ public class PageDetailRequestDto {
     private  String image;
     private Long pageId;
     private Integer status;
+
 }

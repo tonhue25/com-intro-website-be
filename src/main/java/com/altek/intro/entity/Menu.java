@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -15,17 +17,16 @@ import lombok.Setter;
 @Table(name = "ALT_MENU")
 public class Menu extends AbstractEntity {
 
-    //    private List<Page> pageContents;
-//    @OneToMany(mappedBy = "menu")
-//    public List<Page> getPageContents() {
-//        return pageContents;
-//    }
-    private Long parentId;
-    @Column(name = "PARENT_ID")
-    public Long getParentId() {
-        return parentId;
+    private List<Page> pageContents;
+    @OneToMany(mappedBy = "menu")
+    public List<Page> getPageContents() {
+        return pageContents;
     }
-    public void setParentId(Long parentId) {
-        this.parentId = parentId;
+    private Menu parentId;
+
+    @ManyToOne
+    @JoinColumn(name = "PARENT_ID")
+    public Menu getParentId() {
+        return parentId;
     }
 }

@@ -13,7 +13,4 @@ public interface PageService extends AbstractService {
 
     BaseResponse getAllPageContentByMenuId(PageRequestDto requestBody);
 
-    BaseResponse create(PageRequestDto request);
-
-    BaseResponse delete(Long id);
 }

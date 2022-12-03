@@ -22,24 +22,10 @@ public class LeadershipController {
 
     @PostMapping("list")
     public ResponseEntity<LeadershipResponseDto> listAll(@RequestBody BaseRequest request) {
-        return new ResponseEntity(leadershipService.getListLeadership(request), HttpStatus.OK);
-    }
-
-    @PostMapping
-    public ResponseEntity<LeadershipResponseDto> create(@RequestBody LeadershipRequestDto request) {
         try {
-            LeadershipResponseDto result = leadershipService.create(request);
-            return new ResponseEntity<LeadershipResponseDto>(result, HttpStatus.CREATED);
+            return new ResponseEntity(leadershipService.getListLeadership(request), HttpStatus.OK);
         } catch (Exception e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<LeadershipResponseDto> delete(@PathVariable("id") Long id) {
-        LeadershipResponseDto result = leadershipService.delete(id);
-        return new ResponseEntity<LeadershipResponseDto>(result, HttpStatus.OK);
     }
 }

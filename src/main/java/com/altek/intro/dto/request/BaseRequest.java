@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseRequest<T> {
+public class BaseRequest {
 
     private Integer size;
     private Integer page;
@@ -25,4 +25,7 @@ public class BaseRequest<T> {
     private String endDate;
     private String language;
     private List<String> enumTypes;
+//
+    private Integer status;
+    private String name;
 }

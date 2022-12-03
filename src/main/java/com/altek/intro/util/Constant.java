@@ -33,4 +33,8 @@ public class Constant {
 
     public static final String FRIEND_EMAIL = "n18dccn075@student.ptithcm.edu.vn";
     public static final String FRIEND_PASSWORD = "yppeolfqlsgzkysh";
+    public static final String EMPTY_LIST = "list.is.empty";
+    public static final String INVALID_REQUEST_PARAM = "INVALID_REQUEST_PARAM";
+
+    public static final Integer DEFAULT_SIZE = 20;
 }

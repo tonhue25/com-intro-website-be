@@ -13,9 +13,11 @@ public class RecruitmentRequestDto {
     private String image;
     private String fileLink;
     private Long recruitmentTypeId;
+
     private String jobTitle;
     private String jobDescription;
     private String location;
     private String languageId;
+    private String requirement;
     private Long recruitmentId;
 }

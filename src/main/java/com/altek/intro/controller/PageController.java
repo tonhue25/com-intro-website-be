@@ -48,35 +48,5 @@ public class PageController {
         }
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<BaseResponse> listPageContentByMenuId(@PathVariable Long id) {
-//        return new ResponseEntity<>(pageContentService.listPageContentByMenuId(id), HttpStatus.OK);
-//    }
-
-    @PostMapping
-    public ResponseEntity<BaseResponse> create(@RequestBody PageRequestDto request) {
-        try {
-            return new ResponseEntity<BaseResponse>(pageContentService.create(request), HttpStatus.OK);
-        } catch (Exception ex) {
-            BaseResponse result = new BaseResponse(Constant.FAIL,
-                    ex.getMessage());
-            return new ResponseEntity<BaseResponse>(result, HttpStatus.CREATED);
-        }
-    }
-
-//    @PostMapping("list")
-//    public ResponseEntity<BaseResponse> listPageContent(@RequestBody BaseRequest requestDto){
-//        return new ResponseEntity<BaseResponse>(pageContentService.listPageContent(requestDto), HttpStatus.OK);
-//    }
-
-    @DeleteMapping
-    public ResponseEntity<BaseResponse> delete(@RequestParam(value = "id", required = true) Long id) {
-        try {
-            return new ResponseEntity<BaseResponse>(pageContentService.delete(id), HttpStatus.OK);
-        } catch (Exception ex) {
-            return new ResponseEntity<BaseResponse>(new BaseResponse(Constant.FAIL,
-                    ex.getMessage()), HttpStatus.OK);
-        }
-    }
 }
 

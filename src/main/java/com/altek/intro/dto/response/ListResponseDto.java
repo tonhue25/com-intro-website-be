@@ -22,12 +22,31 @@ public class ListResponseDto<D> {
     private String language;
     private List<D> list;
 
+    public ListResponseDto(List<D> list) {
+        this.list = list;
+        this.size = list.size();
+        this.page = 1;
+        this.totalPages = 1;
+        this.recordPerPage = list.size();
+    }
+
     public ListResponseDto(List<D> list, String language) {
         this.list = list;
         this.size = list.size();
         this.page = 1;
         this.totalPages = 1;
         this.recordPerPage = list.size();
+        this.language = language;
+    }
+
+    public ListResponseDto(Pageable pageable, Page page, List<D> list, String language) {
+        this.size = page.getNumberOfElements();
+        if (page.getTotalPages() > 0) {
+            this.page = pageable.getPageNumber() + 1;
+        }
+        this.totalPages = page.getTotalPages();
+        this.recordPerPage = pageable.getPageSize();
+        this.list = list;
         this.language = language;
     }
 }

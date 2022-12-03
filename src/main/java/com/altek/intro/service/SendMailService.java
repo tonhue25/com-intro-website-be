@@ -7,5 +7,5 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 
 public interface SendMailService {
-    BaseResponse sendMail(MailDto dto) throws MessagingException;
+    BaseResponse sendMail(MailDto dto);
 }

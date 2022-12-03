@@ -1,8 +1,11 @@
 package com.altek.intro.service.impl;
 
+import com.altek.intro.dto.request.BaseRequest;
 import com.altek.intro.dto.response.AbstractResponseDto;
 import com.altek.intro.entity.AbstractEntity;
 import com.altek.intro.service.AbstractService;
+import com.altek.intro.util.Constant;
+import com.altek.intro.util.DataUtil;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -48,5 +51,24 @@ public class AbstractServiceImpl<D extends AbstractResponseDto, E extends Abstra
     @Override
     public Pageable getPageable(Integer page, Integer size) {
         return PageRequest.of(page, size);
+    }
+
+    @Override
+    public Pageable getPageable(BaseRequest requestDto){
+        if (DataUtil.isEmpty(requestDto.getPage())) {
+            requestDto.setPage(Constant.FIRST_PAGE);
+        }
+        if (DataUtil.isEmpty(requestDto.getSize())) {
+            requestDto.setSize(Constant.DEFAULT_SIZE);
+        }
+        Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize());
+        if (!DataUtil.isEmpty(requestDto.getSortBy()) && !DataUtil.isEmpty(requestDto.getSortType())) {
+            Sort.Direction sort = Sort.Direction.ASC;
+            if (requestDto.getSortType().equals("DESC")) {
+                sort = Sort.Direction.DESC;
+            }
+            pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(), Sort.by(sort, requestDto.getSortBy()));
+        }
+        return pageable;
     }
 }

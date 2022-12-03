@@ -29,5 +29,4 @@ public class MenuTranslate extends AbstractEntity{
     public Menu getMenu() {
         return menu;
     }
-
 }

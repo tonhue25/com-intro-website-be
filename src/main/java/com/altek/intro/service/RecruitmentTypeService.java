@@ -1,7 +1,10 @@
 package com.altek.intro.service;
 
+import com.altek.intro.dto.request.RecruitmentTypeTranslateRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 
 public interface RecruitmentTypeService extends AbstractService{
-    BaseResponse getAll(String language);
+    BaseResponse getList(String language);
+    BaseResponse createOrUpdate(RecruitmentTypeTranslateRequestDto request);
+    BaseResponse delete(Long id);
 }

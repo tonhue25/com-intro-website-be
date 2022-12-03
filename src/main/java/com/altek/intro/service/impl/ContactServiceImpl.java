@@ -25,6 +25,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,94 +46,69 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
 
     @Override
     public BaseResponse create(ContactRequestDto request) {
-        Contact entity = new Contact();
-        ContactType type = modelMapper.map(request.getType(), ContactType.class);
-        if (!(type == ContactType.FEEDBACK)) {
-            if (!DataUtil.isEmpty(request.getPhoneNumber()) || !DataUtil.isEmpty(request.getEmail())) {
-                Optional<Contact> optional = contactRepository.checkExist(request.getEmail(), request.getPhoneNumber(), type);
-                if (optional.isPresent()) {
-                    entity = optional.get();
+        try {
+            Contact entity = new Contact();
+            ContactType type = modelMapper.map(request.getType(), ContactType.class);
+            if (!(type == ContactType.FEEDBACK)) {
+                if (!DataUtil.isEmpty(request.getPhoneNumber()) || !DataUtil.isEmpty(request.getEmail())) {
+                    Optional<Contact> optional = contactRepository.checkExist(request.getEmail(), request.getPhoneNumber(), type);
+                    if (optional.isPresent()) {
+                        entity = optional.get();
+                    }
                 }
             }
+            entity = contactMapper.convertToEntity(entity, request);
+            entity = contactRepository.save(entity);
+            ContactResponseDto response = modelMapper.map(entity, ContactResponseDto.class);
+            return new BaseResponse(Constant.SUCCESS, "create.or.update.contact", response);
+        } catch (Exception e) {
+            return new BaseResponse(Constant.FAIL, "create.or.update.contact", e.getMessage());
         }
-        entity = contactMapper.convertToEntity(entity, request);
-        entity = contactRepository.save(entity);
-        ContactResponseDto response = modelMapper.map(entity, ContactResponseDto.class);
-        return new BaseResponse(Constant.SUCCESS, "add.or.update.contact.success", response);
     }
 
     @Override
     public BaseResponse delete(Long id) {
-        Optional<Contact> optional = contactRepository.findById(id);
-        if (!optional.isPresent()) {
-            throw new ResourceNotFoundException(String.format("contact.not.found.with.id:%s", id));
+        try {
+            if (DataUtil.isEmpty(id)) {
+                throw new MissingServletRequestParameterException(Constant.INVALID_REQUEST_PARAM.toString(), "delete.contact");
+            } else {
+                Optional<Contact> optional = contactRepository.findById(id);
+                if (!optional.isPresent()) {
+                    throw new ResourceNotFoundException(String.format("contact.not.found.with.id:%s", id));
+                }
+                Contact entity = optional.get();
+                entity.setStatus(Constant.DELETE);
+                entity = contactRepository.save(entity);
+                if (entity.getStatus() == Constant.DELETE) {
+                    return new BaseResponse(Constant.SUCCESS, "delete.contact");
+                } else {
+                    return new BaseResponse(Constant.FAIL, "delete.contact");
+                }
+            }
+        } catch (Exception e) {
+            return new BaseResponse(Constant.FAIL, "delete.product.group", e.getMessage());
         }
-        Contact entity = optional.get();
-        if (entity.getStatus().equals(Constant.DELETE)) {
-            return new BaseResponse(Constant.SUCCESS, String.format("contact.already.delete.with.id:%s", id));
-        }
-        entity.setStatus(Constant.DELETE);
-        contactRepository.save(entity);
-        return new BaseResponse(Constant.SUCCESS, String.format("delete.contact.with.id:%s.success", id));
     }
 
-    @Autowired
-    ListResponseMapper<ContactResponseDto, Contact> listResponseMapper;
-
-
     @Override
-    public BaseResponse getListContact(BaseRequest<ContactType> requestDto) {
-        List<Contact> listEntity = new ArrayList<>();
-        List<ContactResponseDto> listResponse = new ArrayList<>();
-        List<String> listContactTypes = requestDto.getEnumTypes();
+    public BaseResponse getListContact(BaseRequest requestDto) {
         List<ContactType> enums = new ArrayList<>();
-        ListResponseDto<ContactResponseDto> response = new ListResponseDto<>();
-        int pageNumber = 0;
-        int size = 0;
-        int recordPerPage = 0;
-        int totalPages = 0;
-        if (DataUtil.isEmpty(listContactTypes)) {
+        if (DataUtil.isEmpty(requestDto.getEnumTypes())) {
             enums = ContactType.getAllContactType();
         } else {
-            enums = listContactTypes.stream().map(item -> modelMapper.map(item, ContactType.class)).collect(Collectors.toList());
+            enums = requestDto.getEnumTypes().stream().map(item -> modelMapper.map(item, ContactType.class)).collect(Collectors.toList());
             if (!ContactType.getAllContactType().containsAll(enums)) {
                 throw new ResourceNotFoundException(String.format("contact.type.invalid:%s", Arrays.asList(requestDto.getEnumTypes())));
             }
         }
-        if (DataUtil.isEmpty(requestDto.getPage()) || DataUtil.isEmpty(requestDto.getSize())) {
-            listEntity = contactRepository.getList(requestDto.getSearch(), enums);
-            if (CollectionUtils.isNotEmpty(listEntity)) {
-                size = recordPerPage = listEntity.size();
-                pageNumber = totalPages = 1;
-            }
-        } else {
-            Pageable pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize());
-            if (!DataUtil.isEmpty(requestDto.getSortBy()) && !DataUtil.isEmpty(requestDto.getSortType())) {
-                Sort.Direction sort = Sort.Direction.ASC;
-                if (requestDto.getSortType().equals("DESC")) {
-                    sort = Sort.Direction.DESC;
-                }
-                pageable = PageRequest.of(requestDto.getPage() - 1, requestDto.getSize(), Sort.by(sort, requestDto.getSortBy()));
-            }
-            Page<Contact> pageEntity = contactRepository.getList(requestDto.getSearch(), enums, pageable);
-            listEntity = pageEntity.getContent();
-            size = pageEntity.getNumberOfElements();
-            recordPerPage = pageable.getPageSize();
-            totalPages = pageEntity.getTotalPages();
-            pageNumber = pageable.getPageNumber();
-            if (pageEntity.getTotalPages() > 0) {
-                pageNumber = pageNumber + 1;
-            }
+        Pageable pageable = getPageable(requestDto);
+        Page<Contact> pageEntity = contactRepository.getList(requestDto.getSearch(), enums, pageable);
+        List<Contact> listEntity = pageEntity.getContent();
+        if (!CollectionUtils.isNotEmpty(listEntity)) {
+            return new BaseResponse(Constant.SUCCESS, "get.list.contact", Constant.EMPTY_LIST);
         }
-        if (CollectionUtils.isNotEmpty(listEntity)) {
-            listResponse = contactMapper.mapList(listEntity);
-        }
-        response.setLanguage(requestDto.getLanguage());
-        response.setList(listResponse);
-        response.setPage(pageNumber);
-        response.setSize(size);
-        response.setTotalPages(totalPages);
-        response.setRecordPerPage(recordPerPage);
+        List<ContactResponseDto> listResponse = contactMapper.mapList(listEntity);
+        ListResponseDto<ContactResponseDto> response = new ListResponseDto<>(pageable, pageEntity, listResponse, requestDto.getLanguage());
         return new BaseResponse(Constant.SUCCESS, "get.list.contact", response);
     }
 }

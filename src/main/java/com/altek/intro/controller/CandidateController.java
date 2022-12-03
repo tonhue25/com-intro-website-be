@@ -1,8 +1,8 @@
 package com.altek.intro.controller;
 
 import com.altek.intro.dto.request.CandidateRequestDto;
+import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.CandidateResponseDto;
-import com.altek.intro.exception.ResourceNotFoundException;
 import com.altek.intro.service.CandidateService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.List;
-
 @Controller
 @RequestMapping("/candidates")
 @Slf4j
@@ -24,29 +22,20 @@ public class CandidateController {
     private CandidateService candidateService;
 
     @GetMapping
-    public ResponseEntity<CandidateResponseDto> listAll() {
+    public ResponseEntity<BaseResponse> getListCandidate() {
         try {
-            List<CandidateResponseDto> response = candidateService.getAll();
-            return new ResponseEntity(response, HttpStatus.OK);
-        }catch (ResourceNotFoundException e) {
-            log.error(e.getMessage());
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity(candidateService.getListCandidate(), HttpStatus.OK);
         } catch (Exception e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping
-    public ResponseEntity<CandidateResponseDto> create(@RequestBody CandidateRequestDto request){
+    public ResponseEntity<BaseResponse> create(@RequestBody CandidateRequestDto request) {
         try {
-            CandidateResponseDto result = candidateService.create(request);
-            return new ResponseEntity<CandidateResponseDto>(result,HttpStatus.CREATED);
+            return new ResponseEntity<BaseResponse>(candidateService.create(request), HttpStatus.CREATED);
         } catch (Exception e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

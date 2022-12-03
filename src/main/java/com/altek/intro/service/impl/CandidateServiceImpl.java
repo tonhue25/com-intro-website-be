@@ -1,7 +1,9 @@
 package com.altek.intro.service.impl;
 
 import com.altek.intro.dto.request.CandidateRequestDto;
+import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.CandidateResponseDto;
+import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.entity.Candidate;
 import com.altek.intro.entity.Recruitment;
 import com.altek.intro.entity.RecruitmentCandidate;
@@ -17,8 +19,8 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -29,10 +31,6 @@ public class CandidateServiceImpl extends AbstractServiceImpl implements Candida
 
     @Autowired
     private CandidateRepository candiDateRepository;
-
-    @Autowired
-    private CandidateMapper candiDateMapper;
-
     @Autowired
     private ModelMapper modelMapper;
 
@@ -46,27 +44,26 @@ public class CandidateServiceImpl extends AbstractServiceImpl implements Candida
     private RecruitmentRepository recruitmentRepository;
 
     @Override
-    public List<CandidateResponseDto> getAll() {
+    public BaseResponse getListCandidate() {
         try {
-            List<CandidateResponseDto> responseDtoList = new ArrayList<>();
-            List<Candidate> cadidateEntity = candiDateRepository.findAll();
-            CandidateResponseDto dto = new CandidateResponseDto();
-            if (CollectionUtils.isNotEmpty(cadidateEntity)) {
-                responseDtoList = cadidateEntity.stream().map(item -> (CandidateResponseDto) candiDateMapper.convertToDTO(dto, item)).collect(Collectors.toList());
+            List<Candidate> listEntity = candiDateRepository.findAll();
+            if (!CollectionUtils.isNotEmpty(listEntity)) {
+                return new BaseResponse(Constant.SUCCESS, "get.list.candidate", Constant.EMPTY_LIST);
             }
-            return responseDtoList;
+            List<CandidateResponseDto> listDto = listEntity.stream().map(item -> modelMapper.map(item, CandidateResponseDto.class)).collect(Collectors.toList());
+            ListResponseDto<CandidateResponseDto> response = new ListResponseDto<>(listDto);
+            return new BaseResponse(Constant.SUCCESS, "get.list.candidate", response);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new ResourceNotFoundException(e.getMessage());
+            return new BaseResponse(Constant.FAIL, "get.list.candidate", e.getMessage());
         }
     }
-
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
-    public CandidateResponseDto create(CandidateRequestDto request) {
-        if (DataUtil.isEmpty(request.getRecruitmentId())) {
-            throw new IllegalArgumentException("recruitment.id.not.found");
-        } else {
+    public BaseResponse create(CandidateRequestDto request) {
+        try {
+            if (DataUtil.isEmpty(request.getRecruitmentId())) {
+                throw new IllegalArgumentException("recruitment.id.not.found");
+            }
             Optional<Recruitment> optionalRecruitment = recruitmentRepository.findById(request.getRecruitmentId());
             if (!optionalRecruitment.isPresent()) {
                 throw new ResourceNotFoundException(String.format("recruitment.not.found.with.id:%s", request.getRecruitmentId()));
@@ -83,19 +80,16 @@ public class CandidateServiceImpl extends AbstractServiceImpl implements Candida
             entity = candidateMapper.convertToEntity(request, entity, dateOfBirth);
             entity = candiDateRepository.save(entity);
             if (!DataUtil.isEmpty(entity.getId())) {
-                Optional<RecruitmentCandidate> optionalRecruitmentCandidate = recruitmentCandidateRepository.findByRecruitmentAndCandidate(recruitment,entity);
-                if(!optionalRecruitmentCandidate.isPresent()){
-                    RecruitmentCandidate recruitmentCandidate = new RecruitmentCandidate(Constant.ACTIVE,recruitment,entity);
-                    recruitmentCandidate = recruitmentCandidateRepository.save(recruitmentCandidate);
+                Optional<RecruitmentCandidate> optionalRecruitmentCandidate = recruitmentCandidateRepository.findByRecruitmentAndCandidate(recruitment, entity);
+                if (!optionalRecruitmentCandidate.isPresent()) {
+                    RecruitmentCandidate recruitmentCandidate = new RecruitmentCandidate(Constant.ACTIVE, recruitment, entity);
+                    recruitmentCandidateRepository.save(recruitmentCandidate);
                 }
             }
             CandidateResponseDto response = modelMapper.map(entity, CandidateResponseDto.class);
-            return response;
+            return new BaseResponse(Constant.SUCCESS, "create.candidate", response);
+        } catch (Exception e) {
+            return new BaseResponse(Constant.FAIL, "create.candidate", e.getMessage());
         }
-    }
-
-    @Override
-    public CandidateResponseDto delete(Long id) {
-        return null;
     }
 }

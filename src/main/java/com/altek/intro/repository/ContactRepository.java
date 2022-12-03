@@ -23,19 +23,8 @@ public interface ContactRepository extends AbstractRepository<Contact, Long> {
             " and (type in (:types))")
     Page<Contact> getList(@Param("search") String search, @Param("types") List<ContactType> types,
                           Pageable pageable);
-
-    @Query("select e from Contact e where  e.status = 1 and (:search is null or ( " +
-            "  lower(e.fullName) like  lower( concat('%',:search, '%')) or" +
-            "  lower(e.phoneNumber) like  lower( concat('%',:search, '%')) or" +
-            "  lower(e.email) like  lower( concat('%',:search, '%'))  ))" +
-            " and (type in (:types))")
-    List<Contact> getList(@Param("search") String search, @Param("types") List<ContactType> types);
-
     @Query(value = "select u from Contact u where u.status = 1 and u.id = :id")
     Optional<Contact> findById(Long id);
-
-    @Query(value = "select u from Contact u where u.status = 1 and u.phoneNumber = :phoneNumber")
-    Optional<Contact> findByPhoneNumber(@Param("phoneNumber") String phoneNumber);
 
     @Query(value = "select u from Contact u where u.status = 1 and ((u.email = :email) or " +
             " (u.phoneNumber = :phoneNumber))" +

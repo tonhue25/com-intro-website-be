@@ -16,14 +16,9 @@ public class Page extends AbstractEntity {
 
     @Column(name = "IMAGE")
     private String image;
-//
-//<<<<<<< HEAD
-//    @Column(name = "TIMELINE")
-//    private String timeLine;
-//=======
+
     @Column(name = "TIME_LINE")
     private String timeline;
-//>>>>>>> habahoang
 
     @Column(name = "URL")
     private String url;

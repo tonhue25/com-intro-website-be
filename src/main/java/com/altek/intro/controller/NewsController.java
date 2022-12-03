@@ -36,49 +36,21 @@ public class NewsController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @GetMapping("/navbar")
     public ResponseEntity<BaseResponse> getNav(@RequestParam("language") String language,
                                                @RequestParam("parentId") Long parentId) {
         try {
             return new ResponseEntity(menuService.getNav(language, parentId), HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
+        }catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
     @PostMapping("/list")
     public ResponseEntity<BaseResponse> getList(@RequestBody BaseRequest requestDto) {
         try {
             return new ResponseEntity(newsService.getList(requestDto), HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
-
-    @PostMapping
-    public ResponseEntity<NewsResponseDto> Create(@RequestBody NewsRequestDto request) {
-        try {
-            NewsResponseDto result = newsService.create(request);
-            return new ResponseEntity<NewsResponseDto>(result, HttpStatus.CREATED);
-        } catch (Exception e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<NewsResponseDto> delete(@PathVariable("id") Long id){
-        NewsResponseDto result = newsService.delete(id);
-        return new ResponseEntity<NewsResponseDto>(result, HttpStatus.OK);
     }
 }

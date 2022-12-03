@@ -28,9 +28,16 @@ public class GlobalControllerExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({IllegalArgumentException.class, MissingServletRequestParameterException.class})
+    @ExceptionHandler({MissingServletRequestParameterException.class})
+    public ResponseEntity<Object> handleMissingServletRequestParameterException(HttpServletRequest request,
+                                                                                MissingServletRequestParameterException ex) {
+        ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST, request, ex);
+        return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({IllegalArgumentException.class})
     public ResponseEntity<Object> handleIllegalArgumentException(HttpServletRequest request,
-                                                                 Exception ex) {
+                                                                 IllegalArgumentException ex) {
         ErrorResponse error = new ErrorResponse(HttpStatus.BAD_REQUEST, request, ex);
         return new ResponseEntity<Object>(error, HttpStatus.BAD_REQUEST);
     }

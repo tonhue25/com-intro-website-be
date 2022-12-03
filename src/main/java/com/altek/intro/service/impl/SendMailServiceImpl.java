@@ -20,23 +20,27 @@ public class SendMailServiceImpl implements SendMailService {
     @Autowired
     public JavaMailSender emailSender;
 
-    public BaseResponse sendMail(MailDto dto) throws MessagingException {
-        MimeMessage message = emailSender.createMimeMessage();
-        boolean multipart = false;
-        if (!DataUtil.isEmpty(dto.getFiles().get(0))) {
-            multipart = true;
-        }
-        MimeMessageHelper helper = new MimeMessageHelper(message, multipart);
-        helper.setTo(dto.getEmail());
-        helper.setSubject(dto.getSubject());
-        helper.setText(dto.getContent());
-        if (multipart == true) {
-            List<MultipartFile> file = dto.getFiles();
-            for (int i = 0; i < file.size(); i++) {
-                helper.addAttachment(file.get(i).getOriginalFilename(), file.get(i));
+    public BaseResponse sendMail(MailDto dto) {
+        try {
+            MimeMessage message = emailSender.createMimeMessage();
+            boolean multipart = false;
+            if (!DataUtil.isEmpty(dto.getFiles().get(0))) {
+                multipart = true;
             }
+            MimeMessageHelper helper = new MimeMessageHelper(message, multipart);
+            helper.setTo(dto.getEmail());
+            helper.setSubject(dto.getSubject());
+            helper.setText(dto.getContent());
+            if (multipart == true) {
+                List<MultipartFile> file = dto.getFiles();
+                for (int i = 0; i < file.size(); i++) {
+                    helper.addAttachment(file.get(i).getOriginalFilename(), file.get(i));
+                }
+            }
+            emailSender.send(message);
+            return new BaseResponse(Constant.SUCCESS, "send.mail", "Email Sent!");
+        } catch (Exception e) {
+            return new BaseResponse(Constant.FAIL, "error.send.mail", e.getMessage());
         }
-        emailSender.send(message);
-        return new BaseResponse(Constant.SUCCESS, "send.mail", "Email Sent!");
     }
 }

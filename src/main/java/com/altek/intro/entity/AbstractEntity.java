@@ -46,7 +46,7 @@ public abstract class AbstractEntity{
 
     private String createdBy;
 
-    @Column(name = "CREATED_BY", nullable = true)
+    @Column(name = "CREATED_BY")
     @CreatedBy
     public String getCreatedBy() {
         return createdBy;

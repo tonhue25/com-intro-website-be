@@ -15,28 +15,23 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/recruitments")
 @Slf4j
 public class RecruitmentController {
-
     @Autowired
     private RecruitmentService recruitmentService;
 
     @PostMapping("list")
     public ResponseEntity<BaseResponse> list(@RequestBody BaseRequest requestDto) {
-        return new ResponseEntity(recruitmentService.getList(requestDto), HttpStatus.OK);
-    }
-    @PostMapping
-    public ResponseEntity<RecruitmentResponseDto> create(@RequestBody RecruitmentRequestDto request){
         try {
-            RecruitmentResponseDto result = recruitmentService.create(request);
-            return new ResponseEntity<RecruitmentResponseDto>(result,HttpStatus.CREATED);
+            return new ResponseEntity(recruitmentService.getList(requestDto), HttpStatus.OK);
         } catch (Exception e) {
-            log.error(e.getMessage());
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-    @DeleteMapping("/{id}")
-    public ResponseEntity<RecruitmentResponseDto> delete(@PathVariable("id") Long id){
-        RecruitmentResponseDto result = recruitmentService.delete(id);
-        return new ResponseEntity<RecruitmentResponseDto>(result, HttpStatus.OK);
-    }
+//    @PostMapping
+//    public ResponseEntity<BaseResponse> createOrUpdate(@RequestBody RecruitmentRequestDto request){
+//            return new ResponseEntity<BaseResponse>(recruitmentService.createOrUpdate(request),HttpStatus.OK);
+//    }
+//    @DeleteMapping
+//    public ResponseEntity<BaseResponse> delete(@RequestParam("id") Long id){
+//        return new ResponseEntity<BaseResponse>(recruitmentService.delete(id), HttpStatus.OK);
+//    }
 }

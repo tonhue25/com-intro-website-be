@@ -1,5 +1,7 @@
 package com.altek.intro.controller;
 
+import com.altek.intro.dto.request.RecruitmentRequestDto;
+import com.altek.intro.dto.request.RecruitmentTypeTranslateRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.service.RecruitmentTypeService;
 import lombok.extern.slf4j.Slf4j;
@@ -18,6 +20,28 @@ public class RecruitmentTypeController {
 
     @GetMapping
     public ResponseEntity<BaseResponse> listAll(@RequestParam("language") String language) {
-        return new ResponseEntity(recruitmentTypeService.getAll(language), HttpStatus.OK);
+        try {
+            return new ResponseEntity(recruitmentTypeService.getList(language), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping
+    public ResponseEntity<BaseResponse> createOrUpdate(@RequestBody RecruitmentTypeTranslateRequestDto request) {
+        try {
+            return new ResponseEntity<BaseResponse>(recruitmentTypeService.createOrUpdate(request), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @DeleteMapping
+    public ResponseEntity<BaseResponse> delete(@RequestParam Long id) {
+        try {
+            return new ResponseEntity<BaseResponse>(recruitmentTypeService.delete(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }

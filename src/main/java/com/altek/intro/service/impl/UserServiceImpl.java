@@ -47,63 +47,70 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
-    private UserRoleRepository userRoleRepository;
-
     @Override
     public BaseResponse createUser(UserRequestDto request) {
-        User user = new User();
-        List<Role> listRole = new ArrayList<>();
-        List<UserRole> list = new ArrayList<>();
-        if (!DataUtil.isEmpty(request.getRoles())) {
-            List<Long> ids = request.getRoles();
-            listRole = roleMapper.checkList(ids);
-        }
-        if (!DataUtil.isEmpty(request.getPassword())) {
-            request.setPassword(passwordEncoder.encode(request.getPassword()));
-        }
-        if (!DataUtil.isEmpty(request.getId())) {
-            Optional<User> optional = userRepository.findById(request.getId());
-            if (optional.isPresent()) {
-                user = optional.get();
-                list = optional.get().getUserRoles();
+        try {
+            User user = new User();
+            List<Role> listRole = new ArrayList<>();
+            List<UserRole> list = new ArrayList<>();
+            if (!DataUtil.isEmpty(request.getRoles())) {
+                List<Long> ids = request.getRoles();
+                listRole = roleMapper.checkList(ids);
             }
+            if (!DataUtil.isEmpty(request.getPassword())) {
+                request.setPassword(passwordEncoder.encode(request.getPassword()));
+            }
+            if (!DataUtil.isEmpty(request.getId())) {
+                Optional<User> optional = userRepository.findById(request.getId());
+                if (optional.isPresent()) {
+                    user = optional.get();
+                    list = optional.get().getUserRoles();
+                }
+            }
+            user = modelMapper.map(request, User.class);
+            user = userRepository.save(user);
+            list = userRoleMapper.checkList(listRole, user);
+            UserResponseDto response = modelMapper.map(user, UserResponseDto.class);
+            return new BaseResponse(Constant.SUCCESS, String.format("add.or.update.user.with.id:%s", user.getId()),
+                    response);
+        } catch (Exception e) {
+            return new BaseResponse(Constant.FAIL, "add.or.update.user", e.getMessage());
         }
-        user = modelMapper.map(request, User.class);
-        user.setId(1L);
-        user = userRepository.save(user);
-        list = userRoleMapper.checkList(listRole, user);
-        UserResponseDto response = modelMapper.map(user, UserResponseDto.class);
-        return new BaseResponse(Constant.SUCCESS, String.format("add.or.update.user.with.id:%s", user.getId()),
-                response);
     }
+
     @Override
     public BaseResponse deleteUser(Long id) {
-        Optional<User> optional = userRepository.findById(id);
-        if (!optional.isPresent()) {
-            throw new ResourceNotFoundException(String.format("user.not.found.with.id:%s", id));
+        try {
+            Optional<User> optional = userRepository.findById(id);
+            if (!optional.isPresent()) {
+                throw new ResourceNotFoundException(String.format("user.not.found.with.id:%s", id));
+            }
+            User entity = optional.get();
+            entity.setStatus(Constant.DELETE);
+            entity = userRepository.save(entity);
+            if (entity.getStatus() == Constant.DELETE) {
+                return new BaseResponse(Constant.SUCCESS, "delete.user");
+            } else {
+                return new BaseResponse(Constant.FAIL, "delete.user");
+            }
+        } catch (Exception e) {
+            return new BaseResponse(Constant.FAIL, "delete.user", e.getMessage());
         }
-        User entity = optional.get();
-        if (entity.getStatus().equals(Constant.DELETE)) {
-            return new BaseResponse(Constant.SUCCESS, String.format("user.already.delete.with.id:%s", id),
-                    String.format("status.of.user:%s", entity.getStatus()));
-        }
-        entity.setStatus(Constant.DELETE);
-        entity = userRepository.save(entity);
-        return new BaseResponse(Constant.SUCCESS, String.format("delete.user.with.id:%s", id),
-                String.format("status.of.user:%s", entity.getStatus()));
     }
 
     @Override
     public BaseResponse getUser(String username) {
-        Optional<User> optional = userRepository.findByUsername(username);
-        if (!optional.isPresent()) {
-            throw new ResourceNotFoundException(String.format("user.not.found.with.username:%s", username));
+        try {
+            Optional<User> optional = userRepository.findByUsername(username);
+            if (!optional.isPresent()) {
+                throw new ResourceNotFoundException(String.format("user.not.found.with.username:%s", username));
+            }
+            User user = optional.get();
+            UserResponseDto response = modelMapper.map(user, UserResponseDto.class);
+            return new BaseResponse(Constant.SUCCESS, String.format("get.user.with.username:%s", user.getUsername()),
+                    response);
+        } catch (Exception e) {
+            return new BaseResponse(Constant.FAIL, "get.user.with.username", e.getMessage());
         }
-        User user = optional.get();
-        UserResponseDto response = modelMapper.map(user, UserResponseDto.class);
-        return new BaseResponse(Constant.SUCCESS, String.format("get.user.with.username:%s", user.getUsername()),
-                response);
     }
 }

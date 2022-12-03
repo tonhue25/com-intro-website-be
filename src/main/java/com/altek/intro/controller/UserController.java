@@ -16,17 +16,29 @@ public class UserController {
     private UserService userService;
 
     @GetMapping
-    public ResponseEntity<BaseResponse> getUser(@RequestParam String username){
-        return new ResponseEntity<BaseResponse>(userService.getUser(username), HttpStatus.OK);
+    public ResponseEntity<BaseResponse> getUser(@RequestParam String username) {
+        try {
+            return new ResponseEntity<BaseResponse>(userService.getUser(username), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponse> createUser(@RequestBody UserRequestDto request){
-        return new ResponseEntity<BaseResponse>(userService.createUser(request), HttpStatus.CREATED);
+    public ResponseEntity<BaseResponse> createUser(@RequestBody UserRequestDto request) {
+        try {
+            return new ResponseEntity<BaseResponse>(userService.createUser(request), HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @DeleteMapping
-    public ResponseEntity<BaseResponse> deleteUser(@RequestParam Long id){
-        return new ResponseEntity<BaseResponse>(userService.deleteUser(id), HttpStatus.OK);
+    public ResponseEntity<BaseResponse> deleteUser(@RequestParam Long id) {
+        try {
+            return new ResponseEntity<BaseResponse>(userService.deleteUser(id), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
