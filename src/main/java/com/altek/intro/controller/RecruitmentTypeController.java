@@ -1,6 +1,5 @@
 package com.altek.intro.controller;
 
-import com.altek.intro.dto.request.RecruitmentRequestDto;
 import com.altek.intro.dto.request.RecruitmentTypeTranslateRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.service.RecruitmentTypeService;

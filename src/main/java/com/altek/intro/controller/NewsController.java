@@ -1,9 +1,7 @@
 package com.altek.intro.controller;
 
 import com.altek.intro.dto.request.BaseRequest;
-import com.altek.intro.dto.request.NewsRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.NewsResponseDto;
 import com.altek.intro.exception.ResourceNotFoundException;
 import com.altek.intro.service.MenuService;
 import com.altek.intro.service.NewsService;

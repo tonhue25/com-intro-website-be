@@ -2,7 +2,6 @@ package com.altek.intro.controller;
 
 import com.altek.intro.dto.request.CandidateRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.dto.response.CandidateResponseDto;
 import com.altek.intro.service.CandidateService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

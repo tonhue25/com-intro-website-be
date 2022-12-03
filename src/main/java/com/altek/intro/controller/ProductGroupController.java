@@ -2,7 +2,6 @@ package com.altek.intro.controller;
 
 import com.altek.intro.dto.request.ProductGroupRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
-import com.altek.intro.entity.ProductGroup;
 import com.altek.intro.service.ProductGroupService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
