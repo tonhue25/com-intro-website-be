@@ -16,7 +16,7 @@ public class SendEmailController {
     SendMailService sendMailService;
 
     @ResponseBody
-    @RequestMapping("/send-mail")
+    @RequestMapping("/send-mails")
     public ResponseEntity<?> sendEmail(MailDto dto) {
         try {
             return new ResponseEntity(sendMailService.sendMail(dto), HttpStatus.OK);

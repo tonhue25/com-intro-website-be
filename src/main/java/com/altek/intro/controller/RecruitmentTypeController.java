@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/recruitmentTypes")
+@RequestMapping("/recruitment-types")
 @Slf4j
 public class RecruitmentTypeController {
 
