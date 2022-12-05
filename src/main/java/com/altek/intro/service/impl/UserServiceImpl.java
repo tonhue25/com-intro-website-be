@@ -47,6 +47,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
     @Override
     public BaseResponse createUser(UserRequestDto request) {
         try {
@@ -90,9 +91,8 @@ public class UserServiceImpl implements UserService {
             entity = userRepository.save(entity);
             if (entity.getStatus() == Constant.DELETE) {
                 return new BaseResponse(Constant.SUCCESS, "delete.user");
-            } else {
-                return new BaseResponse(Constant.FAIL, "delete.user");
             }
+            return new BaseResponse(Constant.FAIL, "delete.user");
         } catch (Exception e) {
             return new BaseResponse(Constant.FAIL, "delete.user", e.getMessage());
         }

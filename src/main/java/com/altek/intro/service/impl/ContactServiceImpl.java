@@ -69,22 +69,17 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
     @Override
     public BaseResponse delete(Long id) {
         try {
-            if (DataUtil.isEmpty(id)) {
-                throw new MissingServletRequestParameterException(Constant.INVALID_REQUEST_PARAM.toString(), "delete.contact");
-            } else {
-                Optional<Contact> optional = contactRepository.findById(id);
-                if (!optional.isPresent()) {
-                    throw new ResourceNotFoundException(String.format("contact.not.found.with.id:%s", id));
-                }
-                Contact entity = optional.get();
-                entity.setStatus(Constant.DELETE);
-                entity = contactRepository.save(entity);
-                if (entity.getStatus() == Constant.DELETE) {
-                    return new BaseResponse(Constant.SUCCESS, "delete.contact");
-                } else {
-                    return new BaseResponse(Constant.FAIL, "delete.contact");
-                }
+            Optional<Contact> optional = contactRepository.findById(id);
+            if (!optional.isPresent()) {
+                throw new ResourceNotFoundException(String.format("contact.not.found.with.id:%s", id));
             }
+            Contact entity = optional.get();
+            entity.setStatus(Constant.DELETE);
+            entity = contactRepository.save(entity);
+            if (entity.getStatus() == Constant.DELETE) {
+                return new BaseResponse(Constant.SUCCESS, "delete.contact");
+            }
+            return new BaseResponse(Constant.FAIL, "delete.contact");
         } catch (Exception e) {
             return new BaseResponse(Constant.FAIL, "delete.product.group", e.getMessage());
         }

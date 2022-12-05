@@ -20,4 +20,5 @@ public class RecruitmentRequestDto {
     private String languageId;
     private String requirement;
     private Long recruitmentId;
+    private Long productGroupId;
 }

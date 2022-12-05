@@ -2,19 +2,12 @@ package com.altek.intro.service.impl;
 
 import com.altek.intro.dto.request.BaseRequest;
 import com.altek.intro.dto.request.RecruitmentRequestDto;
-import com.altek.intro.dto.request.RecruitmentTypeTranslateRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.dto.response.RecruitmentResponseDto;
-import com.altek.intro.entity.ProductGroup;
-import com.altek.intro.entity.Recruitment;
-import com.altek.intro.entity.RecruitmentType;
+import com.altek.intro.entity.*;
 import com.altek.intro.exception.ResourceNotFoundException;
-import com.altek.intro.mapper.ListResponseMapper;
-import com.altek.intro.mapper.RecruitmentMapper;
-import com.altek.intro.repository.ProductGroupRepository;
-import com.altek.intro.repository.RecruitmentRepository;
-import com.altek.intro.repository.RecruitmentTypeRepository;
+import com.altek.intro.repository.*;
 import com.altek.intro.service.RecruitmentService;
 import com.altek.intro.util.Constant;
 import com.altek.intro.util.DataUtil;
@@ -22,10 +15,9 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -46,6 +38,12 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
 
     @Autowired
     private ProductGroupRepository productGroupRepository;
+
+    @Autowired
+    private RecruitmentTranslateRepository recruitmentTranslateRepository;
+
+    @Autowired
+    private ProductGroupRecruitmentRepository productGroupRecruitmentRepository;
 
     @Override
     public BaseResponse getList(BaseRequest request) {
@@ -84,4 +82,70 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
         }
     }
 
+    @Override
+    @Transactional(rollbackOn = {Exception.class, Throwable.class})
+    public BaseResponse createOrUpdate(RecruitmentRequestDto request) {
+        try {
+            RecruitmentTranslate recruitmentTranslate = new RecruitmentTranslate();
+            RecruitmentType recruitmentType = new RecruitmentType();
+            Recruitment recruitment = new Recruitment();
+            if (!DataUtil.isEmpty(request.getId())) {
+                Optional<RecruitmentTranslate> optionalRecruitmentTranslate = recruitmentTranslateRepository.findById(request.getId());
+                if (optionalRecruitmentTranslate.isPresent()) {
+                    recruitmentTranslate = optionalRecruitmentTranslate.get();
+                    recruitment = recruitmentTranslate.getRecruitment();
+                    recruitmentType = recruitment.getRecruitmentType();
+                }
+            }
+            Optional<RecruitmentType> optionalRecruitmentType = recruitmentTypeRepository.findById(request.getRecruitmentTypeId());
+            if (!optionalRecruitmentType.isPresent()) {
+                throw new ResourceNotFoundException(String.format("recruitment.type.not.found.with.id:%s", request.getRecruitmentTypeId()));
+            }
+            recruitmentType = optionalRecruitmentType.get();
+            Optional<Recruitment> optionalRecruitment = recruitmentRepository.findById(request.getRecruitmentId());
+            if (optionalRecruitment.isPresent()) {
+                recruitment = optionalRecruitment.get();
+            }
+            recruitment = modelMapper.map(request, Recruitment.class);
+            recruitment.setId(request.getRecruitmentId());
+            recruitment = recruitmentRepository.save(recruitment);
+            recruitmentTranslate = modelMapper.map(request, RecruitmentTranslate.class);
+            recruitmentTranslate.setRecruitment(recruitment);
+            recruitmentTranslateRepository.save(recruitmentTranslate);
+            // product-group.
+            Optional<ProductGroup> optionalProductGroup =
+                    productGroupRepository.findById(request.getProductGroupId());
+            if (!optionalProductGroup.isPresent()) {
+                throw new ResourceNotFoundException(String.format("product.group.not.found.with.id:%s", request.getProductGroupId()));
+            }
+            ProductGroup productGroup = optionalProductGroup.get();
+            Optional<ProductgroupRecruitment> optional = productGroupRecruitmentRepository.findByProductGroupAndRecruitment(productGroup, recruitment);
+            if (!optional.isPresent()) {
+                ProductgroupRecruitment productgroupRecruitment = new ProductgroupRecruitment(Constant.ACTIVE, productGroup, recruitment);
+                productGroupRecruitmentRepository.save(productgroupRecruitment);
+            }
+            return new BaseResponse(Constant.SUCCESS, "create.or.update.recruitment", Constant.SUCCESS);
+        } catch (Exception e) {
+            return new BaseResponse(Constant.FAIL, "create.or.update.recruitment", e.getMessage());
+        }
+    }
+
+    @Override
+    public BaseResponse delete(Long id) {
+        try {
+            Optional<Recruitment> optional = recruitmentRepository.findById(id);
+            if (!optional.isPresent()) {
+                throw new ResourceNotFoundException(String.format("recruitment.not.found.with.id:%s", id));
+            }
+            Recruitment recruitment = optional.get();
+            recruitment.setStatus(Constant.DELETE);
+            recruitment = recruitmentRepository.save(recruitment);
+            if (recruitment.getStatus() == Constant.DELETE) {
+                return new BaseResponse(Constant.SUCCESS, "delete.recruitment",Constant.SUCCESS);
+            }
+            return new BaseResponse(Constant.FAIL, "delete.recruitment",Constant.FAIL);
+        } catch (Exception e) {
+            return new BaseResponse(Constant.FAIL, "delete.recruitment.type", e.getMessage());
+        }
+    }
 }

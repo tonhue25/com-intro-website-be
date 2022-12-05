@@ -29,4 +29,10 @@ public class ProductgroupRecruitment extends AbstractEntity implements Serializa
     public Recruitment getRecruitment() {
         return recruitment;
     }
+
+    public ProductgroupRecruitment(Integer status, ProductGroup productGroup, Recruitment recruitment) {
+        super(status);
+        this.productGroup = productGroup;
+        this.recruitment = recruitment;
+    }
 }

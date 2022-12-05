@@ -14,7 +14,7 @@ public interface ProductGroupRepository extends AbstractRepository<ProductGroup,
     @Query(value = "SELECT * FROM ALT_PRODUCT_GROUP where STATUS = 1 ", nativeQuery = true)
     List<ProductGroup> findAll();
 
-    @Query(value = "select p from ProductGroup p where status = 1 and id = :id")
+    @Query(value = "select p from ProductGroup p where p.status = 1 and p.id = :id")
     Optional<ProductGroup> findById(@Param("id") Long id);
 
 }

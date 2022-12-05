@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 public class CandidateServiceImpl extends AbstractServiceImpl implements CandidateService {
 
     @Autowired
-    private CandidateRepository candiDateRepository;
+    private CandidateRepository candidateRepository;
     @Autowired
     private ModelMapper modelMapper;
 
@@ -46,7 +46,7 @@ public class CandidateServiceImpl extends AbstractServiceImpl implements Candida
     @Override
     public BaseResponse getListCandidate() {
         try {
-            List<Candidate> listEntity = candiDateRepository.findAll();
+            List<Candidate> listEntity = candidateRepository.findAll();
             if (!CollectionUtils.isNotEmpty(listEntity)) {
                 return new BaseResponse(Constant.SUCCESS, "get.list.candidate", Constant.EMPTY_LIST);
             }
@@ -71,14 +71,14 @@ public class CandidateServiceImpl extends AbstractServiceImpl implements Candida
             Recruitment recruitment = optionalRecruitment.get();
             Candidate entity = new Candidate();
             if (!DataUtil.isEmpty(request.getPhoneNumber())) {
-                Optional<Candidate> optional = candiDateRepository.findByPhoneNumber(request.getPhoneNumber());
+                Optional<Candidate> optional = candidateRepository.findByPhoneNumber(request.getPhoneNumber());
                 if (optional.isPresent()) {
                     entity = optional.get();
                 }
             }
             Date dateOfBirth = DataUtil.stringToDate(request.getDateOfBirth());
             entity = candidateMapper.convertToEntity(request, entity, dateOfBirth);
-            entity = candiDateRepository.save(entity);
+            entity = candidateRepository.save(entity);
             if (!DataUtil.isEmpty(entity.getId())) {
                 Optional<RecruitmentCandidate> optionalRecruitmentCandidate = recruitmentCandidateRepository.findByRecruitmentAndCandidate(recruitment, entity);
                 if (!optionalRecruitmentCandidate.isPresent()) {
@@ -90,6 +90,24 @@ public class CandidateServiceImpl extends AbstractServiceImpl implements Candida
             return new BaseResponse(Constant.SUCCESS, "create.candidate", response);
         } catch (Exception e) {
             return new BaseResponse(Constant.FAIL, "create.candidate", e.getMessage());
+        }
+    }
+    @Override
+    public BaseResponse delete(Long id) {
+        try {
+            Optional<Candidate> optional = candidateRepository.findById(id);
+            if (!optional.isPresent()) {
+                throw new ResourceNotFoundException(String.format("candidate.not.found.with.id:%s", id));
+            }
+            Candidate candidate = optional.get();
+            candidate.setStatus(Constant.DELETE);
+            candidate = candidateRepository.save(candidate);
+            if (candidate.getStatus() == Constant.DELETE) {
+                return new BaseResponse(Constant.SUCCESS, "delete.candidate",Constant.SUCCESS);
+            }
+            return new BaseResponse(Constant.FAIL, "delete.candidate",Constant.FAIL);
+        } catch (Exception e) {
+            return new BaseResponse(Constant.FAIL, "delete.recruitment.type", e.getMessage());
         }
     }
 }

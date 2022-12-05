@@ -11,7 +11,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "ALT_RECRUITMENT_TRANSLATE")
-public class RecruitmentTranslate extends AbstractEntity implements Serializable {
+public class RecruitmentTranslate extends AbstractEntity{
     @Column(name = "JOB_TITLE")
     private String jobTitle;
     @Column(name = "JOB_DESCRIPTION")

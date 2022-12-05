@@ -77,9 +77,8 @@ public class RoleServiceImpl extends AbstractServiceImpl implements RoleService 
             role = roleRepository.save(role);
             if (role.getStatus() == Constant.DELETE) {
                 return new BaseResponse(Constant.SUCCESS, "delete.role");
-            } else {
-                return new BaseResponse(Constant.FAIL, "delete.role");
             }
+            return new BaseResponse(Constant.FAIL, "delete.role");
         } catch (Exception e) {
             return new BaseResponse(Constant.FAIL, "delete.role", e.getMessage());
         }

@@ -66,23 +66,17 @@ public class ProductGroupServiceImpl extends AbstractServiceImpl implements Prod
     @Override
     public BaseResponse delete(Long id) {
         try {
-            ProductGroup productGroup = new ProductGroup();
-            if (DataUtil.isEmpty(id)) {
-                throw new MissingServletRequestParameterException(Constant.INVALID_REQUEST_PARAM.toString(), "delete.product.group");
-            } else {
-                Optional<ProductGroup> optional = productGroupRepository.findById(id);
-                if (!optional.isPresent()) {
-                    throw new ResourceNotFoundException(String.format("product.group.not.found.with.id:%s", id));
-                }
-                productGroup = optional.get();
-                productGroup.setStatus(Constant.DELETE);
-                productGroup = productGroupRepository.save(productGroup);
-                if (productGroup.getStatus() == Constant.DELETE) {
-                    return new BaseResponse(Constant.SUCCESS, "delete.product.group");
-                } else {
-                    return new BaseResponse(Constant.FAIL, "delete.product.group");
-                }
+            Optional<ProductGroup> optional = productGroupRepository.findById(id);
+            if (!optional.isPresent()) {
+                throw new ResourceNotFoundException(String.format("product.group.not.found.with.id:%s", id));
             }
+            ProductGroup productGroup = optional.get();
+            productGroup.setStatus(Constant.DELETE);
+            productGroup = productGroupRepository.save(productGroup);
+            if (productGroup.getStatus() == Constant.DELETE) {
+                return new BaseResponse(Constant.SUCCESS, "delete.product.group");
+            }
+            return new BaseResponse(Constant.FAIL, "delete.product.group");
         } catch (Exception e) {
             return new BaseResponse(Constant.FAIL, "delete.product.group", e.getMessage());
         }

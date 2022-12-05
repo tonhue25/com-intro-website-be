@@ -44,7 +44,7 @@ public class RecruitmentTypeServiceImpl extends AbstractServiceImpl implements R
             if (!CollectionUtils.isNotEmpty(responseList)) {
                 return new BaseResponse(Constant.SUCCESS, "get.list.recruitment.type", Constant.EMPTY_LIST);
             }
-            ListResponseDto<RecruitmentTypeResponseDto> response = new ListResponseDto<>(responseList,language);
+            ListResponseDto<RecruitmentTypeResponseDto> response = new ListResponseDto<>(responseList, language);
             return new BaseResponse(Constant.SUCCESS, "get.list.recruitment.type", response);
         } catch (Exception e) {
             return new BaseResponse(Constant.FAIL, "get.list.recruitment.type", e.getMessage());
@@ -84,23 +84,17 @@ public class RecruitmentTypeServiceImpl extends AbstractServiceImpl implements R
     @Override
     public BaseResponse delete(Long id) {
         try {
-            RecruitmentType recruitmentType = new RecruitmentType();
-            if (DataUtil.isEmpty(id)) {
-                throw new MissingServletRequestParameterException(Constant.INVALID_REQUEST_PARAM.toString(), "delete.recruitment.type");
-            } else {
-                Optional<RecruitmentType> optional = recruitmentTypeRepository.findById(id);
-                if (!optional.isPresent()) {
-                    throw new ResourceNotFoundException(String.format("recruitment.type.not.found.with.id:%s", id));
-                }
-                recruitmentType = optional.get();
-                recruitmentType.setStatus(Constant.DELETE);
-                recruitmentType = recruitmentTypeRepository.save(recruitmentType);
-                if (recruitmentType.getStatus() == Constant.DELETE) {
-                    return new BaseResponse(Constant.SUCCESS, "delete.recruitment.type");
-                } else {
-                    return new BaseResponse(Constant.FAIL, "delete.recruitment.type");
-                }
+            Optional<RecruitmentType> optional = recruitmentTypeRepository.findById(id);
+            if (!optional.isPresent()) {
+                throw new ResourceNotFoundException(String.format("recruitment.type.not.found.with.id:%s", id));
             }
+            RecruitmentType recruitmentType = optional.get();
+            recruitmentType.setStatus(Constant.DELETE);
+            recruitmentType = recruitmentTypeRepository.save(recruitmentType);
+            if (recruitmentType.getStatus() == Constant.DELETE) {
+                return new BaseResponse(Constant.SUCCESS, "delete.recruitment.type");
+            }
+            return new BaseResponse(Constant.FAIL, "delete.recruitment.type");
         } catch (Exception e) {
             return new BaseResponse(Constant.FAIL, "delete.recruitment.type", e.getMessage());
         }
