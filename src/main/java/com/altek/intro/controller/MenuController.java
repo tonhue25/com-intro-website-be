@@ -17,7 +17,7 @@ public class MenuController {
     private MenuService menuService;
 
     @GetMapping
-    public ResponseEntity<BaseResponse> listAll(@RequestHeader("Accept-Language") String lang) {
+    public ResponseEntity<BaseResponse> getListMenu(@RequestHeader("Accept-Language") String lang) {
         try {
             return new ResponseEntity(menuService.getListMenu(lang), HttpStatus.OK);
         } catch (Exception e) {

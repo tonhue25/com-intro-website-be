@@ -18,27 +18,27 @@ public class RecruitmentTypeController {
     private RecruitmentTypeService recruitmentTypeService;
 
     @GetMapping
-    public ResponseEntity<BaseResponse> getList(@RequestParam("language") String language) {
+    public ResponseEntity<BaseResponse> getListRecruitmentType(@RequestParam("language") String language) {
         try {
-            return new ResponseEntity(recruitmentTypeService.getList(language), HttpStatus.OK);
+            return new ResponseEntity(recruitmentTypeService.getListRecruitmentType(language), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponse> createOrUpdate(@RequestBody RecruitmentTypeTranslateRequestDto request) {
+    public ResponseEntity<BaseResponse> createOrUpdateRecruitmentType(@RequestBody RecruitmentTypeTranslateRequestDto request) {
         try {
-            return new ResponseEntity<BaseResponse>(recruitmentTypeService.createOrUpdate(request), HttpStatus.OK);
+            return new ResponseEntity<BaseResponse>(recruitmentTypeService.createOrUpdateRecruitmentType(request), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping
-    public ResponseEntity<BaseResponse> delete(@RequestParam Long id) {
+    public ResponseEntity<BaseResponse> deleteRecruitmentType(@RequestParam Long id) {
         try {
-            return new ResponseEntity<BaseResponse>(recruitmentTypeService.delete(id), HttpStatus.OK);
+            return new ResponseEntity<BaseResponse>(recruitmentTypeService.deleteRecruitmentType(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

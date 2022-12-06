@@ -37,23 +37,23 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
     @Autowired
     private ModelMapper modelMapper;
 
-    public BaseResponse getListLeadership(BaseRequest requestDto) {
-        List<String> listEnumTypes = requestDto.getEnumTypes();
-        List<EmployeeType> enums = new ArrayList<>();
-        if (DataUtil.isEmpty(listEnumTypes)) {
-            enums = EmployeeType.getAllEmployeeType();
+    public BaseResponse getListLeadership(BaseRequest request) {
+        List<String> enumTypes = request.getEnumTypes();
+        List<EmployeeType> employeeTypes = new ArrayList<>();
+        if (DataUtil.isEmpty(enumTypes)) {
+            employeeTypes = EmployeeType.getAllEmployeeType();
         } else {
-            enums = listEnumTypes.stream().map(item -> modelMapper.map(item, EmployeeType.class)).collect(Collectors.toList());
-            if (!EmployeeType.getAllEmployeeType().containsAll(enums)) {
-                throw new ResourceNotFoundException(String.format("employee.type.invalid:%s", Arrays.asList(requestDto.getEnumTypes())));
+            employeeTypes = enumTypes.stream().map(item -> modelMapper.map(item, EmployeeType.class)).collect(Collectors.toList());
+            if (!EmployeeType.getAllEmployeeType().containsAll(employeeTypes)) {
+                throw new ResourceNotFoundException(String.format("employee.type.invalid:%s", Arrays.asList(request.getEnumTypes())));
             }
         }
-        Pageable pageable = getPageable(requestDto);
-        Page<LeadershipResponseDto> page = leadershipTranslateRepository.getListLeadership(requestDto.getLanguage(), enums, pageable);
+        Pageable pageable = getPageable(request);
+        Page<LeadershipResponseDto> page = leadershipTranslateRepository.getListLeadership(request.getLanguage(), employeeTypes, pageable);
         if (!CollectionUtils.isNotEmpty(page.getContent())) {
             return new BaseResponse(Constant.SUCCESS, "get.list.leadership", Constant.EMPTY_LIST);
         }
-        ListResponseDto<LeadershipResponseDto> response = new ListResponseDto<>(pageable, page, page.getContent(), requestDto.getLanguage());
+        ListResponseDto<LeadershipResponseDto> response = new ListResponseDto<>(pageable, page, page.getContent(), request.getLanguage());
         return new BaseResponse(Constant.SUCCESS, "get.list.leadership", response);
     }
 }

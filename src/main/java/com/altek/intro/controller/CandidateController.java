@@ -27,17 +27,17 @@ public class CandidateController {
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponse> create(@RequestBody CandidateRequestDto request) {
+    public ResponseEntity<BaseResponse> createCandidate(@RequestBody CandidateRequestDto request) {
         try {
-            return new ResponseEntity<BaseResponse>(candidateService.create(request), HttpStatus.CREATED);
+            return new ResponseEntity<BaseResponse>(candidateService.createCandidate(request), HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<BaseResponse> delete(@PathVariable Long id) {
+    public ResponseEntity<BaseResponse> deleteCandidate(@PathVariable Long id) {
         try {
-            return new ResponseEntity<BaseResponse>(candidateService.delete(id), HttpStatus.OK);
+            return new ResponseEntity<BaseResponse>(candidateService.deleteCandidate(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

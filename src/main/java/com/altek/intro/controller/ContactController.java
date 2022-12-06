@@ -28,18 +28,18 @@ public class ContactController {
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponse> create(@RequestBody @Valid ContactRequestDto request) {
+    public ResponseEntity<BaseResponse> createContact(@RequestBody @Valid ContactRequestDto request) {
         try {
-            return new ResponseEntity<BaseResponse>(contactService.create(request), HttpStatus.OK);
+            return new ResponseEntity<BaseResponse>(contactService.createContact(request), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping
-    public ResponseEntity<BaseResponse> delete(@RequestParam Long id) {
+    public ResponseEntity<BaseResponse> deleteContact(@RequestParam Long id) {
         try {
-            return new ResponseEntity<BaseResponse>(contactService.delete(id), HttpStatus.OK);
+            return new ResponseEntity<BaseResponse>(contactService.deleteContact(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

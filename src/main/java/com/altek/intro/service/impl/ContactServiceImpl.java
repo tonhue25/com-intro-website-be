@@ -45,21 +45,21 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
     private ModelMapper modelMapper;
 
     @Override
-    public BaseResponse create(ContactRequestDto request) {
+    public BaseResponse createContact(ContactRequestDto request) {
         try {
-            Contact entity = new Contact();
+            Contact contact = new Contact();
             ContactType type = modelMapper.map(request.getType(), ContactType.class);
             if (!(type == ContactType.FEEDBACK)) {
                 if (!DataUtil.isEmpty(request.getPhoneNumber()) || !DataUtil.isEmpty(request.getEmail())) {
                     Optional<Contact> optional = contactRepository.checkExist(request.getEmail(), request.getPhoneNumber(), type);
                     if (optional.isPresent()) {
-                        entity = optional.get();
+                        contact = optional.get();
                     }
                 }
             }
-            entity = contactMapper.convertToEntity(entity, request);
-            entity = contactRepository.save(entity);
-            ContactResponseDto response = modelMapper.map(entity, ContactResponseDto.class);
+            contact = contactMapper.convertToEntity(contact, request);
+            contact = contactRepository.save(contact);
+            ContactResponseDto response = modelMapper.map(contact, ContactResponseDto.class);
             return new BaseResponse(Constant.SUCCESS, "create.or.update.contact", response);
         } catch (Exception e) {
             return new BaseResponse(Constant.FAIL, "create.or.update.contact", e.getMessage());
@@ -67,16 +67,16 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
     }
 
     @Override
-    public BaseResponse delete(Long id) {
+    public BaseResponse deleteContact(Long id) {
         try {
             Optional<Contact> optional = contactRepository.findById(id);
             if (!optional.isPresent()) {
                 throw new ResourceNotFoundException(String.format("contact.not.found.with.id:%s", id));
             }
-            Contact entity = optional.get();
-            entity.setStatus(Constant.DELETE);
-            entity = contactRepository.save(entity);
-            if (entity.getStatus() == Constant.DELETE) {
+            Contact contact = optional.get();
+            contact.setStatus(Constant.DELETE);
+            contact = contactRepository.save(contact);
+            if (contact.getStatus() == Constant.DELETE) {
                 return new BaseResponse(Constant.SUCCESS, "delete.contact");
             }
             return new BaseResponse(Constant.FAIL, "delete.contact");
@@ -86,24 +86,24 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
     }
 
     @Override
-    public BaseResponse getListContact(BaseRequest requestDto) {
-        List<ContactType> enums = new ArrayList<>();
-        if (DataUtil.isEmpty(requestDto.getEnumTypes())) {
-            enums = ContactType.getAllContactType();
+    public BaseResponse getListContact(BaseRequest request) {
+        List<ContactType> contactTypes = new ArrayList<>();
+        if (DataUtil.isEmpty(request.getEnumTypes())) {
+            contactTypes = ContactType.getAllContactType();
         } else {
-            enums = requestDto.getEnumTypes().stream().map(item -> modelMapper.map(item, ContactType.class)).collect(Collectors.toList());
-            if (!ContactType.getAllContactType().containsAll(enums)) {
-                throw new ResourceNotFoundException(String.format("contact.type.invalid:%s", Arrays.asList(requestDto.getEnumTypes())));
+            contactTypes = request.getEnumTypes().stream().map(item -> modelMapper.map(item, ContactType.class)).collect(Collectors.toList());
+            if (!ContactType.getAllContactType().containsAll(contactTypes)) {
+                throw new ResourceNotFoundException(String.format("contact.type.invalid:%s", Arrays.asList(request.getEnumTypes())));
             }
         }
-        Pageable pageable = getPageable(requestDto);
-        Page<Contact> pageEntity = contactRepository.getList(requestDto.getSearch(), enums, pageable);
-        List<Contact> listEntity = pageEntity.getContent();
-        if (!CollectionUtils.isNotEmpty(listEntity)) {
+        Pageable pageable = getPageable(request);
+        Page<Contact> page = contactRepository.getList(request.getSearch(), contactTypes, pageable);
+        List<Contact> contacts = page.getContent();
+        if (!CollectionUtils.isNotEmpty(contacts)) {
             return new BaseResponse(Constant.SUCCESS, "get.list.contact", Constant.EMPTY_LIST);
         }
-        List<ContactResponseDto> listResponse = contactMapper.mapList(listEntity);
-        ListResponseDto<ContactResponseDto> response = new ListResponseDto<>(pageable, pageEntity, listResponse, requestDto.getLanguage());
+        List<ContactResponseDto> responseDtos = contactMapper.mapList(contacts);
+        ListResponseDto<ContactResponseDto> response = new ListResponseDto<>(pageable, page, responseDtos, request.getLanguage());
         return new BaseResponse(Constant.SUCCESS, "get.list.contact", response);
     }
 }

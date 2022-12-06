@@ -38,7 +38,7 @@ public class RecruitmentTypeServiceImpl extends AbstractServiceImpl implements R
     private RecruitmentTypeMapper recruitmentTypeMapper;
 
     @Override
-    public BaseResponse getList(String language) {
+    public BaseResponse getListRecruitmentType(String language) {
         try {
             List<RecruitmentTypeResponseDto> responseList = recruitmentTypeRepository.getAll(language);
             if (!CollectionUtils.isNotEmpty(responseList)) {
@@ -52,7 +52,7 @@ public class RecruitmentTypeServiceImpl extends AbstractServiceImpl implements R
     }
 
     @Override
-    public BaseResponse createOrUpdate(RecruitmentTypeTranslateRequestDto request) {
+    public BaseResponse createOrUpdateRecruitmentType(RecruitmentTypeTranslateRequestDto request) {
         try {
             RecruitmentType recruitmentType = new RecruitmentType();
             if (!DataUtil.isEmpty(request.getRecruitmentTypeId())) {
@@ -82,7 +82,7 @@ public class RecruitmentTypeServiceImpl extends AbstractServiceImpl implements R
     }
 
     @Override
-    public BaseResponse delete(Long id) {
+    public BaseResponse deleteRecruitmentType(Long id) {
         try {
             Optional<RecruitmentType> optional = recruitmentTypeRepository.findById(id);
             if (!optional.isPresent()) {

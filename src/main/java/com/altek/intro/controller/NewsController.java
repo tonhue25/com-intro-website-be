@@ -35,18 +35,18 @@ public class NewsController {
         }
     }
     @GetMapping("/navbar")
-    public ResponseEntity<BaseResponse> getNav(@RequestParam("language") String language,
+    public ResponseEntity<BaseResponse> getNavNews(@RequestParam("language") String language,
                                                @RequestParam("parentId") Long parentId) {
         try {
-            return new ResponseEntity(menuService.getNav(language, parentId), HttpStatus.OK);
+            return new ResponseEntity(menuService.getNavNews(language, parentId), HttpStatus.OK);
         }catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     @PostMapping("/list")
-    public ResponseEntity<BaseResponse> getList(@RequestBody BaseRequest requestDto) {
+    public ResponseEntity<BaseResponse> getListNews(@RequestBody BaseRequest requestDto) {
         try {
-            return new ResponseEntity(newsService.getList(requestDto), HttpStatus.OK);
+            return new ResponseEntity(newsService.getListNews(requestDto), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

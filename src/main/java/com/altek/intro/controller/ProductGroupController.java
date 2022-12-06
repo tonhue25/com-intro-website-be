@@ -27,18 +27,18 @@ public class ProductGroupController {
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponse> createOrUpdate(@RequestBody ProductGroupRequestDto dto) {
+    public ResponseEntity<BaseResponse> createOrUpdateProductGroup(@RequestBody ProductGroupRequestDto dto) {
         try {
-            return new ResponseEntity(productGroupService.createOrUpdate(dto), HttpStatus.OK);
+            return new ResponseEntity(productGroupService.createOrUpdateProductGroup(dto), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping
-    public ResponseEntity<BaseResponse> delete(@RequestParam Long id) {
+    public ResponseEntity<BaseResponse> deleteProductGroup(@RequestParam Long id) {
         try {
-            return new ResponseEntity(productGroupService.delete(id), HttpStatus.OK);
+            return new ResponseEntity(productGroupService.deleteProductGroup(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

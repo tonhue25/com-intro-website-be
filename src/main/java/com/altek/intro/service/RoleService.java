@@ -6,7 +6,7 @@ import com.altek.intro.dto.response.BaseResponse;
 public interface RoleService extends AbstractService{
     BaseResponse getListRole();
 
-    BaseResponse createOrUpdate(BaseRequest request);
+    BaseResponse createOrUpdateRole(BaseRequest request);
 
-    BaseResponse delete(Long id);
+    BaseResponse deleteRole(Long id);
 }

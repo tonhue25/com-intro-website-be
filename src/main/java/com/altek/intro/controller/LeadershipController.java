@@ -18,7 +18,7 @@ public class LeadershipController {
     private LeadershipService leadershipService;
 
     @PostMapping("list")
-    public ResponseEntity<LeadershipResponseDto> listAll(@RequestBody BaseRequest request) {
+    public ResponseEntity<LeadershipResponseDto> getListLeadership(@RequestBody BaseRequest request) {
         try {
             return new ResponseEntity(leadershipService.getListLeadership(request), HttpStatus.OK);
         } catch (Exception e) {

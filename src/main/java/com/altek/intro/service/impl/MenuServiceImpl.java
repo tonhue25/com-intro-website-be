@@ -37,12 +37,12 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
     @Override
     public BaseResponse getListMenu(String lang) {
         try {
-            List<MenuTranslate> listEntity = menuTranslateRepository.getListMenu(lang);
-            if (!CollectionUtils.isNotEmpty(listEntity)) {
+            List<MenuTranslate> menuTranslates = menuTranslateRepository.getListMenu(lang);
+            if (!CollectionUtils.isNotEmpty(menuTranslates)) {
                 return new BaseResponse(Constant.SUCCESS, "get.list.menu", Constant.EMPTY_LIST);
             }
-            List<MenuResponseDto> listDto = listEntity.stream().map(item -> modelMapper.map(item, MenuResponseDto.class)).collect(Collectors.toList());
-            ListResponseDto<MenuResponseDto> response = new ListResponseDto<>(listDto,lang);
+            List<MenuResponseDto> responseDtos = menuTranslates.stream().map(item -> modelMapper.map(item, MenuResponseDto.class)).collect(Collectors.toList());
+            ListResponseDto<MenuResponseDto> response = new ListResponseDto<>(responseDtos,lang);
             return new BaseResponse(Constant.SUCCESS, "get.list.menu", response);
         } catch (Exception e) {
             return new BaseResponse(Constant.FAIL, "get.list.menu", e.getMessage());
@@ -50,14 +50,14 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
     }
 
     @Override
-    public BaseResponse getNav(String language, Long parentId) {
+    public BaseResponse getNavNews(String language, Long parentId) {
         try {
-            List<MenuTranslate> listEntity = menuTranslateRepository.getNav(language, parentId);
-            if (!CollectionUtils.isNotEmpty(listEntity)) {
+            List<MenuTranslate> menuTranslates = menuTranslateRepository.getNav(language, parentId);
+            if (!CollectionUtils.isNotEmpty(menuTranslates)) {
                 return new BaseResponse(Constant.SUCCESS, "get.list.nav.news", Constant.EMPTY_LIST);
             }
-            List<MenuResponseDto> listDto = listEntity.stream().map(item -> modelMapper.map(item, MenuResponseDto.class)).collect(Collectors.toList());
-            ListResponseDto<MenuResponseDto> response = new ListResponseDto<>(listDto,language);
+            List<MenuResponseDto> responseDtos = menuTranslates.stream().map(item -> modelMapper.map(item, MenuResponseDto.class)).collect(Collectors.toList());
+            ListResponseDto<MenuResponseDto> response = new ListResponseDto<>(responseDtos,language);
             return new BaseResponse(Constant.SUCCESS, "get.list.nav.news", response);
         } catch (Exception e) {
             return new BaseResponse(Constant.FAIL, "get.list.nav.news", e.getMessage());

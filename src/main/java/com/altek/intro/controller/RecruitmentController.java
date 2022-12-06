@@ -19,27 +19,27 @@ public class RecruitmentController {
     private RecruitmentService recruitmentService;
 
     @PostMapping("list")
-    public ResponseEntity<BaseResponse> list(@RequestBody BaseRequest requestDto) {
+    public ResponseEntity<BaseResponse> getListRecruitment(@RequestBody BaseRequest requestDto) {
         try {
-            return new ResponseEntity(recruitmentService.getList(requestDto), HttpStatus.OK);
+            return new ResponseEntity(recruitmentService.getListRecruitment(requestDto), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PostMapping
-    public ResponseEntity<BaseResponse> createOrUpdate(@RequestBody RecruitmentRequestDto request) {
+    public ResponseEntity<BaseResponse> createOrUpdateRecruitment(@RequestBody RecruitmentRequestDto request) {
         try {
-            return new ResponseEntity<BaseResponse>(recruitmentService.createOrUpdate(request), HttpStatus.OK);
+            return new ResponseEntity<BaseResponse>(recruitmentService.createOrUpdateRecruitment(request), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<BaseResponse> delete(@PathVariable Long id) {
+    public ResponseEntity<BaseResponse> deleteRecruitment(@PathVariable Long id) {
         try {
-            return new ResponseEntity<BaseResponse>(recruitmentService.delete(id), HttpStatus.OK);
+            return new ResponseEntity<BaseResponse>(recruitmentService.deleteRecruitment(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

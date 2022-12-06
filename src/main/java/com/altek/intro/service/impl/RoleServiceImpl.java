@@ -47,7 +47,7 @@ public class RoleServiceImpl extends AbstractServiceImpl implements RoleService 
     }
 
     @Override
-    public BaseResponse createOrUpdate(BaseRequest request) {
+    public BaseResponse createOrUpdateRole(BaseRequest request) {
         try {
             Role role = new Role();
             if (!DataUtil.isEmpty(request.getId())) {
@@ -66,7 +66,7 @@ public class RoleServiceImpl extends AbstractServiceImpl implements RoleService 
     }
 
     @Override
-    public BaseResponse delete(Long id) {
+    public BaseResponse deleteRole(Long id) {
         try {
             Optional<Role> optional = roleRepository.findById(id);
             if (!optional.isPresent()) {

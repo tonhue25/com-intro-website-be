@@ -52,11 +52,11 @@ public class UserServiceImpl implements UserService {
     public BaseResponse createUser(UserRequestDto request) {
         try {
             User user = new User();
-            List<Role> listRole = new ArrayList<>();
-            List<UserRole> list = new ArrayList<>();
+            List<Role> roles = new ArrayList<>();
+            List<UserRole> userRoles = new ArrayList<>();
             if (!DataUtil.isEmpty(request.getRoles())) {
                 List<Long> ids = request.getRoles();
-                listRole = roleMapper.checkList(ids);
+                roles = roleMapper.checkList(ids);
             }
             if (!DataUtil.isEmpty(request.getPassword())) {
                 request.setPassword(passwordEncoder.encode(request.getPassword()));
@@ -65,12 +65,12 @@ public class UserServiceImpl implements UserService {
                 Optional<User> optional = userRepository.findById(request.getId());
                 if (optional.isPresent()) {
                     user = optional.get();
-                    list = optional.get().getUserRoles();
+                    userRoles = optional.get().getUserRoles();
                 }
             }
             user = modelMapper.map(request, User.class);
             user = userRepository.save(user);
-            list = userRoleMapper.checkList(listRole, user);
+            userRoles = userRoleMapper.checkList(roles, user);
             UserResponseDto response = modelMapper.map(user, UserResponseDto.class);
             return new BaseResponse(Constant.SUCCESS, String.format("add.or.update.user.with.id:%s", user.getId()),
                     response);

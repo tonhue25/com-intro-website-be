@@ -46,7 +46,7 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
     private ProductGroupRecruitmentRepository productGroupRecruitmentRepository;
 
     @Override
-    public BaseResponse getList(BaseRequest request) {
+    public BaseResponse getListRecruitment(BaseRequest request) {
         try {
             List<String> locations = new ArrayList<>();
             List<Long> types = new ArrayList<>();
@@ -84,7 +84,7 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
 
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
-    public BaseResponse createOrUpdate(RecruitmentRequestDto request) {
+    public BaseResponse createOrUpdateRecruitment(RecruitmentRequestDto request) {
         try {
             RecruitmentTranslate recruitmentTranslate = new RecruitmentTranslate();
             RecruitmentType recruitmentType = new RecruitmentType();
@@ -131,7 +131,7 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
     }
 
     @Override
-    public BaseResponse delete(Long id) {
+    public BaseResponse deleteRecruitment(Long id) {
         try {
             Optional<Recruitment> optional = recruitmentRepository.findById(id);
             if (!optional.isPresent()) {

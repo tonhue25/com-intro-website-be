@@ -32,12 +32,12 @@ public class ProductGroupServiceImpl extends AbstractServiceImpl implements Prod
     @Override
     public BaseResponse getListProductGroup() {
         try {
-            List<ProductGroup> listEntity = productGroupRepository.findAll();
-            if (!CollectionUtils.isNotEmpty(listEntity)) {
+            List<ProductGroup> productGroups = productGroupRepository.findAll();
+            if (!CollectionUtils.isNotEmpty(productGroups)) {
                 return new BaseResponse(Constant.SUCCESS, "get.list.product.group", Constant.EMPTY_LIST);
             }
-            List<ProductGroupResponseDto> listDto = listEntity.stream().map(item -> modelMapper.map(item, ProductGroupResponseDto.class)).collect(Collectors.toList());
-            ListResponseDto<ProductGroupResponseDto> response = new ListResponseDto<>(listDto);
+            List<ProductGroupResponseDto> responseDtos = productGroups.stream().map(item -> modelMapper.map(item, ProductGroupResponseDto.class)).collect(Collectors.toList());
+            ListResponseDto<ProductGroupResponseDto> response = new ListResponseDto<>(responseDtos);
             return new BaseResponse(Constant.SUCCESS, "get.list.product.group", response);
         } catch (Exception e) {
             return new BaseResponse(Constant.FAIL, "get.list.product.group", e.getMessage());
@@ -45,7 +45,7 @@ public class ProductGroupServiceImpl extends AbstractServiceImpl implements Prod
     }
 
     @Override
-    public BaseResponse createOrUpdate(ProductGroupRequestDto dto) {
+    public BaseResponse createOrUpdateProductGroup(ProductGroupRequestDto dto) {
         try {
             ProductGroup productGroup = new ProductGroup();
             if (!DataUtil.isEmpty(dto.getId())) {
@@ -64,7 +64,7 @@ public class ProductGroupServiceImpl extends AbstractServiceImpl implements Prod
     }
 
     @Override
-    public BaseResponse delete(Long id) {
+    public BaseResponse deleteProductGroup(Long id) {
         try {
             Optional<ProductGroup> optional = productGroupRepository.findById(id);
             if (!optional.isPresent()) {

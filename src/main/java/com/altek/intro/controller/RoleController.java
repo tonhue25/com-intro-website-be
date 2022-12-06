@@ -27,7 +27,7 @@ public class RoleController {
     @PostMapping
     public ResponseEntity<BaseResponse> createOrUpdate(@RequestBody BaseRequest request) {
         try {
-            return new ResponseEntity(roleService.createOrUpdate(request), HttpStatus.OK);
+            return new ResponseEntity(roleService.createOrUpdateRole(request), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -36,7 +36,7 @@ public class RoleController {
     @DeleteMapping
     public ResponseEntity<BaseResponse> delete(@RequestParam Long id) {
         try {
-            return new ResponseEntity(roleService.delete(id), HttpStatus.OK);
+            return new ResponseEntity(roleService.deleteRole(id), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
