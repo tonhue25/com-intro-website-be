@@ -7,7 +7,7 @@ import com.altek.intro.dto.response.CandidateResponseDto;
 import java.util.List;
 
 public interface CandidateService extends AbstractService {
-    BaseResponse getListCandidate();
+    BaseResponse getCandidates();
     BaseResponse createCandidate(CandidateRequestDto request);
     BaseResponse deleteCandidate(Long id);
 }

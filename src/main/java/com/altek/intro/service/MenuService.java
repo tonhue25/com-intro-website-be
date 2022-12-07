@@ -7,7 +7,7 @@ import com.altek.intro.dto.response.BaseResponse;
 
 @Service
 public interface MenuService extends AbstractService {
-    BaseResponse getListMenu(String lang);
+    BaseResponse getMenus(String lang);
 
     BaseResponse getNavNews(String language, Long parentId);
 }

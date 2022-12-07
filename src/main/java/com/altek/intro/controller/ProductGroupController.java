@@ -18,9 +18,9 @@ public class ProductGroupController {
     private ProductGroupService productGroupService;
 
     @GetMapping
-    public ResponseEntity<BaseResponse> getListProductGroup() {
+    public ResponseEntity<BaseResponse> getProductGroups() {
         try {
-            return new ResponseEntity(productGroupService.getListProductGroup(), HttpStatus.OK);
+            return new ResponseEntity(productGroupService.getProductGroups(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

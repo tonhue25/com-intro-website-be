@@ -18,9 +18,9 @@ public class RecruitmentTypeController {
     private RecruitmentTypeService recruitmentTypeService;
 
     @GetMapping
-    public ResponseEntity<BaseResponse> getListRecruitmentType(@RequestParam("language") String language) {
+    public ResponseEntity<BaseResponse> getRecruitmentTypes(@RequestParam("language") String language) {
         try {
-            return new ResponseEntity(recruitmentTypeService.getListRecruitmentType(language), HttpStatus.OK);
+            return new ResponseEntity(recruitmentTypeService.getRecruitmentTypes(language), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

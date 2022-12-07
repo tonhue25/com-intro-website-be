@@ -10,5 +10,5 @@ import org.springframework.stereotype.Service;
 public interface ContactService extends AbstractService{
     BaseResponse createContact(ContactRequestDto request);
     BaseResponse deleteContact(Long id);
-    BaseResponse getListContact(BaseRequest requestDto);
+    BaseResponse getContacts(BaseRequest requestDto);
 }

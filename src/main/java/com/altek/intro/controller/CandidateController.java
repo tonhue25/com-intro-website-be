@@ -18,9 +18,9 @@ public class CandidateController {
     private CandidateService candidateService;
 
     @GetMapping
-    public ResponseEntity<BaseResponse> getListCandidate() {
+    public ResponseEntity<BaseResponse> getCandidates() {
         try {
-            return new ResponseEntity(candidateService.getListCandidate(), HttpStatus.OK);
+            return new ResponseEntity(candidateService.getCandidates(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

@@ -46,7 +46,7 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
     private ProductGroupRecruitmentRepository productGroupRecruitmentRepository;
 
     @Override
-    public BaseResponse getListRecruitment(BaseRequest request) {
+    public BaseResponse getRecruitments(BaseRequest request) {
         try {
             List<String> locations = new ArrayList<>();
             List<Long> types = new ArrayList<>();

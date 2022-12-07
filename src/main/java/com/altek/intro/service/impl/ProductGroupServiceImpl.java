@@ -30,14 +30,14 @@ public class ProductGroupServiceImpl extends AbstractServiceImpl implements Prod
     private ModelMapper modelMapper;
 
     @Override
-    public BaseResponse getListProductGroup() {
+    public BaseResponse getProductGroups() {
         try {
             List<ProductGroup> productGroups = productGroupRepository.findAll();
             if (!CollectionUtils.isNotEmpty(productGroups)) {
                 return new BaseResponse(Constant.SUCCESS, "get.list.product.group", Constant.EMPTY_LIST);
             }
-            List<ProductGroupResponseDto> responseDtos = productGroups.stream().map(item -> modelMapper.map(item, ProductGroupResponseDto.class)).collect(Collectors.toList());
-            ListResponseDto<ProductGroupResponseDto> response = new ListResponseDto<>(responseDtos);
+            List<ProductGroupResponseDto> productGroupResponseDtos = productGroups.stream().map(item -> modelMapper.map(item, ProductGroupResponseDto.class)).collect(Collectors.toList());
+            ListResponseDto<ProductGroupResponseDto> response = new ListResponseDto<>(productGroupResponseDtos);
             return new BaseResponse(Constant.SUCCESS, "get.list.product.group", response);
         } catch (Exception e) {
             return new BaseResponse(Constant.FAIL, "get.list.product.group", e.getMessage());

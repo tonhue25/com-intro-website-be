@@ -65,7 +65,7 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
     }
 
     @Override
-    public BaseResponse getListNews(BaseRequest requestDto) {
+    public BaseResponse getNews(BaseRequest requestDto) {
         Pageable pageable = getPageable(requestDto);
         Page<NewsResponseDto> page = newsTranslateRepository.getList(requestDto.getSearch(), requestDto.getLanguage(), requestDto.getStartDate(),
                 requestDto.getEndDate(),

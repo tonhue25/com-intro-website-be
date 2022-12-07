@@ -7,5 +7,5 @@ import com.altek.intro.dto.response.NewsResponseDto;
 
 public interface NewsService extends AbstractService{
     BaseResponse findNewsById(String language, Long newsId);
-    BaseResponse getListNews(BaseRequest requestDto);
+    BaseResponse getNews(BaseRequest requestDto);
 }

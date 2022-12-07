@@ -86,7 +86,7 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
     }
 
     @Override
-    public BaseResponse getListContact(BaseRequest request) {
+    public BaseResponse getContacts(BaseRequest request) {
         List<ContactType> contactTypes = new ArrayList<>();
         if (DataUtil.isEmpty(request.getEnumTypes())) {
             contactTypes = ContactType.getAllContactType();
@@ -102,8 +102,8 @@ public class ContactServiceImpl extends AbstractServiceImpl implements ContactSe
         if (!CollectionUtils.isNotEmpty(contacts)) {
             return new BaseResponse(Constant.SUCCESS, "get.list.contact", Constant.EMPTY_LIST);
         }
-        List<ContactResponseDto> responseDtos = contactMapper.mapList(contacts);
-        ListResponseDto<ContactResponseDto> response = new ListResponseDto<>(pageable, page, responseDtos, request.getLanguage());
+        List<ContactResponseDto> contactResponseDtos = contactMapper.mapList(contacts);
+        ListResponseDto<ContactResponseDto> response = new ListResponseDto<>(pageable, page, contactResponseDtos, request.getLanguage());
         return new BaseResponse(Constant.SUCCESS, "get.list.contact", response);
     }
 }

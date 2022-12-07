@@ -38,13 +38,13 @@ public class RecruitmentTypeServiceImpl extends AbstractServiceImpl implements R
     private RecruitmentTypeMapper recruitmentTypeMapper;
 
     @Override
-    public BaseResponse getListRecruitmentType(String language) {
+    public BaseResponse getRecruitmentTypes(String language) {
         try {
-            List<RecruitmentTypeResponseDto> responseList = recruitmentTypeRepository.getAll(language);
-            if (!CollectionUtils.isNotEmpty(responseList)) {
+            List<RecruitmentTypeResponseDto> responseDtos = recruitmentTypeRepository.getAll(language);
+            if (!CollectionUtils.isNotEmpty(responseDtos)) {
                 return new BaseResponse(Constant.SUCCESS, "get.list.recruitment.type", Constant.EMPTY_LIST);
             }
-            ListResponseDto<RecruitmentTypeResponseDto> response = new ListResponseDto<>(responseList, language);
+            ListResponseDto<RecruitmentTypeResponseDto> response = new ListResponseDto<>(responseDtos, language);
             return new BaseResponse(Constant.SUCCESS, "get.list.recruitment.type", response);
         } catch (Exception e) {
             return new BaseResponse(Constant.FAIL, "get.list.recruitment.type", e.getMessage());

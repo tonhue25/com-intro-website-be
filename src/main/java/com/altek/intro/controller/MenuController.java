@@ -17,9 +17,9 @@ public class MenuController {
     private MenuService menuService;
 
     @GetMapping
-    public ResponseEntity<BaseResponse> getListMenu(@RequestHeader("Accept-Language") String lang) {
+    public ResponseEntity<BaseResponse> getMenus(@RequestHeader("Accept-Language") String lang) {
         try {
-            return new ResponseEntity(menuService.getListMenu(lang), HttpStatus.OK);
+            return new ResponseEntity(menuService.getMenus(lang), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

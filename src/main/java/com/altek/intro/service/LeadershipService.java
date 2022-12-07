@@ -7,6 +7,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface LeadershipService extends AbstractService{
-    BaseResponse getListLeadership(BaseRequest request);
+    BaseResponse getLeaderships(BaseRequest request);
 
 }

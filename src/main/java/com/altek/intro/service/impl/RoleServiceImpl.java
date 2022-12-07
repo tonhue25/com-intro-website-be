@@ -32,7 +32,7 @@ public class RoleServiceImpl extends AbstractServiceImpl implements RoleService 
     private ModelMapper modelMapper;
 
     @Override
-    public BaseResponse getListRole() {
+    public BaseResponse getRoles() {
         try {
             List<Role> listEntity = roleRepository.findAll();
             if (!CollectionUtils.isNotEmpty(listEntity)) {

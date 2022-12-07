@@ -19,9 +19,9 @@ public class RecruitmentController {
     private RecruitmentService recruitmentService;
 
     @PostMapping("list")
-    public ResponseEntity<BaseResponse> getListRecruitment(@RequestBody BaseRequest requestDto) {
+    public ResponseEntity<BaseResponse> getRecruitments(@RequestBody BaseRequest requestDto) {
         try {
-            return new ResponseEntity(recruitmentService.getListRecruitment(requestDto), HttpStatus.OK);
+            return new ResponseEntity(recruitmentService.getRecruitments(requestDto), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

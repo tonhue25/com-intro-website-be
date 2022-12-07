@@ -19,9 +19,9 @@ public class ContactController {
     private ContactService contactService;
 
     @PostMapping("/list")
-    public ResponseEntity<BaseResponse> getListContact(@RequestBody BaseRequest dto) {
+    public ResponseEntity<BaseResponse> getContacts(@RequestBody BaseRequest dto) {
         try {
-            return new ResponseEntity(contactService.getListContact(dto), HttpStatus.OK);
+            return new ResponseEntity(contactService.getContacts(dto), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

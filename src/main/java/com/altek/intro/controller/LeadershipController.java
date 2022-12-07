@@ -18,9 +18,9 @@ public class LeadershipController {
     private LeadershipService leadershipService;
 
     @PostMapping("list")
-    public ResponseEntity<LeadershipResponseDto> getListLeadership(@RequestBody BaseRequest request) {
+    public ResponseEntity<LeadershipResponseDto> getLeaderships(@RequestBody BaseRequest request) {
         try {
-            return new ResponseEntity(leadershipService.getListLeadership(request), HttpStatus.OK);
+            return new ResponseEntity(leadershipService.getLeaderships(request), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

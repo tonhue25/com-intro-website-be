@@ -16,9 +16,9 @@ public class RoleController {
     private RoleService roleService;
 
     @GetMapping
-    public ResponseEntity<BaseResponse> getListRole() {
+    public ResponseEntity<BaseResponse> getRoles() {
         try {
-            return new ResponseEntity(roleService.getListRole(), HttpStatus.OK);
+            return new ResponseEntity(roleService.getRoles(), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

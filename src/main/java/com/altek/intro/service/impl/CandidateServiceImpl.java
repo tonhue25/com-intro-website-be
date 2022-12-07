@@ -44,14 +44,14 @@ public class CandidateServiceImpl extends AbstractServiceImpl implements Candida
     private RecruitmentRepository recruitmentRepository;
 
     @Override
-    public BaseResponse getListCandidate() {
+    public BaseResponse getCandidates() {
         try {
-            List<Candidate> entities = candidateRepository.findAll();
-            if (!CollectionUtils.isNotEmpty(entities)) {
+            List<Candidate> candidates = candidateRepository.findAll();
+            if (!CollectionUtils.isNotEmpty(candidates)) {
                 return new BaseResponse(Constant.SUCCESS, "get.list.candidate", Constant.EMPTY_LIST);
             }
-            List<CandidateResponseDto> dtos = entities.stream().map(item -> modelMapper.map(item, CandidateResponseDto.class)).collect(Collectors.toList());
-            ListResponseDto<CandidateResponseDto> responses = new ListResponseDto<>(dtos);
+            List<CandidateResponseDto> candidateResponseDtos = candidates.stream().map(item -> modelMapper.map(item, CandidateResponseDto.class)).collect(Collectors.toList());
+            ListResponseDto<CandidateResponseDto> responses = new ListResponseDto<>(candidateResponseDtos);
             return new BaseResponse(Constant.SUCCESS, "get.list.candidate", responses);
         } catch (Exception e) {
             return new BaseResponse(Constant.FAIL, "get.list.candidate", e.getMessage());
@@ -61,9 +61,6 @@ public class CandidateServiceImpl extends AbstractServiceImpl implements Candida
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
     public BaseResponse createCandidate(CandidateRequestDto request) {
         try {
-            if (DataUtil.isEmpty(request.getRecruitmentId())) {
-                throw new IllegalArgumentException("recruitment.id.not.found");
-            }
             Optional<Recruitment> optionalRecruitment = recruitmentRepository.findById(request.getRecruitmentId());
             if (!optionalRecruitment.isPresent()) {
                 throw new ResourceNotFoundException(String.format("recruitment.not.found.with.id:%s", request.getRecruitmentId()));

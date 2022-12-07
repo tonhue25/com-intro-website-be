@@ -44,9 +44,9 @@ public class NewsController {
         }
     }
     @PostMapping("/list")
-    public ResponseEntity<BaseResponse> getListNews(@RequestBody BaseRequest requestDto) {
+    public ResponseEntity<BaseResponse> getNews(@RequestBody BaseRequest requestDto) {
         try {
-            return new ResponseEntity(newsService.getListNews(requestDto), HttpStatus.OK);
+            return new ResponseEntity(newsService.getNews(requestDto), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

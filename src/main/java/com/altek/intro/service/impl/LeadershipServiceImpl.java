@@ -37,7 +37,7 @@ public class LeadershipServiceImpl extends AbstractServiceImpl implements Leader
     @Autowired
     private ModelMapper modelMapper;
 
-    public BaseResponse getListLeadership(BaseRequest request) {
+    public BaseResponse getLeaderships(BaseRequest request) {
         List<String> enumTypes = request.getEnumTypes();
         List<EmployeeType> employeeTypes = new ArrayList<>();
         if (DataUtil.isEmpty(enumTypes)) {

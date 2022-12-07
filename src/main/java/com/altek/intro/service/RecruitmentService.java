@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface RecruitmentService extends AbstractService{
-    BaseResponse getListRecruitment(BaseRequest requestDto);
+    BaseResponse getRecruitments(BaseRequest requestDto);
     BaseResponse createOrUpdateRecruitment(RecruitmentRequestDto request);
     BaseResponse deleteRecruitment(Long id);
 }
