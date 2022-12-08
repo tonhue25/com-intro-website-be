@@ -1,6 +1,7 @@
 package com.altek.intro.controller;
 
 import com.altek.intro.dto.request.PageRequestDto;
+import com.altek.intro.dto.request.PageTranslateRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
 import com.altek.intro.exception.ResourceNotFoundException;
 import com.altek.intro.service.PageService;
@@ -46,5 +47,20 @@ public class PageController {
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<BaseResponse> getPage(@RequestHeader("Accept-Language") String lang,
+                                                @PathVariable Long id) {
+        return new ResponseEntity(pageContentService.getPage(id, lang), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity<BaseResponse> createUpdatePage(@RequestBody PageTranslateRequestDto request) {
+        return new ResponseEntity(pageContentService.createUpdatePage(request), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<BaseResponse> deletePage(@PathVariable Long id) {
+        return new ResponseEntity(pageContentService.deletePage(id), HttpStatus.OK);
+    }
 }
 

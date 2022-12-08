@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -38,10 +37,8 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
 
     @Autowired
     private ProductGroupRepository productGroupRepository;
-
     @Autowired
     private RecruitmentTranslateRepository recruitmentTranslateRepository;
-
     @Autowired
     private ProductGroupRecruitmentRepository productGroupRecruitmentRepository;
 
@@ -140,10 +137,12 @@ public class RecruitmentServiceImpl extends AbstractServiceImpl implements Recru
             Recruitment recruitment = optional.get();
             recruitment.setStatus(Constant.DELETE);
             recruitment = recruitmentRepository.save(recruitment);
+            recruitment.getRecruitmentTranslates().stream().forEach(item -> item.setStatus(Constant.DELETE));
+            recruitmentTranslateRepository.saveAll(recruitment.getRecruitmentTranslates());
             if (recruitment.getStatus() == Constant.DELETE) {
-                return new BaseResponse(Constant.SUCCESS, "delete.recruitment",Constant.SUCCESS);
+                return new BaseResponse(Constant.SUCCESS, "delete.recruitment", Constant.SUCCESS);
             }
-            return new BaseResponse(Constant.FAIL, "delete.recruitment",Constant.FAIL);
+            return new BaseResponse(Constant.FAIL, "delete.recruitment", Constant.FAIL);
         } catch (Exception e) {
             return new BaseResponse(Constant.FAIL, "delete.recruitment.type", e.getMessage());
         }
