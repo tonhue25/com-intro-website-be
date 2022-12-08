@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserRoleRepository extends AbstractRepository<UserRole, Long>{
-
     @Query(value = "select u from UserRole u where u.status = 1 and u.role = :role and u.user = :user")
     Optional<UserRole> findByRoleAndUser(Role role, User user);
 

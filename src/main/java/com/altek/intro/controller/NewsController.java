@@ -40,6 +40,7 @@ public class NewsController {
         try {
             return new ResponseEntity(menuService.getNavNews(language, parentId), HttpStatus.OK);
         }catch (Exception e) {
+            log.error(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -48,6 +49,7 @@ public class NewsController {
         try {
             return new ResponseEntity(newsService.getNews(requestDto), HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

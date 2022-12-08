@@ -14,9 +14,8 @@ import com.altek.intro.entity.Recruitment;
 
 @Repository
 public interface RecruitmentRepository extends AbstractRepository<Recruitment, Long> {
-
-    @Query(value = "SELECT * FROM ALT_RECRUITMENT where STATUS = 1 ", nativeQuery = true)
-    List<Recruitment> findAll();
+    @Query(value = "select p from Recruitment p where p.status = 1 and p.id = :id")
+    Optional<Recruitment> findById(Long id);
 
     @Query("select new com.altek.intro.dto.response.RecruitmentResponseDto("
             + " rt.id, rt.status,rt.createdBy,  TO_CHAR (rt.createdTime, 'DD/MM/YYYY'), " +
@@ -38,6 +37,6 @@ public interface RecruitmentRepository extends AbstractRepository<Recruitment, L
                                      @Param("types") List<Long> types,
                                      @Param("groups") List<Long> groups, Pageable pageable);
 
-    @Query(value = "select p from Recruitment p where p.status = 1 and p.id = :id")
-    Optional<Recruitment> findById(Long id);
+    @Query(value = "SELECT * FROM ALT_RECRUITMENT where STATUS = 1 ", nativeQuery = true)
+    List<Recruitment> findAll();
 }

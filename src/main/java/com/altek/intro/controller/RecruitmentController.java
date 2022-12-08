@@ -23,6 +23,7 @@ public class RecruitmentController {
         try {
             return new ResponseEntity(recruitmentService.getRecruitments(requestDto), HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -32,6 +33,7 @@ public class RecruitmentController {
         try {
             return new ResponseEntity<BaseResponse>(recruitmentService.createOrUpdateRecruitment(request), HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -41,6 +43,7 @@ public class RecruitmentController {
         try {
             return new ResponseEntity<BaseResponse>(recruitmentService.deleteRecruitment(id), HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

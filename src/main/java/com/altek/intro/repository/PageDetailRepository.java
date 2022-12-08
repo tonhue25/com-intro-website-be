@@ -10,13 +10,6 @@ import com.altek.intro.entity.PageDetail;
 
 @Repository
 public interface PageDetailRepository extends AbstractRepository<PageDetail, Long>{
-
-    @Query(value = "select u from PageDetail u where u.status = 1 and u.page = :page")
-    Optional<PageDetail> findByPage(Page page);
-
-    @Query(value = "select u from PageDetail u where u.status = 1 and u.page = :page")
-    boolean existsByPage(Page page);
-
     @Query(value = "select u from PageDetail u where u.status = 1 and u.id = :id")
     Optional<PageDetail> findById(Long id);
 }

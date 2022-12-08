@@ -104,7 +104,7 @@ public class CandidateServiceImpl extends AbstractServiceImpl implements Candida
             }
             return new BaseResponse(Constant.FAIL, "delete.candidate",Constant.FAIL);
         } catch (Exception e) {
-            return new BaseResponse(Constant.FAIL, "delete.recruitment.type", e.getMessage());
+            return new BaseResponse(Constant.FAIL, "delete.candidate", e.getMessage());
         }
     }
 }

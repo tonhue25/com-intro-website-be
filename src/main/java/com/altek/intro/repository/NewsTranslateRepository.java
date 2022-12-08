@@ -11,6 +11,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface NewsTranslateRepository extends AbstractRepository<NewsTranslate, Long> {
+    @Query("SELECT nt FROM NewsTranslate nt WHERE nt.languageId = :language AND nt.news.id = :newsId AND nt.news.status = 1 ")
+    NewsTranslate findByNewsId(@Param("language") String language, @Param("newsId") Long newsId);
     @Query("select new com.altek.intro.dto.response.NewsResponseDto("
             + " nt.id, nt.status, nt.createdBy, TO_CHAR (nt.createdTime, 'DD/MM/YYYY')," +
             " nt.lastUpdatedBy, TO_CHAR (nt.lastUpdatedTime, 'DD/MM/YYYY'), " +
@@ -24,6 +26,5 @@ public interface NewsTranslateRepository extends AbstractRepository<NewsTranslat
                                          @Param("startDate") String startDate,
                                          @Param("endDate") String endDate,
                                          Pageable pageable);
-    @Query("SELECT nt FROM NewsTranslate nt WHERE nt.languageId = :language AND nt.news.id = :newsId AND nt.news.status = 1 ")
-    NewsTranslate findByNewsId(@Param("language") String language, @Param("newsId") Long newsId);
+
 }

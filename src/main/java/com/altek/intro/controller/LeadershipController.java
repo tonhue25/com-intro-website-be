@@ -22,6 +22,7 @@ public class LeadershipController {
         try {
             return new ResponseEntity(leadershipService.getLeaderships(request), HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

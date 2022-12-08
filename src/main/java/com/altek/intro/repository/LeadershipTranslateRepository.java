@@ -14,14 +14,12 @@ import java.util.Optional;
 
 @Repository
 public interface LeadershipTranslateRepository extends  AbstractRepository<LeadershipTranslate, Long>{
+    @Query(value = "select u from Leadership u where u.status = 1 and u.id = :id")
+    Optional<LeadershipTranslate> findById(Long id);
     @Query(value = "SELECT new com.altek.intro.dto.response.LeadershipResponseDto(l.id, l.status, l.createdBy, " +
             "TO_CHAR (l.createdTime , 'DD/MM/YYYY'), l.lastUpdatedBy, TO_CHAR(l.lastUpdatedTime,'dd/MM/YYYY'), l.image, " +
             "lt.fullName, lt.position, lt.information, l.facebook, l.linkedIn, lt.languageId, lt.leadershipId, l.team) " +
             "FROM LeadershipTranslate lt, Leadership l WHERE lt.leadershipId = l.id and " +
             "l.status = 1 and lt.languageId = :language and (l.team in (:teams))")
     Page<LeadershipResponseDto> getListLeadership(@Param("language") String language, @Param("teams") List<EmployeeType> types , Pageable pageable);
-
-    @Query(value = "select u from Leadership u where u.status = 1 and u.id = :id")
-    Optional<LeadershipTranslate> findById(Long id);
-
 }

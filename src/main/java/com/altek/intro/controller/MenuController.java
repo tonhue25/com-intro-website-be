@@ -21,6 +21,7 @@ public class MenuController {
         try {
             return new ResponseEntity(menuService.getMenus(lang), HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

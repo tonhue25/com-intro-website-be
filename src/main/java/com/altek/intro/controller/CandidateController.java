@@ -22,6 +22,7 @@ public class CandidateController {
         try {
             return new ResponseEntity(candidateService.getCandidates(), HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -31,6 +32,7 @@ public class CandidateController {
         try {
             return new ResponseEntity<BaseResponse>(candidateService.createCandidate(request), HttpStatus.CREATED);
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -39,6 +41,7 @@ public class CandidateController {
         try {
             return new ResponseEntity<BaseResponse>(candidateService.deleteCandidate(id), HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

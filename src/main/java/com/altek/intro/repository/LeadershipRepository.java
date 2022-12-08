@@ -10,9 +10,8 @@ import com.altek.intro.entity.Leadership;
 
 @Repository
 public interface LeadershipRepository extends  AbstractRepository<Leadership, Long>{
-    @Query(value = "SELECT * FROM ALT_LEADERSHIP WHERE STATUS = 1", nativeQuery = true)
-    List<Leadership> findAll();
-
     @Query(value = "select u from Leadership u where u.status = 1 and u.id = :id")
     Optional<Leadership> findById(Long id);
+    @Query(value = "SELECT * FROM ALT_LEADERSHIP WHERE STATUS = 1", nativeQuery = true)
+    List<Leadership> findAll();
 }

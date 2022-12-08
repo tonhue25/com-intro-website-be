@@ -22,6 +22,7 @@ public class RecruitmentTypeController {
         try {
             return new ResponseEntity(recruitmentTypeService.getRecruitmentTypes(language), HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -31,6 +32,7 @@ public class RecruitmentTypeController {
         try {
             return new ResponseEntity<BaseResponse>(recruitmentTypeService.createOrUpdateRecruitmentType(request), HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -40,6 +42,7 @@ public class RecruitmentTypeController {
         try {
             return new ResponseEntity<BaseResponse>(recruitmentTypeService.deleteRecruitmentType(id), HttpStatus.OK);
         } catch (Exception e) {
+            log.error(e.getMessage(), e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

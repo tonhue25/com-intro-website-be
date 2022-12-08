@@ -14,7 +14,6 @@ import java.util.Optional;
 public interface RecruitmentCandidateRepository extends AbstractRepository<RecruitmentCandidate, Long> {
     @Query(value = "select u from RecruitmentCandidate u where u.status = 1 and u.recruitment = :recruitment and u.candidate = :candidate ")
     Optional<RecruitmentCandidate> findByRecruitmentAndCandidate(@Param("recruitment") Recruitment recruitment,@Param("candidate") Candidate candidate);
-
     @Query(value = "select u from RecruitmentCandidate u where u.status = 1 and u.recruitment = :recruitment")
     List<RecruitmentCandidate> findByRecruitment(@Param("recruitment") Recruitment recruitment);
 }

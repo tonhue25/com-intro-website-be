@@ -13,10 +13,10 @@ import java.util.Optional;
 
 @Repository
 public interface CandidateRepository extends AbstractRepository<Candidate, Long> {
-    @Query(value = "SELECT * FROM ALT_CANDIDATE WHERE STATUS = 1", nativeQuery = true)
-    List<Candidate> findAll();
-    @Query("select c from Candidate c where c.status = 1 and c.phoneNumber = :phoneNumber")
-    Optional<Candidate> findByPhoneNumber(@Param("phoneNumber") String phoneNumber);
     @Query("select c from Candidate c where c.status = 1 and c.id = :id")
     Optional<Candidate> findById(Long id);
+    @Query("select c from Candidate c where c.status = 1 and c.phoneNumber = :phoneNumber")
+    Optional<Candidate> findByPhoneNumber(@Param("phoneNumber") String phoneNumber);
+    @Query(value = "SELECT * FROM ALT_CANDIDATE WHERE STATUS = 1", nativeQuery = true)
+    List<Candidate> findAll();
 }
