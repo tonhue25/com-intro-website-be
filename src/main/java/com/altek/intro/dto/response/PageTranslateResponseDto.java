@@ -13,6 +13,6 @@ public class PageTranslateResponseDto extends AbstractResponseDto {
     private String pageTitle;
     private String shortDescription;
     private String languageId;
-    private Long pageId;
     private String detail;
+    private PageResponseDto page;
 }

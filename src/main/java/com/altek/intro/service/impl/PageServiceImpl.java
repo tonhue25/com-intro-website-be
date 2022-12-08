@@ -133,7 +133,7 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
         page = pageRepository.save(page);
         pageTranslate = pageMapper.convertToEntity(pageTranslate, request, page);
         pageTranslateRepository.save(pageTranslate);
-        PageResponseDto responseDto = modelMapper.map(page, PageResponseDto.class);
+        PageTranslateResponseDto responseDto = modelMapper.map(pageTranslate, PageTranslateResponseDto.class);
         return new BaseResponse(Constant.SUCCESS, "create.or.update.page", responseDto);
     }
 

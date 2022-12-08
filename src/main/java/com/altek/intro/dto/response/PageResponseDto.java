@@ -18,7 +18,6 @@ public class PageResponseDto extends AbstractResponseDto {
     private String timeLine;
     private String url;
 
-
     public PageResponseDto(Long id, Integer status, String createdBy, String createdTime, String lastUpdatedBy, String lastUpdatedTime,
                            String pageTitle, String shortDescription, String image, String timeLine, Long menuId, String url) {
         super(id, status, createdBy, createdTime, lastUpdatedBy, lastUpdatedTime);
