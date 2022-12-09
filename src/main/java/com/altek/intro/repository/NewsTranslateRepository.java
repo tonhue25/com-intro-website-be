@@ -1,5 +1,6 @@
 package com.altek.intro.repository;
 
+import com.altek.intro.dto.response.LeadershipResponseDto;
 import com.altek.intro.dto.response.NewsResponseDto;
 import com.altek.intro.entity.LeadershipTranslate;
 import com.altek.intro.entity.News;
@@ -43,10 +44,17 @@ public interface NewsTranslateRepository extends AbstractRepository<NewsTranslat
 
     @Query(value = "select lt from NewsTranslate lt " +
             "where lt.status = 1 and lt.news.id = :newsId and lt.languageId = :languageId")
-    NewsTranslate findByNewsIdAndLanguageId(@Param("newsId") Long newsId,
+    NewsTranslate findNewsTranslateByNewsIdAndLanguageId(@Param("newsId") Long newsId,
                                                         @Param("languageId") String languageId);
 
     @Query(value = "SELECT lt FROM NewsTranslate lt WHERE lt.status = 1 AND lt.news.id = :newsId")
     List<NewsTranslate> findNewsTranslateByNewsId(@Param("newsId") Long newsId);
+
+    @Query(value = "select new com.altek.intro.dto.response.NewsResponseDto(n.id, n.status, nt.createdBy, " +
+            "TO_CHAR (nt.createdTime, 'dd/MM/yyyy'),  nt.lastUpdatedBy, TO_CHAR (nt.lastUpdatedTime, 'dd/MM/yyyy')," +
+            " nt.title, nt.languageId, nt.news.id ,nt.detail, nt.shortDescription , n.thumbnail ) " +
+            "from NewsTranslate nt inner join News n on nt.news.id = n.id " +
+            "where n.status = 1 and nt.news.id = :newsId and nt.languageId = :languageId")
+    NewsResponseDto findByNewsIdAndLanguageId(@Param("newsId") Long newsId, @Param("languageId") String languageId);
 
 }

@@ -2,11 +2,16 @@ package com.altek.intro.service.impl;
 
 import com.altek.intro.dto.request.BaseRequest;
 import com.altek.intro.dto.request.NewsRequestDto;
+import com.altek.intro.dto.request.NewsRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
+import com.altek.intro.dto.response.NewsResponseDto;
 import com.altek.intro.dto.response.NewsResponseDto;
 import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.entity.News;
 import com.altek.intro.entity.NewsTranslate;
+import com.altek.intro.entity.News;
+import com.altek.intro.entity.NewsTranslate;
+import com.altek.intro.enums.EmployeeType;
 import com.altek.intro.exception.ResourceNotFoundException;
 import com.altek.intro.exception.SystemErrorException;
 import com.altek.intro.mapper.ListResponseMapper;
@@ -139,38 +144,53 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
         return new BaseResponse(Constant.SUCCESS, "get.list.news", response);
     }
 
+    private Long addNewTranslationForNewsAndReturnId(NewsRequestDto request, News newsEntity){
+        NewsTranslate newsTranslateEntity = new NewsTranslate();
+        newsTranslateEntity = insertRequestToNewsTranslate(newsTranslateEntity, request, newsEntity);
+        newsTranslateEntity = newsTranslateRepository.save(newsTranslateEntity);
+        return newsTranslateEntity.getNews().getId();
+    }
+    private Long newNewsAndReturnId(NewsRequestDto request){
+        News newsEntity = new News();
+        newsEntity = insertRequestToNews(newsEntity ,request);
+        newsEntity = newsRepository.save(newsEntity);
+
+        addNewTranslationForNewsAndReturnId(request, newsEntity);
+        return newsEntity.getId();
+    }
+
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
-    public BaseResponse createNews (NewsRequestDto request) {
+    public BaseResponse createNews(NewsRequestDto request) {
         log.info("#NewsServiceImpl.createNews   Start..... ");
         try {
             BaseResponse reponse = new BaseResponse();
 
-            News dtoCheck = newsRepository.findNewsById(request.getId());
-            if(Objects.nonNull(dtoCheck) && !dtoCheck.getId().equals(request.getId())){
+            NewsResponseDto dtoCheckExist = newsTranslateRepository
+                    .findByNewsIdAndLanguageId(request.getId(), request.getLanguageId());
+            if(Objects.nonNull(dtoCheckExist)){
                 reponse.setMessage("common.error.code.already");
                 reponse.setHttp_code(HttpStatus.BAD_REQUEST.toString());
                 return reponse;
             }
 
-            News newsEntity = new News();
-            newsEntity = insertRequestToNews(newsEntity ,request);
-            newsEntity = newsRepository.save(newsEntity);
+            long idResponse;
+            News dtoCheckAddTranslationOrNew = newsRepository.findNewsById(request.getId());
+            if(Objects.nonNull(dtoCheckAddTranslationOrNew)){
+                idResponse = addNewTranslationForNewsAndReturnId(request, dtoCheckAddTranslationOrNew);
+            } else {
+                idResponse = newNewsAndReturnId(request);
+            }
 
-            NewsTranslate newsTranslateEntity = new NewsTranslate();
-            newsTranslateEntity = insertRequestToNewsTranslate(newsTranslateEntity, request, newsEntity);
-            newsTranslateEntity = newsTranslateRepository.save(newsTranslateEntity);
-
-            NewsResponseDto data = new NewsResponseDto();
-            data = (NewsResponseDto) newsMapper.convertToDTO(data, newsEntity);
-            data = (NewsResponseDto) newsMapper.convertToDTO(data, newsTranslateEntity);
+            NewsResponseDto data = newsTranslateRepository
+                    .findByNewsIdAndLanguageId(idResponse, request.getLanguageId());
             reponse.setData(data);
             reponse.setMessage("common.insert.success");
             reponse.setHttp_code(HttpStatus.CREATED.toString());
             return reponse;
         } catch (Exception ex) {
             ex.printStackTrace();
-            log.error("#NewsServiceImpl.createNews " + ex.getMessage(), ex);
+            log.error("#NewsServiceImpl.createNewNews " + ex.getMessage(), ex);
             throw new SystemErrorException("common.system.error");
         }
     }
@@ -182,30 +202,24 @@ public class NewsServiceImpl extends AbstractServiceImpl implements NewsService 
         try {
             BaseResponse reponse = new BaseResponse();
 
-            News dtoCheck = newsRepository.findNewsById(request.getId());
-            if(!Objects.nonNull(dtoCheck)){
-                reponse.setMessage("common.error.code.not.found");
-                reponse.setHttp_code(HttpStatus.NOT_FOUND.toString());
-                return reponse;
-            }
-
-            News newsEntity = new News();
-            newsEntity = insertRequestToNews(newsEntity ,request);
-            newsEntity = newsRepository.save(newsEntity);
-
-            NewsTranslate newsTranslateEntity = newsTranslateRepository
+            NewsResponseDto dtoCheckExist = newsTranslateRepository
                     .findByNewsIdAndLanguageId(request.getId(), request.getLanguageId());
-            if(newsTranslateEntity == null){
+            News newsEntity = new News();
+            if(Objects.isNull(dtoCheckExist)){
                 reponse.setMessage("common.error.code.not.found");
                 reponse.setHttp_code(HttpStatus.NOT_FOUND.toString());
                 return reponse;
-            }
-            newsTranslateEntity = insertRequestToNewsTranslate(newsTranslateEntity, request, newsEntity);
-            newsTranslateEntity = newsTranslateRepository.save(newsTranslateEntity);
+            } else {
+                newsEntity = insertRequestToNews(newsEntity ,request);
+                newsEntity = newsRepository.save(newsEntity);
 
-            NewsResponseDto data = new NewsResponseDto();
-            data = (NewsResponseDto) newsMapper.convertToDTO(data, newsEntity);
-            data = (NewsResponseDto) newsMapper.convertToDTO(data, newsTranslateEntity);
+                NewsTranslate newsTranslateEntity = newsTranslateRepository.findNewsTranslateByNewsIdAndLanguageId(request.getId(), request.getLanguageId());
+                newsTranslateEntity = insertRequestToNewsTranslate(newsTranslateEntity, request, newsEntity);
+                newsTranslateRepository.save(newsTranslateEntity);
+            }
+
+            NewsResponseDto data = newsTranslateRepository
+                    .findByNewsIdAndLanguageId(newsEntity.getId(), request.getLanguageId());
             reponse.setData(data);
             reponse.setMessage("common.update.success");
             reponse.setHttp_code(HttpStatus.OK.toString());
