@@ -1,6 +1,7 @@
 package com.altek.intro.repository;
 
 import com.altek.intro.dto.response.NewsResponseDto;
+import com.altek.intro.entity.LeadershipTranslate;
 import com.altek.intro.entity.News;
 import com.altek.intro.entity.NewsTranslate;
 import org.springframework.data.domain.Page;
@@ -39,4 +40,13 @@ public interface NewsTranslateRepository extends AbstractRepository<NewsTranslat
 
     @Query("SELECT nt FROM NewsTranslate nt WHERE nt.languageId = :language AND nt.news.id = :newsId AND nt.news.status = 1 ")
     NewsTranslate findByNewsId(@Param("language") String language, @Param("newsId") Long newsId);
+
+    @Query(value = "select lt from NewsTranslate lt " +
+            "where lt.status = 1 and lt.news.id = :newsId and lt.languageId = :languageId")
+    NewsTranslate findByNewsIdAndLanguageId(@Param("newsId") Long newsId,
+                                                        @Param("languageId") String languageId);
+
+    @Query(value = "SELECT lt FROM NewsTranslate lt WHERE lt.status = 1 AND lt.news.id = :newsId")
+    List<NewsTranslate> findNewsTranslateByNewsId(@Param("newsId") Long newsId);
+
 }

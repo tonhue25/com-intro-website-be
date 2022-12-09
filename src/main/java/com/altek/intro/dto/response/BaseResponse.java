@@ -14,8 +14,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Component
-public class BaseResponse<T> implements Serializable{
+public class BaseResponse<T>{
     
     private String http_code;
     private String message;

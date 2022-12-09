@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @RequestMapping("/recruitments")
 @Slf4j
@@ -20,7 +22,7 @@ public class RecruitmentController {
     private RecruitmentService recruitmentService;
 
     @PostMapping("list")
-    public ResponseEntity<BaseResponse> list(@RequestBody BaseRequest requestDto) {
+    public ResponseEntity<BaseResponse> list(@RequestBody @Valid BaseRequest requestDto) {
         return new ResponseEntity(recruitmentService.getList(requestDto), HttpStatus.OK);
     }
     @PostMapping

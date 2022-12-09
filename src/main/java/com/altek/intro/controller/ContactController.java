@@ -29,7 +29,7 @@ public class ContactController {
     private ContactService contactService;
 
     @PostMapping("/list")
-    public ResponseEntity<BaseResponse> getListContact(@RequestBody BaseRequest dto) {
+    public ResponseEntity<BaseResponse> getListContact(@RequestBody @Valid BaseRequest dto) {
         return new ResponseEntity(contactService.getListContact(dto), HttpStatus.OK);
     }
 

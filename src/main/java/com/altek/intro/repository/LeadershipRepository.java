@@ -14,5 +14,5 @@ public interface LeadershipRepository extends  AbstractRepository<Leadership, Lo
     List<Leadership> findAll();
 
     @Query(value = "select u from Leadership u where u.status = 1 and u.id = :id")
-    Optional<Leadership> findById(Long id);
+    Leadership findLeadershipById(Long id);
 }

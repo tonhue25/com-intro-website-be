@@ -22,6 +22,11 @@ public interface PageTranslateRepository extends AbstractRepository<PageTranslat
     List<PageResponseDto> findAllPageContentByMenuID(@Param("language") String language,
                                                     @Param("menuId") Long menuId, Pageable pageable);
 
+    @Query("SELECT count(pt) FROM PageTranslate pt INNER JOIN Page p ON pt.pageId = p.id " +
+            "WHERE p.status = 1 AND pt.languageId = :language AND p.menu.id = :menuId")
+    Long countAllPageContentByMenuID (@Param("language") String language,
+                                                     @Param("menuId") Long menuId);
+
 //    List<Page> findByMenuAndStatus(Menu menu, Integer status);
 //
 //    @Query(value = "select u from Page u where u.status = 1 and u.id = :id")

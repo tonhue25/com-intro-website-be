@@ -12,4 +12,7 @@ public class NewsRequestDto {
     private String title;
     private String thumbnail;
     private String shortDescription;
+    private String detail;
+    private String languageId;
+
 }

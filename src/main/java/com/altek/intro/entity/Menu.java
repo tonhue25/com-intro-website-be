@@ -20,6 +20,7 @@ public class Menu extends AbstractEntity {
 //    public List<Page> getPageContents() {
 //        return pageContents;
 //    }
+
     private Long parentId;
     @Column(name = "PARENT_ID")
     public Long getParentId() {

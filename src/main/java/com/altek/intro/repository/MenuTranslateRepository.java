@@ -1,6 +1,7 @@
 package com.altek.intro.repository;
 
 import com.altek.intro.entity.MenuTranslate;
+import com.altek.intro.entity.NewsTranslate;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -15,4 +16,12 @@ public interface MenuTranslateRepository extends AbstractRepository<MenuTranslat
     @Query(value = "select mt.* from ALT_MENU_TRANSLATE mt, ALT_MENU m where language_id = :language and mt.menu_id = m.id " +
             " and m.parent_id = :parentId", nativeQuery = true)
     List<MenuTranslate> getNav(@Param("language") String language, @Param("parentId") Long parentId);
+
+    @Query(value = "select mt from MenuTranslate mt " +
+            "where mt.status = 1 and mt.menu.id = :menuId and mt.languageId = :languageId")
+    MenuTranslate findByMenuIdAndLanguageId(@Param("menuId") Long menuId,
+                                            @Param("languageId") String languageId);
+
+    @Query(value = "SELECT lt FROM NewsTranslate lt WHERE lt.status = 1 AND lt.news.id = :menuId")
+    List<MenuTranslate> findMenuTranslateByMenuId(@Param("menuId") Long menuId);
 }
