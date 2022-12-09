@@ -1,5 +1,7 @@
 package com.altek.intro.repository;
 
+import com.altek.intro.dto.response.LeadershipResponseDto;
+import com.altek.intro.entity.LeadershipTranslate;
 import com.altek.intro.entity.Menu;
 import com.altek.intro.entity.News;
 import org.springframework.data.jpa.repository.Query;
@@ -20,4 +22,6 @@ public interface MenuRepository extends  AbstractRepository<Menu, Long>{
 
     @Query("SELECT m FROM Menu m WHERE m.status = 1 AND m.id = :id")
     Menu findMenuById(@Param("id") Long id);
+
+
 }

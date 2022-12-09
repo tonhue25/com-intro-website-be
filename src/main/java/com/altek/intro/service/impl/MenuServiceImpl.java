@@ -7,9 +7,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.altek.intro.dto.request.MenuRequestDto;
+import com.altek.intro.dto.request.MenuRequestDto;
 import com.altek.intro.dto.response.ListResponseDto;
+import com.altek.intro.dto.response.MenuResponseDto;
 import com.altek.intro.entity.MenuTranslate;
 import com.altek.intro.entity.Menu;
+import com.altek.intro.entity.Menu;
+import com.altek.intro.entity.MenuTranslate;
 import com.altek.intro.exception.SystemErrorException;
 import com.altek.intro.repository.MenuTranslateRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -122,38 +126,53 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
         }
     }
 
+    private Long addNewTranslationForMenuAndReturnId(MenuRequestDto request, Menu menuEntity){
+        MenuTranslate menuTranslateEntity = new MenuTranslate();
+        menuTranslateEntity = insertRequestToMenuTranslate(menuTranslateEntity, request, menuEntity);
+        menuTranslateEntity = menuTranslateRepository.save(menuTranslateEntity);
+        return menuTranslateEntity.getMenu().getId();
+    }
+    private Long newMenuAndReturnId(MenuRequestDto request){
+        Menu menuEntity = new Menu();
+        menuEntity = insertRequestToMenu(menuEntity ,request);
+        menuEntity = menuRepository.save(menuEntity);
+
+        addNewTranslationForMenuAndReturnId(request, menuEntity);
+        return menuEntity.getId();
+    }
+
     @Override
     @Transactional(rollbackOn = {Exception.class, Throwable.class})
-    public BaseResponse createMenu (MenuRequestDto request) {
+    public BaseResponse createMenu(MenuRequestDto request) {
         log.info("#MenuServiceImpl.createMenu   Start..... ");
         try {
             BaseResponse reponse = new BaseResponse();
 
-            Menu dtoCheck = menuRepository.findMenuById(request.getId());
-            if(Objects.nonNull(dtoCheck) && !dtoCheck.getId().equals(request.getId())){
+            MenuResponseDto dtoCheckExist = menuTranslateRepository
+                    .findByMenuIdAndLanguageId(request.getId(), request.getLanguageId());
+            if(Objects.nonNull(dtoCheckExist)){
                 reponse.setMessage("common.error.code.already");
                 reponse.setHttp_code(HttpStatus.BAD_REQUEST.toString());
                 return reponse;
             }
 
-            Menu menuEntiy = new Menu();
-            menuEntiy = insertRequestToMenu(menuEntiy ,request);
-            menuEntiy = menuRepository.save(menuEntiy);
+            long idResponse;
+            Menu dtoCheckAddTranslationOrNew = menuRepository.findMenuById(request.getId());
+            if(Objects.nonNull(dtoCheckAddTranslationOrNew)){
+                idResponse = addNewTranslationForMenuAndReturnId(request, dtoCheckAddTranslationOrNew);
+            } else {
+                idResponse = newMenuAndReturnId(request);
+            }
 
-            MenuTranslate menuTranslateEntity = new MenuTranslate();
-            menuTranslateEntity = insertRequestToMenuTranslate(menuTranslateEntity, request, menuEntiy);
-            menuTranslateEntity = menuTranslateRepository.save(menuTranslateEntity);
-
-            MenuResponseDto data = new MenuResponseDto();
-            data = (MenuResponseDto) menuMapper.convertToDTO(data, menuEntiy);
-            data = (MenuResponseDto) menuMapper.convertToDTO(data, menuTranslateEntity);
+            MenuResponseDto data = menuTranslateRepository
+                    .findByMenuIdAndLanguageId(idResponse, request.getLanguageId());
             reponse.setData(data);
             reponse.setMessage("common.insert.success");
             reponse.setHttp_code(HttpStatus.CREATED.toString());
             return reponse;
         } catch (Exception ex) {
             ex.printStackTrace();
-            log.error("#MenuServiceImpl.createMenu " + ex.getMessage(), ex);
+            log.error("#MenuServiceImpl.createNewMenu " + ex.getMessage(), ex);
             throw new SystemErrorException("common.system.error");
         }
     }
@@ -165,32 +184,26 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
         try {
             BaseResponse reponse = new BaseResponse();
 
-            Menu dtoCheck = menuRepository.findMenuById(request.getId());
-            if(!Objects.nonNull(dtoCheck)){
-                reponse.setMessage("common.error.code.not.found");
-                reponse.setHttp_code(HttpStatus.NOT_FOUND.toString());
-                return reponse;
-            }
-
-            Menu menuEntiy = new Menu();
-            menuEntiy = insertRequestToMenu(menuEntiy ,request);
-            menuEntiy = menuRepository.save(menuEntiy);
-
-            MenuTranslate menuTranslateEntity = menuTranslateRepository
+            MenuResponseDto dtoCheckExist = menuTranslateRepository
                     .findByMenuIdAndLanguageId(request.getId(), request.getLanguageId());
-            if(menuTranslateEntity == null){
+            Menu menuEntity = new Menu();
+            if(Objects.isNull(dtoCheckExist)){
                 reponse.setMessage("common.error.code.not.found");
                 reponse.setHttp_code(HttpStatus.NOT_FOUND.toString());
                 return reponse;
-            }
-            menuTranslateEntity = insertRequestToMenuTranslate(menuTranslateEntity, request,menuEntiy);
-            menuTranslateEntity = menuTranslateRepository.save(menuTranslateEntity);
+            } else {
+                menuEntity = insertRequestToMenu(menuEntity ,request);
+                menuEntity = menuRepository.save(menuEntity);
 
-            MenuResponseDto data = new MenuResponseDto();
-            data = (MenuResponseDto) menuMapper.convertToDTO(data, menuEntiy);
-            data = (MenuResponseDto) menuMapper.convertToDTO(data, menuTranslateEntity);
+                MenuTranslate menuTranslateEntity = menuTranslateRepository.findMenuTranslateByMenuIdAndLanguageId(request.getId(), request.getLanguageId());
+                menuTranslateEntity = insertRequestToMenuTranslate(menuTranslateEntity, request, menuEntity);
+                menuTranslateRepository.save(menuTranslateEntity);
+            }
+
+            MenuResponseDto data = menuTranslateRepository
+                    .findByMenuIdAndLanguageId(menuEntity.getId(), request.getLanguageId());
             reponse.setData(data);
-            reponse.setMessage("common.insert.success");
+            reponse.setMessage("common.update.success");
             reponse.setHttp_code(HttpStatus.OK.toString());
             return reponse;
         } catch (Exception ex) {
@@ -207,27 +220,27 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
         try {
             BaseResponse reponse = new BaseResponse();
 
-            Menu menuEntiy = menuRepository.findMenuById(request.getId());
-            if(!Objects.nonNull(menuEntiy)){
+            Menu menuEntity = menuRepository.findMenuById(request.getId());
+            if(!Objects.nonNull(menuEntity)){
                 reponse.setMessage("common.error.code.not.found");
                 reponse.setHttp_code(HttpStatus.NOT_FOUND.toString());
                 return reponse;
             }
 
-            menuEntiy.setStatus(Constant.DELETE);
-            menuEntiy = menuRepository.save(menuEntiy);
+            menuEntity.setStatus(Constant.DELETE);
+            menuEntity = menuRepository.save(menuEntity);
 
-            List<MenuTranslate> findBymenuId = menuTranslateRepository.
-                    findMenuTranslateByMenuId(menuEntiy.getId());
-            for(MenuTranslate item: findBymenuId){
+            List<MenuTranslate> findByMenuId = menuTranslateRepository.
+                    findMenuTranslateByMenuId(menuEntity.getId());
+            for(MenuTranslate item: findByMenuId){
                 item.setStatus(Constant.DELETE);
                 menuTranslateRepository.save(item);
             }
 
             MenuResponseDto data = new MenuResponseDto();
-            data = (MenuResponseDto) menuMapper.convertToDTO(data, menuEntiy);
+            data = (MenuResponseDto) menuMapper.convertToDTO(data, menuEntity);
             reponse.setData(data);
-            reponse.setMessage("common.insert.success");
+            reponse.setMessage("common.delete.success");
             reponse.setHttp_code(HttpStatus.OK.toString());
             return reponse;
         } catch (Exception ex) {
@@ -237,10 +250,10 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
         }
     }
 
-    private Menu insertRequestToMenu(Menu menuEntiy, MenuRequestDto request){
-        menuEntiy = (Menu) menuMapper.convertToEntity(request, menuEntiy);
-        menuEntiy.setStatus(Constant.INSERT);
-        return menuEntiy;
+    private Menu insertRequestToMenu(Menu menuEntity, MenuRequestDto request){
+        menuEntity = (Menu) menuMapper.convertToEntity(request, menuEntity);
+        menuEntity.setStatus(Constant.INSERT);
+        return menuEntity;
     }
     private MenuTranslate insertRequestToMenuTranslate(MenuTranslate menuTranslateEntity,
                                                        MenuRequestDto request,
@@ -253,3 +266,4 @@ public class MenuServiceImpl extends AbstractServiceImpl implements MenuService 
         return menuTranslateEntity;
     }
 }
+
