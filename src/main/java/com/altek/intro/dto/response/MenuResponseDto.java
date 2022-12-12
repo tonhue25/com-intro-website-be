@@ -5,11 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
-public class MenuResponseDto extends AbstractResponseDto{
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class MenuResponseDto extends AbstractResponseDto {
     private String label;
     private String link;
     private String languageId;

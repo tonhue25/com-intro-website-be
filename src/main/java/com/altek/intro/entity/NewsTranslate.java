@@ -23,17 +23,16 @@ public class NewsTranslate extends AbstractEntity {
 
     @Column(name = "LANGUAGE_ID")
     private String languageId;
-
     private News news;
+    @Column(name = "DETAIL", length = 1000)
+    private String detail;
+    private String thumbnail;
+
     @ManyToOne
     public News getNews() {
         return news;
     }
 
-    @Column(name = "DETAIL", length = 1000)
-    private String detail;
-
-    private String thumbnail;
     @Transient
     public String getThumbnail() {
         return thumbnail;

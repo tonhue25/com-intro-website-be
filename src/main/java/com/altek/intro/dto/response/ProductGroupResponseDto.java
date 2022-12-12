@@ -7,8 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class ProductGroupResponseDto extends  AbstractResponseDto{
+@AllArgsConstructor
+public class ProductGroupResponseDto extends AbstractResponseDto {
     private String name;
 }

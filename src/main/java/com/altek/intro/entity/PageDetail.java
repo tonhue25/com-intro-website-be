@@ -1,10 +1,11 @@
 package com.altek.intro.entity;
 
-import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Setter
 @Getter
@@ -12,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Entity
 @Table(name = "ALT_PAGE_DETAIL")
-public class PageDetail extends AbstractEntity{
+public class PageDetail extends AbstractEntity {
 
     @Column(name = "TITLE")
     private String title;
@@ -28,7 +29,6 @@ public class PageDetail extends AbstractEntity{
 
     @Column(name = "IMAGE")
     private String image;
-
     private Page page;
 
     @OneToOne(fetch = FetchType.LAZY)

@@ -9,11 +9,11 @@ import java.util.List;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class UserResponseDto extends  AbstractResponseDto{
+@AllArgsConstructor
+public class UserResponseDto extends AbstractResponseDto {
 
+    List<UserRoleResponseDto> userRoles;
     private String username;
     private String email;
-    List<UserRoleResponseDto> userRoles;
 }

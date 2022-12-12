@@ -1,9 +1,14 @@
 package com.altek.intro.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
-import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 @Getter
 @Setter
@@ -11,7 +16,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "ALT_RECRUITMENT_TRANSLATE")
-public class RecruitmentTranslate extends AbstractEntity{
+public class RecruitmentTranslate extends AbstractEntity {
     @Column(name = "JOB_TITLE")
     private String jobTitle;
     @Column(name = "JOB_DESCRIPTION")
@@ -23,6 +28,7 @@ public class RecruitmentTranslate extends AbstractEntity{
     @Column(name = "REQUIREMENT")
     private String requirement;
     private Recruitment recruitment;
+
     @ManyToOne
     public Recruitment getRecruitment() {
         return recruitment;

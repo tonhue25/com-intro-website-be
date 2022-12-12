@@ -1,12 +1,11 @@
 package com.altek.intro.entity;
 
-import javax.persistence.*;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Setter
@@ -16,13 +15,13 @@ import java.util.List;
 @Entity
 @Table(name = "ALT_MENU")
 public class Menu extends AbstractEntity {
-
     private List<Page> pageContents;
+    private Menu parentId;
+
     @OneToMany(mappedBy = "menu")
     public List<Page> getPageContents() {
         return pageContents;
     }
-    private Menu parentId;
 
     @ManyToOne
     @JoinColumn(name = "PARENT_ID")

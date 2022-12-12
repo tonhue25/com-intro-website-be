@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.util.List;
 
 @Getter
@@ -11,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseRequest {
-
     private Integer size;
     private Integer page;
     private String search;
@@ -25,7 +25,6 @@ public class BaseRequest {
     private String endDate;
     private String language;
     private List<String> enumTypes;
-//
     private Integer status;
     private String name;
 }

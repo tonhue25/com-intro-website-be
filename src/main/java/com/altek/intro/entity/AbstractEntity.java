@@ -1,20 +1,18 @@
 package com.altek.intro.entity;
 
 
-import java.util.Date;
-
-import javax.persistence.*;
-
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import lombok.Getter;
-import lombok.Setter;
+import javax.persistence.*;
+import java.util.Date;
 
 @MappedSuperclass
 @Getter
@@ -23,11 +21,21 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Access(AccessType.PROPERTY)
-public abstract class AbstractEntity{
-
+public abstract class AbstractEntity {
     private Long id;
+    @Column(name = "STATUS")
+    private Integer status;
+    private String createdBy;
+    private Date createdTime;
+    private String lastUpdatedBy;
+    private Date lastUpdatedTime;
+
+    public AbstractEntity(Integer status) {
+        this.status = status;
+    }
+
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ID")
     public Long getId() {
         return id;
@@ -37,14 +45,9 @@ public abstract class AbstractEntity{
         this.id = id;
     }
 
-    @Column(name = "STATUS")
-    private Integer status;
-
     public Integer getStatus() {
         return status;
     }
-
-    private String createdBy;
 
     @Column(name = "CREATED_BY")
     @CreatedBy
@@ -52,14 +55,11 @@ public abstract class AbstractEntity{
         return createdBy;
     }
 
-    private Date createdTime;
     @Column(name = "CREATED_TIME")
     @CreatedDate
     public Date getCreatedTime() {
         return createdTime;
     }
-
-    private String lastUpdatedBy;
 
     @Column(name = "LAST_UPDATED_BY")
     @LastModifiedBy
@@ -67,13 +67,9 @@ public abstract class AbstractEntity{
         return lastUpdatedBy;
     }
 
-    private Date lastUpdatedTime;
     @Column(name = "LAST_UPDATED_TIME")
     @LastModifiedDate
     public Date getLastUpdatedTime() {
         return lastUpdatedTime;
-    }
-    public AbstractEntity(Integer status) {
-        this.status = status;
     }
 }

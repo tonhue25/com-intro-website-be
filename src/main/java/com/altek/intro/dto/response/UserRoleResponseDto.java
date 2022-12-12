@@ -7,10 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class UserRoleResponseDto{
-
+@AllArgsConstructor
+public class UserRoleResponseDto {
     private RoleResponseDto role;
-
 }

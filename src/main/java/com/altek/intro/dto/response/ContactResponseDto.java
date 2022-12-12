@@ -1,13 +1,15 @@
 package com.altek.intro.dto.response;
 
 import com.altek.intro.enums.ContactType;
-import com.altek.intro.repository.ContactRepository;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class ContactResponseDto extends AbstractResponseDto {
 
     private String fullName;

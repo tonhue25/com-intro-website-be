@@ -1,21 +1,22 @@
 package com.altek.intro.dto.request;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-// client gửi thông tin về server.
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class LeadershipRequestDto {
-     Long id;
-     String image;
-     String name;
-     String position;
-     String information;
+    Long id;
+    String image;
+    String name;
+    String position;
+    String information;
 
-     private String facebook;
+    private String facebook;
 
-     private String linkedin;
+    private String linkedin;
 }

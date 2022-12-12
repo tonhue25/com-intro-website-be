@@ -7,8 +7,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 public class RecruitmentResponseDto extends AbstractResponseDto {
 
     private String jobTitle;
@@ -27,7 +27,7 @@ public class RecruitmentResponseDto extends AbstractResponseDto {
     public RecruitmentResponseDto(Long id, Integer status, String createdBy, String createdTime,
                                   String lastUpdatedBy, String lastUpdatedTime, String jobTitle, String jobDescription,
                                   String image, String fileLink, String location, Long recruitmentTypeId, String languageId,
-                                  Long recruitmentId , Long productGroupId,String requirement) {
+                                  Long recruitmentId, Long productGroupId, String requirement) {
         super(id, status, createdBy, createdTime, lastUpdatedBy, lastUpdatedTime);
         this.jobTitle = jobTitle;
         this.jobDescription = jobDescription;

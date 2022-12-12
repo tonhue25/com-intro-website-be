@@ -7,9 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class RoleResponseDto extends  AbstractResponseDto{
+@AllArgsConstructor
+public class RoleResponseDto extends AbstractResponseDto {
 
     private String name;
 }

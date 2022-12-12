@@ -20,10 +20,10 @@ import java.util.List;
 @Table(name = "ALT_PRODUCT_GROUP")
 public class ProductGroup extends AbstractEntity implements Serializable {
 
+    List<ProductgroupRecruitment> productgroupRecruitments;
     @Column(name = "NAME")
     private String name;
 
-    List<ProductgroupRecruitment> productgroupRecruitments;
     @OneToMany(mappedBy = "productGroup")
     public List<ProductgroupRecruitment> getProductgroupRecruitments() {
         return productgroupRecruitments;
