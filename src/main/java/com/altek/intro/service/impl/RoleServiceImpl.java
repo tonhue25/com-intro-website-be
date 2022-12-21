@@ -6,21 +6,17 @@ import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.dto.response.RoleResponseDto;
 import com.altek.intro.entity.Role;
 import com.altek.intro.exception.ResourceNotFoundException;
+import com.altek.intro.mapper.RoleMapper;
 import com.altek.intro.repository.RoleRepository;
 import com.altek.intro.service.RoleService;
 import com.altek.intro.util.Constant;
-import com.altek.intro.util.DataUtil;
 import org.apache.commons.collections4.CollectionUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.MissingRequestValueException;
-import org.springframework.web.bind.MissingServletRequestParameterException;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class RoleServiceImpl extends AbstractServiceImpl implements RoleService {
@@ -31,6 +27,9 @@ public class RoleServiceImpl extends AbstractServiceImpl implements RoleService 
     @Autowired
     private ModelMapper modelMapper;
 
+    @Autowired
+    private RoleMapper roleMapper;
+
     @Override
     public BaseResponse getRoles() {
         try {
@@ -38,8 +37,9 @@ public class RoleServiceImpl extends AbstractServiceImpl implements RoleService 
             if (!CollectionUtils.isNotEmpty(listEntity)) {
                 return new BaseResponse(Constant.SUCCESS, "get.list.role", Constant.EMPTY_LIST);
             }
-            List<RoleResponseDto> listDto = listEntity.stream().map(item -> modelMapper.map(item, RoleResponseDto.class)).collect(Collectors.toList());
-            ListResponseDto<RoleResponseDto> response = new ListResponseDto<>(listDto);
+            RoleResponseDto responseDto = new RoleResponseDto();
+            List<Object> listDto = roleMapper.convertListToDto(listEntity, responseDto);
+            ListResponseDto<Object> response = new ListResponseDto<>(listDto);
             return new BaseResponse(Constant.SUCCESS, "get.list.role", response);
         } catch (Exception e) {
             return new BaseResponse(Constant.FAIL, "get.list.role", e.getMessage());
@@ -50,11 +50,9 @@ public class RoleServiceImpl extends AbstractServiceImpl implements RoleService 
     public BaseResponse createOrUpdateRole(BaseRequest request) {
         try {
             Role role = new Role();
-            if (!DataUtil.isEmpty(request.getId())) {
-                Optional<Role> optional = roleRepository.findById(request.getId());
-                if (optional.isPresent()) {
-                    role = optional.get();
-                }
+            Optional<Role> optional = roleRepository.findById(request.getId());
+            if (optional.isPresent()) {
+                role = optional.get();
             }
             role = modelMapper.map(request, Role.class);
             role = roleRepository.save(role);

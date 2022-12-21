@@ -1,8 +1,10 @@
 package com.altek.intro.mapper.impl;
 
+import com.altek.intro.mapper.AbstractMapper;
 import org.modelmapper.ModelMapper;
 
-import com.altek.intro.mapper.AbstractMapper;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * AbstractMapperImpl
@@ -10,7 +12,7 @@ import com.altek.intro.mapper.AbstractMapper;
  * @author NGUYEN HOANG VU
  * @return
  */
-public class AbstractMapperImpl implements AbstractMapper {
+public class AbstractMapperImpl<E, D> implements AbstractMapper<E, D> {
 
     @Override
     public Object convertToDTO(Object objectDto, Object objectEntity) {
@@ -26,4 +28,12 @@ public class AbstractMapperImpl implements AbstractMapper {
         return result;
     }
 
+    @Override
+    public List convertListToDto(List list, Object dto) {
+        ModelMapper modelMapper = new ModelMapper();
+        List<D> result =
+                (List<D>) list.stream().map(item -> modelMapper.map(item, dto.getClass()))
+                        .collect(Collectors.toList());
+        return result;
+    }
 }
