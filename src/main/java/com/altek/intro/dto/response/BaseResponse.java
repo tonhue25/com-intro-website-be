@@ -12,6 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BaseResponse<T> implements Serializable {
+
     private String http_code;
     private String message;
     private Object data;

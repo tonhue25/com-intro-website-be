@@ -11,10 +11,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MenuRequestDto {
-
     private Long id;
     private String label;
     private String link;
     private String status;
-
+    private String languageId;
+    private Long parentId;
 }

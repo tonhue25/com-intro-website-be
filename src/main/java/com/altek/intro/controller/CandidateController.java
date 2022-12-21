@@ -7,10 +7,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-@Controller
+
+@RestController
 @RequestMapping("/candidates")
 @Slf4j
 public class CandidateController {
@@ -36,6 +36,7 @@ public class CandidateController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<BaseResponse> deleteCandidate(@PathVariable Long id) {
         try {

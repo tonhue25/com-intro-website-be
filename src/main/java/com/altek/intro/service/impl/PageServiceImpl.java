@@ -3,6 +3,7 @@ package com.altek.intro.service.impl;
 import com.altek.intro.dto.request.PageRequestDto;
 import com.altek.intro.dto.request.PageTranslateRequestDto;
 import com.altek.intro.dto.response.BaseResponse;
+import com.altek.intro.dto.response.ListResponseDto;
 import com.altek.intro.dto.response.PageResponseDto;
 import com.altek.intro.dto.response.PageTranslateResponseDto;
 import com.altek.intro.entity.Menu;
@@ -60,22 +61,6 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
         }
     }
 
-    public Integer initializePageNumber(Integer pageNumber) {
-        if (pageNumber == null) {
-            return Constant.FIRST_PAGE;
-        } else {
-            if (pageNumber < 1) return Constant.FIRST_PAGE;
-            return pageNumber;
-        }
-    }
-
-    public Integer initializePageSize(Integer pageSize) {
-        if (pageSize == null) {
-            return Constant.MAX_SIZE;
-        }
-        return pageSize;
-    }
-
     @Override
     public BaseResponse getAllPageContentByMenuId(PageRequestDto requestBody) {
         Optional<Menu> optional = menuRepository.findById(requestBody.getMenuId());
@@ -83,12 +68,24 @@ public class PageServiceImpl extends AbstractServiceImpl implements PageService 
             throw new ResourceNotFoundException(String.format("menu.not.found.with.id:%s", requestBody.getMenuId()));
         }
 
-        Integer pageSize = initializePageSize(requestBody.getSize());
-        Integer pageNumber = initializePageNumber(requestBody.getPage());
-
+        ListResponseDto<PageResponseDto> response = new ListResponseDto<>();
+        Integer pageSize = DataUtil.initializePageSize(requestBody.getSize());
+        Integer pageNumber = DataUtil.initializePageNumber(requestBody.getPage());
+        double totalPages;
+        Long sizeFindAll = pageContentTranslateRepository.countAllPageContentByMenuID(requestBody.getLanguage(), requestBody.getMenuId());
         Pageable paging = getPageable(pageNumber - 1, pageSize);
-        List<PageResponseDto> listEntity = pageContentTranslateRepository.findAllPageContentByMenuID(requestBody.getLanguage(), requestBody.getMenuId(), paging);
-        return new BaseResponse(Constant.SUCCESS, "get.list.page.by.menuId", listEntity);
+        List<PageResponseDto> listEntity =
+                pageContentTranslateRepository.findAllPageContentByMenuID(requestBody.getLanguage(), requestBody.getMenuId(), paging);
+
+        totalPages = Math.ceil((double) sizeFindAll / pageSize);
+
+        response.setLanguage(requestBody.getLanguage());
+        response.setList(listEntity);
+        response.setPage(pageNumber);
+        response.setSize(listEntity.size());
+        response.setTotalPages((int) totalPages);
+        response.setRecordPerPage(pageSize);
+        return new BaseResponse(Constant.SUCCESS, "get.list.page.by.menuId", response);
     }
 
     @Override

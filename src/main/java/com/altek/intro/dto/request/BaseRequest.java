@@ -5,14 +5,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.Min;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseRequest {
+public class BaseRequest<T> {
+
+    @Min(1)
     private Integer size;
+
+    @Min(1)
     private Integer page;
     private String search;
     private String sortType;

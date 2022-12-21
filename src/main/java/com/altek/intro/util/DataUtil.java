@@ -59,4 +59,20 @@ public class DataUtil {
         }
         return false;
     }
+    public static Integer initializePageNumber(Integer pageNumber){
+        if(pageNumber == null){
+            return Constant.FIRST_PAGE;
+        } else {
+            if(pageNumber < 1)
+                return Constant.FIRST_PAGE;
+            return pageNumber;
+        }
+    }
+
+    public static Integer initializePageSize(Integer pageSize){
+        if(pageSize == null){
+            return Constant.MAX_SIZE;
+        }
+        return pageSize;
+    }
 }

@@ -10,13 +10,15 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LeadershipRequestDto {
+
     Long id;
     String image;
-    String name;
+    String fullName;
     String position;
     String information;
-
-    private String facebook;
-
-    private String linkedin;
+    String facebook;
+    String linkedIn;
+    String languageId;
+    String team;
+    Long leadershipId;
 }
